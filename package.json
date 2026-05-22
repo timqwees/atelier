@@ -1,0 +1,19 @@
+{
+  "name": "limitless-atelier",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npm install && node server.js",
+    "zip": "zip -r архив.zip . -x '*.DS_Store'"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.1",
+    "express": "^4.21.0",
+    "luxon": "^3.5.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

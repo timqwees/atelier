@@ -1,0 +1,597 @@
+/* ===== Demo Block — after Hero section ===== */
+
+.demo-section {
+  padding: 6rem 0;
+  background-color: hsl(var(--background));
+  position: relative;
+}
+
+.demo-section .demo-container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  .demo-section .demo-container { padding: 0 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .demo-section .demo-container { padding: 0 2rem; }
+}
+
+/* — Section header — */
+.demo-section .demo-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.demo-section .demo-header .demo-tag {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.demo-section .demo-header h2 {
+  font-family: var(--font-serif);
+  font-size: 1.875rem;
+  font-weight: 300;
+  line-height: 1.25;
+  margin: 0 0 1.5rem;
+  color: hsl(var(--foreground));
+}
+
+@media (min-width: 640px) {
+  .demo-section .demo-header h2 { font-size: 2.25rem; }
+}
+@media (min-width: 768px) {
+  .demo-section .demo-header h2 { font-size: 3rem; }
+}
+
+.demo-section .demo-header h2 em {
+  font-style: italic;
+  font-weight: 300;
+}
+
+.demo-section .demo-header .demo-subtitle {
+  color: hsl(var(--muted-foreground));
+  max-width: 42rem;
+  margin: 0 auto;
+  line-height: 1.625;
+  font-size: 0.875rem;
+}
+
+/* — Two-column layout — */
+.demo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (min-width: 1024px) {
+  .demo-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+/* — Chat card (shared between live chat & demo windows) — */
+.demo-chat-card {
+  background: hsl(var(--card));
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.5625rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.demo-chat-card .chat-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid hsl(var(--border));
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.demo-chat-card .chat-header .chat-avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: hsl(var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--font-serif);
+  font-size: 0.875rem;
+  color: hsl(var(--foreground));
+}
+
+.demo-chat-card .chat-header .chat-title {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  color: hsl(var(--foreground));
+  line-height: 1.25;
+}
+
+.demo-chat-card .chat-header .chat-label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+/* — Messages area — */
+.demo-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-height: 320px;
+  max-height: 420px;
+  scroll-behavior: smooth;
+}
+
+.demo-msg {
+  max-width: 85%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  opacity: 0;
+  transform: translateY(8px);
+  animation: demoMsgIn 0.35s ease forwards;
+}
+
+.demo-msg-instant {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.demo-msg-user {
+  align-self: flex-end;
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+}
+
+.demo-msg-bot {
+  align-self: flex-start;
+  background: hsl(var(--muted));
+  color: hsl(var(--foreground));
+}
+
+.demo-msg-bot .demo-msg-photo {
+  max-height: 10rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* — Typing indicator — */
+.demo-typing {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 4px;
+  padding: 0.75rem 1rem;
+  background: hsl(var(--muted));
+  border-radius: 0.375rem;
+}
+
+.demo-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--muted-foreground));
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+
+.demo-typing span:nth-child(2) { animation-delay: 0.15s; }
+.demo-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typingDot {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+@keyframes demoMsgIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* — Live chat input area — */
+.live-chat-input-area {
+  border-top: 1px solid hsl(var(--border));
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: hsl(var(--card));
+}
+
+.live-chat-input-area input[type="text"] {
+  flex: 1;
+  height: 2.25rem;
+  border: 1px solid hsl(var(--input));
+  border-radius: 0.375rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  background: hsl(var(--background));
+  color: hsl(var(--foreground));
+  outline: none;
+  font-family: var(--font-sans);
+}
+
+.live-chat-input-area input[type="text"]::placeholder {
+  color: hsl(var(--muted-foreground));
+}
+
+.live-chat-input-area input[type="text"]:focus {
+  border-color: hsl(var(--ring));
+  box-shadow: 0 0 0 2px hsl(var(--ring) / 0.15);
+}
+
+.live-chat-btn {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: hsl(var(--foreground));
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+.live-chat-btn:hover {
+  background: hsl(var(--accent));
+}
+
+.live-chat-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+}
+
+.live-chat-btn svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.live-chat-send-btn {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--primary));
+}
+
+.live-chat-send-btn:hover {
+  opacity: 0.9;
+}
+
+/* — Image preview — */
+.live-chat-previews {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem 0;
+  flex-wrap: wrap;
+}
+
+.live-chat-previews .preview-thumb {
+  position: relative;
+  height: 3.5rem;
+}
+
+.live-chat-previews .preview-thumb img {
+  height: 3.5rem;
+  width: auto;
+  border-radius: 0.25rem;
+  border: 1px solid hsl(var(--border));
+  display: block;
+}
+
+.live-chat-previews .preview-thumb .remove-thumb {
+  position: absolute;
+  top: -0.375rem;
+  right: -0.375rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  border-radius: 9999px;
+  background: hsl(var(--destructive));
+  color: hsl(var(--destructive-foreground));
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.625rem;
+  line-height: 1;
+}
+
+/* hidden file input */
+.live-chat-file-input {
+  display: none;
+}
+
+/* user message images */
+.demo-msg-user-img {
+  max-height: 10rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  border: 1px solid hsl(var(--background) / 0.2);
+}
+
+/* — Demo window extras — */
+.demo-windows-col {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.demo-windows-col > .demo-chat-card {
+  flex: 1;
+  min-width: 0;
+}
+
+.demo-windows-col > .demo-chat-card .demo-messages {
+  min-height: 300px;
+  max-height: 360px;
+}
+
+.demo-windows-col > .demo-chat-card .demo-msg-user-img {
+  max-height: 11.5rem;
+}
+
+.demo-chat-card .demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  background: hsl(var(--accent));
+  color: hsl(var(--muted-foreground));
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.demo-badge .pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: hsl(var(--chart-3));
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+.demo-restart-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  border: 1px solid hsl(var(--border));
+  background: transparent;
+  color: hsl(var(--muted-foreground));
+  cursor: pointer;
+  margin-left: auto;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.demo-restart-btn:hover {
+  background: hsl(var(--accent));
+}
+
+/* — Section fade-in animation — */
+.demo-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.demo-section.demo-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* — Loading spinner — */
+.demo-spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid hsl(var(--muted-foreground) / 0.3);
+  border-top-color: hsl(var(--muted-foreground));
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  align-self: flex-start;
+  margin: 0.25rem 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* — Mobile optimization for side-by-side demo cards — */
+.demo-section {
+  overflow-x: hidden;
+}
+
+.demo-windows-col {
+  overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .demo-windows-col .demo-chat-card .chat-header {
+    padding: 0.5rem 0.5rem;
+    gap: 0.375rem;
+  }
+  .demo-windows-col .demo-chat-card .chat-header .chat-avatar {
+    width: 1.5rem;
+    height: 1.5rem;
+    font-size: 0.625rem;
+  }
+  .demo-windows-col .demo-chat-card .chat-header .chat-title {
+    font-size: 0.625rem;
+  }
+  .demo-windows-col .demo-chat-card .demo-badge {
+    font-size: 0.5rem;
+    padding: 0.125rem 0.375rem;
+    letter-spacing: 0.05em;
+  }
+  .demo-windows-col .demo-chat-card .demo-messages {
+    padding: 0.5rem;
+    gap: 0.375rem;
+    min-height: 200px;
+    max-height: 200px;
+  }
+  .demo-windows-col .demo-chat-card .demo-msg {
+    padding: 0.375rem 0.5rem;
+    font-size: 0.5rem;
+    max-width: 92%;
+  }
+  .demo-windows-col .demo-chat-card .demo-msg-photo,
+  .demo-windows-col .demo-chat-card .demo-msg-user-img {
+    max-height: 5rem;
+  }
+  .demo-windows-col .demo-chat-card .demo-restart-btn {
+    font-size: 0.5rem;
+    padding: 0.125rem 0.375rem;
+  }
+}
+
+@media (max-width: 767px) {
+  /* — Global mobile scroll fix — */
+  html, body {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* — Kill ALL Framer Motion inline animations on mobile — */
+  section [style],
+  section div[style],
+  section h1[style],
+  section h2[style],
+  section p[style],
+  section span[style],
+  section img[style],
+  section button[style] {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  /* — Kill all CSS transitions inside sections (prevents layout shifts) — */
+  section,
+  section * {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+
+  /* — Kill backdrop-blur on navbar (heavy on Mobile Safari) — */
+  nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background-color: hsl(var(--background)) !important;
+  }
+
+  /* — Kill scale/transform transitions on all images — */
+  section img {
+    transition: none !important;
+    transform: none !important;
+  }
+
+  /* — Disable smooth scroll globally on mobile — */
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  /* — Hero: use stable viewport height (iOS address bar) — */
+  #hero {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+  }
+
+  /* — Demo section — */
+  .demo-section {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .demo-msg {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .demo-messages {
+    scroll-behavior: auto;
+  }
+}
+
+/* — Left column label — */
+.live-chat-label {
+  margin-bottom: 1rem;
+}
+
+.live-chat-label .label-tag {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 0.25rem;
+}
+
+.live-chat-label .label-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: hsl(var(--foreground));
+  font-weight: 400;
+}
+
+/* Right column label */
+.demo-col-label {
+  margin-bottom: 1rem;
+}
+
+.demo-col-label .label-tag {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+  margin-bottom: 0.25rem;
+}
+
+.demo-col-label .label-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: hsl(var(--foreground));
+  font-weight: 400;
+}
+
+/* — Responsive: smaller demo windows on mobile — */
+@media (max-width: 1023px) {
+  .demo-messages {
+    min-height: 260px;
+    max-height: 340px;
+  }
+}

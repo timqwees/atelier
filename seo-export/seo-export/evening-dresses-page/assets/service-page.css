@@ -1,0 +1,230 @@
+.service-hero,
+.service-hero h1,
+.service-hero__eyebrow,
+.service-hero__lead,
+.service-hero__usp {
+  color: #fff !important;
+}
+
+.service-hero__lead {
+  margin-bottom: 12px !important;
+  color: rgba(255, 255, 255, 0.84) !important;
+}
+
+.service-hero__usp {
+  max-width: 620px;
+  margin: 0 0 28px;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.service-slider {
+  position: relative;
+}
+
+.service-slider__viewport {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(280px, 31%);
+  gap: 24px;
+  overflow-x: auto;
+  padding: 4px 2px 18px;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+.service-slider__card {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+.service-slider__media {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 6px;
+  background: hsl(var(--muted));
+}
+
+.service-slider__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 700ms ease;
+}
+
+.service-slider__card:hover img {
+  transform: scale(1.04);
+}
+
+.service-slider__body {
+  padding-top: 18px;
+}
+
+.service-slider__title {
+  margin: 0 0 8px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+.service-slider__title strong,
+.service-text-card-title strong {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.service-slider__text {
+  margin: 0;
+  color: hsl(var(--muted-foreground));
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.service-slider__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.service-slider__button {
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  transition: background 160ms ease;
+}
+
+.service-slider__button:hover {
+  background: hsl(var(--accent) / 0.55);
+}
+
+.service-section-eyebrow strong,
+.service-price__eyebrow strong {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.service-price strong,
+.service-factor strong {
+  font-weight: 700;
+  color: hsl(var(--foreground));
+}
+
+.service-price__cta-row {
+  margin-top: 30px;
+}
+
+.service-factor-list,
+.service-materials-list {
+  display: grid;
+  gap: 14px;
+}
+
+.service-factor {
+  padding-bottom: 14px;
+  border-bottom: 1px solid hsl(var(--border) / 0.7);
+  color: hsl(var(--muted-foreground));
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.service-factor:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.service-process-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 24px;
+  list-style-position: inside;
+  list-style-type: decimal-leading-zero;
+}
+
+.service-process-list li {
+  min-height: 170px;
+  padding: 24px;
+  border: 1px solid hsl(var(--border));
+  border-radius: 6px;
+  background: hsl(var(--background));
+  color: hsl(var(--muted-foreground) / 0.7);
+  font-family: "Cormorant Garamond", serif;
+  font-size: 26px;
+}
+
+.service-process-list p {
+  margin-top: 16px;
+  color: hsl(var(--muted-foreground));
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.service-materials-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style-position: inside;
+  list-style-type: decimal-leading-zero;
+}
+
+.service-materials-list li {
+  color: hsl(var(--muted-foreground));
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.service-faq summary {
+  list-style: none;
+}
+
+.service-faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.service-faq h3 {
+  display: inline;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.service-faq h3 strong {
+  color: hsl(var(--foreground));
+  font-weight: 700;
+}
+
+.service-faq p {
+  margin-top: 16px;
+}
+
+@media (max-width: 1023px) {
+  .service-slider__viewport {
+    grid-auto-columns: minmax(260px, 44%);
+  }
+
+  .service-process-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .service-slider__viewport {
+    grid-auto-columns: minmax(250px, 82vw);
+  }
+
+  .service-slider__controls {
+    justify-content: flex-start;
+  }
+
+  .service-process-list,
+  .service-materials-list {
+    grid-template-columns: 1fr;
+  }
+}

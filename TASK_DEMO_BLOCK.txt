@@ -1,0 +1,184 @@
+# ТЗ: Добавить интерактивный демо-блок после Hero-секции
+
+## Контекст проекта
+
+Сайт Ателье 15/13 — лендинг премиального ателье индивидуального пошива в Москве.
+
+Стек:
+- Сервер: Node.js/Express (server.js) — порт 8080
+- Фронтенд: React 18.3.1 + TailwindCSS + Framer Motion — СКОМПИЛИРОВАН в минифицированный бандл public/assets/index-DGEI_cvq.js и public/assets/index-B-os_Paw.css. Исходных React-файлов (src/, .jsx, .tsx) в проекте НЕТ.
+- Статика раздаётся из public/ через express.static
+- AI-чат через OpenAI GPT-4o, endpoint POST /api/chat
+
+Структура страницы (секции в порядке рендера, всё внутри минифицированного бандла):
+1. Navbar (fixed)
+2. Hero (<section id="hero">) — фоновое фото, заголовок, CTA
+3. Feature cards — "Ателье для тех, кто ценит безупречность"
+4. Индивидуальный пошив (id="services")
+5. Другие услуги
+6. Прайс-лист (id="pricing")
+7. Доверие (id="trust")
+8. Процесс (id="process")
+9. Портфолио
+10. Локация (id="location")
+11. Контактная форма (id="contact")
+12. Footer
+13. Floating chat widget (fixed bottom-right, z-50)
+
+Дизайн-система (CSS-переменные уже определены в :root бандла):
+- --font-sans: "Montserrat", --font-serif: "Cormorant Garamond", --font-mono: "Inter"
+- Цвета HSL: --background, --foreground, --card, --border, --muted, --muted-foreground, --primary, --accent, --input, --ring и др.
+- Контейнер: max-width: 80rem, padding: 0 1rem / 1.5rem / 2rem по брейкпоинтам
+- Секции: padding: 6rem 0 (py-24)
+- Заголовки секций: тег text-xs tracking-[0.3em] uppercase text-muted-foreground + h2 font-serif text-3xl font-light
+
+API чата (POST /api/chat):
+  Request:  { messages: [{ role: "user"|"assistant", content: string, images?: string[] }] }
+  Response: { reply: string } или { error: string }
+- images — массив data:image/* base64 строк
+- Макс 50 сообщений, content до 2000 символов, image до 6MB, макс 10 фото за сессию
+
+
+## Задача
+
+Добавить новую секцию СРАЗУ ПОСЛЕ Hero (<section id="hero">). Поскольку React-исходников нет, реализация через ОТДЕЛЬНЫЕ ФАЙЛЫ public/assets/demo-block.js и public/assets/demo-block.css, подключённые в public/index.html. JS-скрипт через MutationObserver ждёт появления #hero в DOM и вставляет новый блок после него.
+
+CSS-файл public/assets/demo-block.css УЖЕ СОЗДАН — прочитай его содержимое перед началом работы, в нём все классы и стили.
+
+
+## Структура нового блока
+
+<section class="demo-section">
+  <!-- Заголовок секции -->
+  <div class="demo-container">
+    <div class="demo-header">
+      <span class="demo-tag">Калькулятор</span>
+      <h2>Узнайте стоимость <em>пошива</em></h2>
+      <p class="demo-subtitle">Отправьте фото или опишите изделие — наш AI-помощник рассчитает примерную стоимость за секунды</p>
+    </div>
+
+    <!-- Двухколоночный grid -->
+    <div class="demo-grid">
+      <!-- ЛЕВАЯ КОЛОНКА: рабочий чат -->
+      <div>
+        <div class="live-chat-label">
+          <div class="label-tag">Попробуйте сами</div>
+          <div class="label-title">Живой чат</div>
+        </div>
+        <div class="demo-chat-card">
+          <!-- header: аватар "А", заголовок "Ателье 15/13", label "Онлайн" -->
+          <!-- область сообщений (.demo-messages) -->
+          <!-- превью фото (.live-chat-previews) — показывается только если есть прикреплённые фото -->
+          <!-- input + кнопки (.live-chat-input-area) -->
+        </div>
+      </div>
+
+      <!-- ПРАВАЯ КОЛОНКА: 2 демо-окна -->
+      <div>
+        <div class="demo-col-label">
+          <div class="label-tag">Примеры работы</div>
+          <div class="label-title">Демонстрация</div>
+        </div>
+        <div class="demo-windows-col">
+          <!-- Демо 1: текстовый диалог -->
+          <div class="demo-chat-card">...</div>
+          <!-- Демо 2: расчёт по фото -->
+          <div class="demo-chat-card">...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+## Левая колонка — рабочий чат
+
+Полнофункциональный чат, работающий через POST /api/chat:
+
+- Начальное сообщение бота: "Добрый день! Я помощник Ателье 15/13. Расскажите, что вас интересует — пошив нового изделия или корректировка существующего? Вы также можете отправить фотографии изделия (до 5 штук), и я рассчитаю примерную стоимость пошива."
+- Input с placeholder: "Напишите или прикрепите фото..."
+- Кнопка прикрепления фото (скрытый input type=file, accept="image/*", multiple, max 5 штук)
+- Сжатие фото через canvas: max 1024px по большей стороне, JPEG quality 0.8, результат — data:image/jpeg;base64,...
+- Превью прикреплённых фото с кнопкой удаления (×)
+- Кнопка отправки (disabled когда пустой ввод и нет фото, или идёт загрузка)
+- Loading-спиннер (div.demo-spinner) при ожидании ответа от API
+- Автоскролл к новым сообщениям
+- Стили сообщений: user — класс demo-msg demo-msg-user, bot — класс demo-msg demo-msg-bot
+- Фото в сообщениях user: <img class="demo-msg-user-img">
+- При отправке формируется массив messages со всей историей и отправляется на /api/chat
+
+SVG-иконки (inline в JS):
+- Скрепка (attach): <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+- Отправка (send): <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+
+
+## Правая колонка — 2 демо-окна с автопроигрыванием
+
+Каждое демо-окно — карточка .demo-chat-card с автоматически проигрываемым сценарием:
+
+Сценарий 1 — «Текстовый диалог» (header title: "Расчёт по описанию"):
+  - Бот: "Добрый день! Расскажите, что вас интересует?"           delay: 800ms
+  - User: "Хочу сшить вечернее платье в пол из шёлка"              delay: 1500ms
+  - [typing 1500ms]
+  - Бот: "Отличный выбор! Подскажите, нужна ли подкладка?"         delay: 1000ms
+  - User: "Да, нужна"                                              delay: 1000ms
+  - [typing 2000ms]
+  - Бот: "Ориентировочная стоимость пошива:\n\n• Базовая: 80 000 ₽\n• Подкладка: +50%\n• Сложная ткань (шёлк): +30%\n• Длинное изделие: +25%\n\nИтого: от 164 000 ₽"
+
+Сценарий 2 — «Расчёт по фото» (header title: "Расчёт по фотографии"):
+  - Бот: "Здравствуйте! Отправьте фото, и я рассчитаю стоимость." delay: 800ms
+  - User: [фото /images/craftsmanship.png] + "Сколько будет стоить пошив такого платья?"  delay: 1500ms
+  - [typing 2000ms]
+  - Бот: "Вижу вечернее платье с декором. Нужна ли подкладка?"     delay: 1000ms
+  - User: "Да, с подкладкой"                                       delay: 1000ms
+  - [typing 2000ms]
+  - Бот: "Ориентировочная стоимость:\n\n• Базовая: 80 000 ₽\n• Подкладка: +50%\n• Декор: +1 000 ₽\n• Длинное изделие: +25%\n\nИтого: от 221 000 ₽"
+
+Механика проигрывания:
+- Запуск через IntersectionObserver — когда секция видна на экране (threshold 0.2)
+- Перед каждым сообщением бота (кроме первого) — typing indicator (div.demo-typing с тремя span)
+- Сообщения появляются с анимацией (CSS-класс demo-msg, keyframes demoMsgIn из CSS)
+- После завершения сценария — пауза 4 сек, затем автоперезапуск
+- В header каждого демо: badge с классом demo-badge с span.pulse-dot во время проигрывания, кнопка demo-restart-btn "Повторить" после завершения
+- НЕ запускать пока блок не виден на экране
+
+
+## Анимации
+
+- Вся секция: fade-in при скролле — IntersectionObserver добавляет класс demo-visible
+- Сообщения в демо: @keyframes demoMsgIn (определён в CSS)
+- Typing: @keyframes typingDot (определён в CSS)
+- Spinner: @keyframes spin (определён в CSS)
+
+
+## Responsive
+
+- Desktop (>=1024px): 2 колонки grid
+- Mobile (<1024px): 1 колонка, чат сверху, демо-окна снизу
+
+
+## Пошаговый план выполнения
+
+1. ПРОЧИТАТЬ public/assets/demo-block.css — все CSS-классы уже определены, не нужно создавать
+2. СОЗДАТЬ public/assets/demo-block.js — вся логика в одном файле:
+   a. MutationObserver для инжекции блока после section#hero
+   b. Функция buildSection() — строит всю DOM-структуру секции
+   c. Функция buildLiveChat() — рабочий чат с fetch, фото, сжатием
+   d. Функция buildDemoWindow(scenario) — демо-окно с проигрывателем
+   e. Функция playScenario(container, steps) — таймеры, typing, автоперезапуск
+   f. IntersectionObserver для fade-in секции и запуска демо
+   g. Два массива сценариев (SCENARIO_TEXT, SCENARIO_PHOTO)
+3. ИЗМЕНИТЬ public/index.html — добавить в <head>:
+   <link rel="stylesheet" href="/assets/demo-block.css">
+   <script defer src="/assets/demo-block.js"></script>
+4. ЗАПУСТИТЬ сервер и проверить на localhost:8080
+
+
+## ВАЖНЫЕ ОГРАНИЧЕНИЯ
+
+- НЕ ТРОГАТЬ public/assets/index-DGEI_cvq.js и index-B-os_Paw.css — это минифицированный бандл
+- НЕ ТРОГАТЬ server.js
+- Использовать ТОЛЬКО vanilla JS (без React, без npm)
+- Все стили через CSS-переменные из :root (определены в бандле)
+- SVG-иконки — inline в JS-коде
+- CSS-файл demo-block.css УЖЕ СУЩЕСТВУЕТ, создавать/менять его не нужно

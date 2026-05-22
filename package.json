@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "npm install && node server.js",
+    "linux_start": "chmod +x start.sh && ./start.sh",
+    "start": "node server.js",
     "zip": "zip -r архив.zip . -x '*.DS_Store'"
   },
   "dependencies": {

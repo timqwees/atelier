@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { readFileSync } from 'fs';
+import { readFileSync, readdirSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomUUID } from 'crypto';
@@ -15,8 +15,6 @@ import {
 } from './seo/serviceMenuUtils.js';
 import { menFinalPagesMatrix } from './seo/menFinalPagesMatrix.js';
 import { womenFinalPagesMatrix } from './seo/womenFinalPagesMatrix.js';
-import { menAlterationPagesMatrix } from './seo/menAlterationPagesMatrix.js';
-import { womenAlterationPagesMatrix } from './seo/womenAlterationPagesMatrix.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,46 +22,21 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 8080;
 const SITE_ORIGIN = (process.env.SITE_ORIGIN || '').replace(/\/$/, '');
-const FINAL_EVENING_DRESSES_ROUTE = '/services/custom-tailoring/women/dresses/evening';
-const FINAL_EVENING_DRESSES_BASE = '/final-pages/evening-dresses';
-const FINAL_EVENING_DRESSES_INDEX = join(__dirname, 'public', 'final-pages', 'evening-dresses', 'index.html');
-const FINAL_SHEATH_DRESSES_ROUTE = '/services/custom-tailoring/women/dresses/sheath';
-const FINAL_SHEATH_DRESSES_BASE = '/final-pages/sheath-dresses';
-const FINAL_SHEATH_DRESSES_INDEX = join(__dirname, 'public', 'final-pages', 'sheath-dresses', 'index.html');
-const FINAL_STRAIGHT_DRESSES_ROUTE = '/services/custom-tailoring/women/dresses/straight';
-const FINAL_STRAIGHT_DRESSES_BASE = '/final-pages/straight-dresses';
-const FINAL_STRAIGHT_DRESSES_INDEX = join(__dirname, 'public', 'final-pages', 'straight-dresses', 'index.html');
-const FINAL_CUT_OFF_WAIST_DRESSES_ROUTE = '/services/custom-tailoring/women/dresses/cut-off-waist';
-const FINAL_CUT_OFF_WAIST_DRESSES_BASE = '/final-pages/cut-off-waist-dresses';
-const FINAL_CUT_OFF_WAIST_DRESSES_INDEX = join(__dirname, 'public', 'final-pages', 'cut-off-waist-dresses', 'index.html');
-const FINAL_WOMEN_SERVICE_PAGES = womenFinalPagesMatrix.flatMap((group) =>
-  group.pages.map((page) => ({
-    route: page.route,
-    base: `/final-pages/${page.folder}`,
-    index: join(__dirname, 'public', 'final-pages', page.folder, 'index.html'),
-  }))
-);
-const FINAL_MEN_SERVICE_PAGES = menFinalPagesMatrix.map((page) => ({
-  route: page.route,
-  base: `/final-pages/${page.folder}`,
-  index: join(__dirname, 'public', 'final-pages', page.folder, 'index.html'),
-}));
-const FINAL_WOMEN_ALTERATION_PAGES = womenAlterationPagesMatrix.map((page) => ({
-  route: page.route,
-  base: `/final-pages/${page.folder}`,
-  index: join(__dirname, 'public', 'final-pages', page.folder, 'index.html'),
-}));
-const FINAL_MEN_ALTERATION_PAGES = menAlterationPagesMatrix.map((page) => ({
-  route: page.route,
-  base: `/final-pages/${page.folder}`,
-  index: join(__dirname, 'public', 'final-pages', page.folder, 'index.html'),
-}));
-const FINAL_SERVICE_PAGES = [
-  ...FINAL_WOMEN_SERVICE_PAGES,
-  ...FINAL_MEN_SERVICE_PAGES,
-  ...FINAL_WOMEN_ALTERATION_PAGES,
-  ...FINAL_MEN_ALTERATION_PAGES,
+const PUBLIC_DIR = join(__dirname, 'public');
+const FINAL_PAGES_DIR = join(__dirname, 'public', 'final-pages');
+const STANDARD_HTML_PAGE_FILES = [
+  'index.html',
+  'assistant.html',
+  'services.html',
+  'price.html',
+  'process.html',
+  'about.html',
+  'location.html',
+  'contacts.html',
 ];
+const STANDARD_HTML_PAGES = loadStandardHtmlPages();
+const STANDARD_HTML_ROUTES = STANDARD_HTML_PAGES.map((page) => page.route);
+const FINAL_SERVICE_PAGES = loadFinalServicePages();
 const FINAL_SERVICE_PAGE_ROUTES = FINAL_SERVICE_PAGES.map((page) => page.route);
 
 app.set('trust proxy', true);
@@ -89,118 +62,6 @@ const FORMAT_LABELS = {
   subscription: 'Абонемент (4 игры)',
   corporate: 'Корпоратив / ДР',
 };
-
-const SEO_PAGES = {
-  home: {
-    path: '/',
-    title: 'Ателье 15/13 — индивидуальный пошив в центре Москвы',
-    description: 'Премиальное ателье индивидуального пошива в Москве: сложные изделия, люксовые ткани, точная посадка и персональная консультация.',
-    eyebrow: 'Москва',
-    h1: 'Индивидуальный пошив на заказ',
-    lead: 'Создаём изделия с нуля по вашим меркам: костюмы, платья, пальто, жакеты и сложные конструкции из премиальных тканей.',
-    items: [
-      'Индивидуальные лекала и работа с посадкой',
-      'Пошив из кашемира, шерсти, шелка, кожи и сложных материалов',
-      'Консультация, примерки и сопровождение до готового изделия',
-    ],
-  },
-  consultant: {
-    path: '/consultant',
-    title: 'AI-консультант по пошиву — Ателье 15/13',
-    description: 'Онлайн-консультант Ателье 15/13: задайте вопрос о пошиве, тканях или стоимости, отправьте фото изделия для предварительного расчёта.',
-    eyebrow: 'Консультант',
-    h1: 'Персональный консультант Ателье 15/13',
-    lead: 'Задайте вопрос о пошиве, тканях, посадке или отправьте фото изделия, чтобы получить предварительный расчёт стоимости.',
-    items: [
-      'Текстовая консультация по изделию и материалам',
-      'Предварительная оценка стоимости по описанию или фото',
-      'Переход к записи на персональную консультацию в ателье',
-    ],
-  },
-  services: {
-    path: '/services',
-    title: 'Услуги ателье — индивидуальный пошив и подгонка',
-    description: 'Услуги Ателье 15/13: индивидуальный пошив, сложная подгонка, коррекция посадки, реставрация и работа с премиальными изделиями.',
-    eyebrow: 'Услуги',
-    h1: 'Услуги Ателье 15/13',
-    lead: 'Главная услуга ателье - индивидуальный пошив изделий с нуля по меркам клиента, с вниманием к силуэту, ткани и деталям.',
-    items: [
-      'Индивидуальный пошив платьев, костюмов, пальто, жакетов и сорочек',
-      'Сложная подгонка готовых изделий по фигуре',
-      'Коррекция посадки, реставрация и работа с винтажными вещами',
-    ],
-  },
-  pricing: {
-    path: '/pricing',
-    title: 'Прайс на пошив одежды — Ателье 15/13',
-    description: 'Прайс-лист Ателье 15/13 на индивидуальный пошив и дополнительные работы. Стоимость зависит от изделия, ткани и сложности конструкции.',
-    eyebrow: 'Прайс',
-    h1: 'Прайс-лист услуг',
-    lead: 'Стоимость пошива рассчитывается по типу изделия, материалам, конструктивной сложности и дополнительным элементам.',
-    items: [
-      'Топы, блузы, юбки, брюки и платья',
-      'Жакеты, пиджаки, пальто, куртки и верхняя одежда',
-      'Доплаты за подкладку, сложные ткани, декор, карманы и ручные работы',
-    ],
-  },
-  process: {
-    path: '/process',
-    title: 'Процесс работы ателье — консультация, мерки, примерки',
-    description: 'Как работает Ателье 15/13: консультация, снятие мерок, подбор ткани, конструирование, пошив, примерки и финальная посадка.',
-    eyebrow: 'Процесс',
-    h1: 'Как мы работаем',
-    lead: 'Каждый проект проходит понятные этапы: от консультации и выбора ткани до финальной примерки и точной посадки изделия.',
-    items: [
-      'Консультация и определение задачи',
-      'Снятие мерок, выбор ткани и построение лекал',
-      'Пошив, примерки и финальная корректировка',
-    ],
-  },
-  about: {
-    path: '/about',
-    title: 'О нас — Ателье 15/13 в Москве',
-    description: 'Ателье 15/13 в центре Москвы: индивидуальный пошив, сложные изделия, премиальные ткани и мастерство работы с посадкой.',
-    eyebrow: 'О нас',
-    h1: 'Ателье для тех, кто ценит безупречность',
-    lead: 'Мы создаём одежду, где каждый шов, изгиб и конструктивная деталь продуманы под человека, материал и задачу.',
-    items: [
-      'Работаем со сложными изделиями и премиальными тканями',
-      'Более 500 созданных изделий с 2020 года',
-      'Ателье расположено в центре Москвы, рядом с ЦУМ',
-    ],
-  },
-  location: {
-    path: '/location',
-    title: 'Локация ателье — Петровка 15/13, Москва',
-    description: 'Адрес Ателье 15/13: Москва, ул. Петровка 15/13, стр. 3. Визит в ателье возможен по предварительной записи.',
-    eyebrow: 'Локация',
-    h1: 'Ателье в центре Москвы',
-    lead: 'Мы находимся в историческом центре Москвы, в нескольких минутах от ЦУМ. Посещение ателье возможно только по записи.',
-    items: [
-      'Москва, ул. Петровка 15/13, стр. 3',
-      'Удобная транспортная доступность',
-      'Персональные консультации по предварительной записи',
-    ],
-  },
-  contacts: {
-    path: '/contacts',
-    title: 'Контакты и запись на консультацию — Ателье 15/13',
-    description: 'Контакты Ателье 15/13 и запись на консультацию по индивидуальному пошиву в Москве. Оставьте заявку, и мы свяжемся с вами.',
-    eyebrow: 'Контакты',
-    h1: 'Записаться на консультацию',
-    lead: 'Оставьте заявку, чтобы обсудить изделие, ткань, сроки, посадку и предварительную стоимость работы.',
-    items: [
-      'Телефон: +7 (915) 371-50-41',
-      'Адрес: Москва, ул. Петровка 15/13, стр. 3',
-      'Форма посещения: только по записи',
-    ],
-  },
-};
-
-const SEO_ROUTES = Object.values(SEO_PAGES).reduce((routes, page) => {
-  routes[page.path] = page;
-  return routes;
-}, {});
 
 const LEGACY_ROUTES = {
   '/index.html': '/',
@@ -355,6 +216,61 @@ function forceEveningDressClassification(classification, userText = '') {
 
 function renderJsonLd(data) {
   return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+}
+
+function getHtmlAttribute(tag, name) {
+  const pattern = "\\b" + name + "=[\"']([^\"']*)[\"']";
+  return tag.match(new RegExp(pattern, 'i'))?.[1] || '';
+}
+
+function extractCanonicalRoute(html, sourceName) {
+  const canonicalTag = html
+    .match(/<link\b[^>]*>/gi)
+    ?.find((tag) => getHtmlAttribute(tag, 'rel').toLowerCase() === 'canonical');
+  const href = canonicalTag ? getHtmlAttribute(canonicalTag, 'href') : '';
+
+  if (!href) {
+    throw new Error(sourceName + ': missing canonical link');
+  }
+
+  return normalizeServicePath(new URL(href, 'https://atelier.local').pathname);
+}
+
+function loadStandardHtmlPages() {
+  return STANDARD_HTML_PAGE_FILES.map((fileName) => {
+    const index = join(PUBLIC_DIR, fileName);
+    const html = readFileSync(index, 'utf8');
+
+    return {
+      route: extractCanonicalRoute(html, 'public/' + fileName),
+      index,
+    };
+  });
+}
+
+function loadFinalServicePages() {
+  const routes = new Set();
+
+  return readdirSync(FINAL_PAGES_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const folder = entry.name;
+      const index = join(FINAL_PAGES_DIR, folder, 'index.html');
+      const html = readFileSync(index, 'utf8');
+      const route = extractCanonicalRoute(html, 'public/final-pages/' + folder + '/index.html');
+
+      if (routes.has(route)) {
+        throw new Error('Duplicate final page route: ' + route);
+      }
+
+      routes.add(route);
+
+      return { route, index };
+    });
+}
+
+function readHtmlPage(page) {
+  return readFileSync(page.index, 'utf8');
 }
 
 function serializeServiceMenuNode(node) {
@@ -773,102 +689,20 @@ function renderServiceNotFoundPage(req) {
 </html>`;
 }
 
-function renderSeoContent(page) {
-  const imageBlock = page.path === '/'
-    ? `<div class="absolute inset-0"><img src="/images/hero-atelier.png" alt="Ателье 15/13" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div></div>`
-    : '';
-  const sectionClass = page.path === '/'
-    ? 'relative min-h-screen flex items-center overflow-hidden'
-    : 'py-24 sm:py-32 bg-background';
-  const textClass = page.path === '/'
-    ? 'relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-white'
-    : 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8';
-  const leadClass = page.path === '/'
-    ? 'text-base sm:text-lg text-white/70 max-w-2xl mb-8 leading-relaxed'
-    : 'text-muted-foreground max-w-3xl mb-8 leading-relaxed';
-  const itemClass = page.path === '/'
-    ? 'text-white/75'
-    : 'text-muted-foreground';
-
-  return `
-    ${renderStaticNav()}
-    <main class="min-h-screen pt-16">
-      <section class="${sectionClass}">
-        ${imageBlock}
-        <div class="${textClass}">
-          <div class="max-w-3xl">
-            <p class="text-xs tracking-[0.3em] uppercase ${page.path === '/' ? 'text-white/70 border border-white/25 inline-block px-4 py-2 rounded-md mb-6' : 'text-muted-foreground mb-4'}">${escapeHtml(page.eyebrow)}</p>
-            <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">${escapeHtml(page.h1)}</h1>
-            <p class="${leadClass}">${escapeHtml(page.lead)}</p>
-            <ul class="space-y-3">
-              ${page.items.map((item) => `<li class="text-sm ${itemClass}">${escapeHtml(item)}</li>`).join('')}
-            </ul>
-          </div>
-        </div>
-      </section>
-    </main>
-  `;
-}
-
-function renderSeoPage(page, req) {
-  const canonical = `${getOrigin(req)}${page.path}`;
-  const content = renderSeoContent(page);
-
-  return `<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>${escapeHtml(page.title)}</title>
-    <meta name="description" content="${escapeHtml(page.description)}" />
-    <link rel="canonical" href="${escapeHtml(canonical)}" />
-    <meta property="og:title" content="${escapeHtml(page.title)}" />
-    <meta property="og:description" content="${escapeHtml(page.description)}" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="${escapeHtml(canonical)}" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/index-DGEI_cvq.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=3">
-    <link rel="stylesheet" href="/assets/demo-block.css?v=3">
-    <script defer src="/assets/services-menu.js?v=3"></script>
-    <script defer src="/assets/demo-block.js?v=3"></script>
-    <script defer src="/assets/voice-input.js"></script>
-    <script defer src="/assets/lightbox.js"></script>
-    <style>[data-testid="button-chat-toggle"] { display: none !important; }</style>
-    <!-- Yandex.Metrika counter -->
-<script type="text/javascript">
-    (function(m,e,t,r,i,k,a){
-        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-        m[i].l=1*new Date();
-        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=109384423', 'ym');
-
-    ym(109384423, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-</script>
-<noscript><div><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
-  </head>
-  <body>
-    <div id="root">${content}</div>
-  </body>
-</html>`;
-}
-
 function renderSitemap(req) {
   const origin = getOrigin(req);
   const pagesByPath = new Map();
 
-  Object.values(SEO_PAGES).forEach((page) => {
-    pagesByPath.set(page.path, page.path);
+  STANDARD_HTML_PAGES.forEach((page) => {
+    pagesByPath.set(page.route, page.route);
   });
 
   servicePages.forEach((page) => {
     pagesByPath.set(page.path, page.path);
+  });
+
+  FINAL_SERVICE_PAGES.forEach((page) => {
+    pagesByPath.set(page.route, page.route);
   });
 
   const urls = Array.from(pagesByPath.values())
@@ -878,55 +712,8 @@ function renderSitemap(req) {
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 }
 
-function renderFinalStaticServicePage(req, indexPath, basePath, routePath) {
-  const origin = getOrigin(req);
-
-  return readFileSync(indexPath, 'utf8')
-    .replaceAll('href="./favicon.png"', `href="${basePath}/favicon.png"`)
-    .replaceAll('href="./assets/', `href="${basePath}/assets/`)
-    .replaceAll('src="./assets/', `src="${basePath}/assets/`)
-    .replaceAll('href="./images/', `href="${basePath}/images/`)
-    .replaceAll('src="./images/', `src="${basePath}/images/`)
-    .replaceAll('content="/images/', `content="${basePath}/images/`)
-    .replaceAll('"/images/', `"${basePath}/images/`)
-    .replaceAll(`href="${routePath}"`, `href="${origin}${routePath}"`)
-    .replaceAll(`content="${routePath}"`, `content="${origin}${routePath}"`);
-}
-
-function renderFinalEveningDressesPage(req) {
-  return renderFinalStaticServicePage(
-    req,
-    FINAL_EVENING_DRESSES_INDEX,
-    FINAL_EVENING_DRESSES_BASE,
-    FINAL_EVENING_DRESSES_ROUTE
-  );
-}
-
-function renderFinalSheathDressesPage(req) {
-  return renderFinalStaticServicePage(
-    req,
-    FINAL_SHEATH_DRESSES_INDEX,
-    FINAL_SHEATH_DRESSES_BASE,
-    FINAL_SHEATH_DRESSES_ROUTE
-  );
-}
-
-function renderFinalStraightDressesPage(req) {
-  return renderFinalStaticServicePage(
-    req,
-    FINAL_STRAIGHT_DRESSES_INDEX,
-    FINAL_STRAIGHT_DRESSES_BASE,
-    FINAL_STRAIGHT_DRESSES_ROUTE
-  );
-}
-
-function renderFinalCutOffWaistDressesPage(req) {
-  return renderFinalStaticServicePage(
-    req,
-    FINAL_CUT_OFF_WAIST_DRESSES_INDEX,
-    FINAL_CUT_OFF_WAIST_DRESSES_BASE,
-    FINAL_CUT_OFF_WAIST_DRESSES_ROUTE
-  );
+function renderStaticHtmlPage(page) {
+  return readHtmlPage(page);
 }
 
 app.use(cors());
@@ -955,26 +742,6 @@ app.get('/sitemap.xml', (req, res) => {
   res.type('application/xml').send(renderSitemap(req));
 });
 
-app.get(FINAL_EVENING_DRESSES_ROUTE, (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderFinalEveningDressesPage(req));
-});
-
-app.get(FINAL_SHEATH_DRESSES_ROUTE, (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderFinalSheathDressesPage(req));
-});
-
-app.get(FINAL_STRAIGHT_DRESSES_ROUTE, (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderFinalStraightDressesPage(req));
-});
-
-app.get(FINAL_CUT_OFF_WAIST_DRESSES_ROUTE, (req, res) => {
-  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderFinalCutOffWaistDressesPage(req));
-});
-
 app.get(FINAL_SERVICE_PAGE_ROUTES, (req, res, next) => {
   const page = FINAL_SERVICE_PAGES.find((item) => item.route === req.path);
   if (!page) {
@@ -983,7 +750,7 @@ app.get(FINAL_SERVICE_PAGE_ROUTES, (req, res, next) => {
   }
 
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderFinalStaticServicePage(req, page.index, page.base, page.route));
+  res.send(renderStaticHtmlPage(page));
 });
 
 app.get('/services/*', (req, res) => {
@@ -1004,8 +771,14 @@ app.get('/services/*', (req, res) => {
   res.send(renderServicePage(page, req));
 });
 
-app.get(Object.keys(SEO_ROUTES), (req, res) => {
-  res.send(renderSeoPage(SEO_ROUTES[req.path], req));
+app.get(STANDARD_HTML_ROUTES, (req, res, next) => {
+  const page = STANDARD_HTML_PAGES.find((item) => item.route === req.path);
+  if (!page) {
+    next();
+    return;
+  }
+
+  res.send(renderStaticHtmlPage(page));
 });
 
 app.use(express.static(join(__dirname, 'public')));

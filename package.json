@@ -6,6 +6,7 @@
   "scripts": {
     "linux_start": "chmod +x start.sh && ./start.sh",
     "start": "node server.js",
+    "validate:heads": "node scripts/validate-page-heads.js",
     "zip": "zip -r архив.zip . -x '*.DS_Store'"
   },
   "dependencies": {

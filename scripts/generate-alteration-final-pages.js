@@ -213,7 +213,7 @@ function renderPage(page) {
     <link rel="stylesheet" crossorigin href="./assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="./assets/services-menu.css?v=3">
     <link rel="stylesheet" href="./assets/service-page.css?v=5">
-    <script defer src="./assets/services-menu.js?v=3"></script>
+    <script defer src="./assets/services-menu.js?v=4"></script>
     <script defer src="./assets/service-page.js?v=2"></script>
     <style>html, body { overflow-x: hidden; }</style>
 ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(item)}</script>`).join('\n')}

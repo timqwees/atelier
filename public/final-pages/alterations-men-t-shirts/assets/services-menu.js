@@ -1,7 +1,11 @@
 (function () {
   var API_URL = '/api/service-menu';
+  var STATIC_MENU_URL = '/assets/service-menu.json';
   var MAX_NAV_WAIT = 80;
   var menuData = null;
+  var menuLoadPromise = null;
+  var pendingOpen = false;
+  var menuLoadFailed = false;
   var menuRoot = null;
   var selectedPath = [];
   var initialized = false;
@@ -15,12 +19,28 @@
       .replace(/'/g, '&#39;');
   }
 
+  function normalizePath(path) {
+    if (!path || path === '/') return '/';
+    return String(path).replace(/\/+$/, '');
+  }
+
+  function isServicesLink(link) {
+    if (!link || link.tagName !== 'A') return false;
+    if (!link.closest || !link.closest('nav')) return false;
+    if (link.closest('[aria-label="Хлебные крошки"]')) return false;
+
+    try {
+      var url = new URL(link.getAttribute('href') || '', window.location.href);
+      return url.origin === window.location.origin && normalizePath(url.pathname) === '/services' && !url.search && !url.hash;
+    } catch (_) {
+      return false;
+    }
+  }
+
   function findNavServicesLinks() {
     return Array.prototype.slice
-      .call(document.querySelectorAll('nav a[href="/services"]'))
-      .filter(function (link) {
-        return !link.closest('[aria-label="Хлебные крошки"]');
-      });
+      .call(document.querySelectorAll('nav a'))
+      .filter(isServicesLink);
   }
 
   function createMenuRoot() {
@@ -61,10 +81,23 @@
     return menuRoot && menuRoot.classList.contains('is-open');
   }
 
+  function updateNavState(open) {
+    findNavServicesLinks().forEach(function (link) {
+      link.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
   function openMenu() {
-    if (!menuRoot || !menuData) return;
+    if (!menuRoot) menuRoot = document.getElementById('atelier-services-menu') || createMenuRoot();
+    if (!menuData) {
+      pendingOpen = true;
+      loadMenuData();
+      return;
+    }
+
     menuRoot.classList.add('is-open');
     menuRoot.setAttribute('aria-hidden', 'false');
+    updateNavState(true);
     renderMenu();
   }
 
@@ -72,6 +105,7 @@
     if (!menuRoot) return;
     menuRoot.classList.remove('is-open');
     menuRoot.setAttribute('aria-hidden', 'true');
+    updateNavState(false);
   }
 
   function toggleMenu(event) {
@@ -84,6 +118,45 @@
     }
 
     openMenu();
+  }
+
+  function fetchJson(url) {
+    return fetch(url).then(function (response) {
+      if (!response.ok) throw new Error('Service menu unavailable');
+      return response.json();
+    });
+  }
+
+  function loadMenuData() {
+    if (menuData) return Promise.resolve(menuData);
+    if (menuLoadPromise) return menuLoadPromise;
+
+    menuLoadPromise = fetchJson(API_URL)
+      .catch(function () {
+        return fetchJson(STATIC_MENU_URL);
+      })
+      .then(function (data) {
+        menuData = data;
+        menuLoadFailed = false;
+        bindNavLinks();
+
+        if (pendingOpen) {
+          pendingOpen = false;
+          openMenu();
+        }
+
+        return menuData;
+      })
+      .catch(function () {
+        menuLoadFailed = true;
+        if (pendingOpen) {
+          pendingOpen = false;
+          window.location.href = '/services';
+        }
+        return null;
+      });
+
+    return menuLoadPromise;
   }
 
   function getColumnTitle(depth) {
@@ -186,7 +259,7 @@
       if (link.dataset.servicesMenuBound === 'true') return;
       link.dataset.servicesMenuBound = 'true';
       link.setAttribute('aria-haspopup', 'dialog');
-      link.addEventListener('click', toggleMenu);
+      link.setAttribute('aria-expanded', isOpen() ? 'true' : 'false');
     });
 
     return true;
@@ -209,18 +282,18 @@
     initialized = true;
 
     menuRoot = document.getElementById('atelier-services-menu') || createMenuRoot();
+    bindNavLinks();
+    waitForNav();
 
-    fetch(API_URL)
-      .then(function (response) {
-        if (!response.ok) throw new Error('Service menu unavailable');
-        return response.json();
-      })
-      .then(function (data) {
-        menuData = data;
-        bindNavLinks();
-        waitForNav();
-      })
-      .catch(function () {});
+    document.addEventListener('click', function (event) {
+      var link = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (!isServicesLink(link)) return;
+      if (menuLoadFailed && !menuData) return;
+
+      toggleMenu(event);
+    }, true);
+
+    loadMenuData();
 
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') closeMenu();
@@ -229,7 +302,7 @@
     document.addEventListener('click', function (event) {
       if (!isOpen()) return;
       if (event.target.closest('#atelier-services-menu')) return;
-      if (event.target.closest('nav a[href="/services"]')) return;
+      if (isServicesLink(event.target.closest('a'))) return;
       closeMenu();
     });
   }

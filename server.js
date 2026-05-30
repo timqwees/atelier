@@ -640,7 +640,7 @@ function renderServicePage(page, req) {
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="/assets/services-menu.css?v=3">
     <link rel="stylesheet" href="/assets/service-page.css?v=5">
-    <script defer src="/assets/services-menu.js?v=3"></script>
+    <script defer src="/assets/services-menu.js?v=4"></script>
     <script defer src="/assets/service-page.js?v=2"></script>
     <style>html, body { overflow-x: hidden; }</style>
     ${renderServiceSchemas(page, req)}
@@ -665,7 +665,7 @@ function renderServiceNotFoundPage(req) {
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="/assets/services-menu.css?v=3">
-    <script defer src="/assets/services-menu.js?v=3"></script>
+    <script defer src="/assets/services-menu.js?v=4"></script>
   </head>
   <body>
     <div id="root">

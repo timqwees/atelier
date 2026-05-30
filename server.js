@@ -638,9 +638,9 @@ function renderServicePage(page, req) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=3">
+    <link rel="stylesheet" href="/assets/services-menu.css?v=5">
     <link rel="stylesheet" href="/assets/service-page.css?v=5">
-    <script defer src="/assets/services-menu.js?v=4"></script>
+    <script defer src="/assets/services-menu.js?v=5"></script>
     <script defer src="/assets/service-page.js?v=2"></script>
     <style>html, body { overflow-x: hidden; }</style>
     ${renderServiceSchemas(page, req)}
@@ -664,8 +664,8 @@ function renderServiceNotFoundPage(req) {
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=3">
-    <script defer src="/assets/services-menu.js?v=4"></script>
+    <link rel="stylesheet" href="/assets/services-menu.css?v=5">
+    <script defer src="/assets/services-menu.js?v=5"></script>
   </head>
   <body>
     <div id="root">

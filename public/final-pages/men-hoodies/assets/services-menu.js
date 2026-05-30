@@ -24,10 +24,15 @@
     return String(path).replace(/\/+$/, '');
   }
 
+  function normalizeText(value) {
+    return String(value || '').replace(/\s+/g, ' ').trim().toLowerCase();
+  }
+
   function isServicesLink(link) {
     if (!link || link.tagName !== 'A') return false;
-    if (!link.closest || !link.closest('nav')) return false;
+    if (!link.closest) return false;
     if (link.closest('[aria-label="Хлебные крошки"]')) return false;
+    if (link.closest('#atelier-services-menu')) return false;
 
     try {
       var url = new URL(link.getAttribute('href') || '', window.location.href);
@@ -39,8 +44,35 @@
 
   function findNavServicesLinks() {
     return Array.prototype.slice
-      .call(document.querySelectorAll('nav a'))
+      .call(document.querySelectorAll('a'))
       .filter(isServicesLink);
+  }
+
+  function isServicesButton(button) {
+    if (!button || !button.closest || button.closest('#atelier-services-menu')) return false;
+
+    var testId = button.getAttribute('data-testid') || '';
+    if (testId === 'button-hero-services') return true;
+
+    var text = normalizeText(button.textContent);
+    return text === 'услуги' || text === 'наши услуги';
+  }
+
+  function findServicesTrigger(target) {
+    if (!target || !target.closest) return null;
+
+    var element = target.closest('a,button,[role="button"]');
+    if (!element) return null;
+
+    if (isServicesLink(element)) {
+      return { element: element, type: 'link' };
+    }
+
+    if (isServicesButton(element)) {
+      return { element: element, type: 'button' };
+    }
+
+    return null;
   }
 
   function createMenuRoot() {
@@ -97,6 +129,8 @@
 
     menuRoot.classList.add('is-open');
     menuRoot.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('atelier-services-menu-open');
+    document.body.classList.add('atelier-services-menu-open');
     updateNavState(true);
     renderMenu();
   }
@@ -105,12 +139,18 @@
     if (!menuRoot) return;
     menuRoot.classList.remove('is-open');
     menuRoot.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('atelier-services-menu-open');
+    document.body.classList.remove('atelier-services-menu-open');
     updateNavState(false);
   }
 
-  function toggleMenu(event) {
+  function toggleMenu(event, trigger) {
     event.preventDefault();
-    event.stopPropagation();
+
+    if (trigger && trigger.type === 'button') {
+      event.stopPropagation();
+      if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+    }
 
     if (isOpen()) {
       closeMenu();
@@ -286,11 +326,11 @@
     waitForNav();
 
     document.addEventListener('click', function (event) {
-      var link = event.target && event.target.closest ? event.target.closest('a') : null;
-      if (!isServicesLink(link)) return;
+      var trigger = findServicesTrigger(event.target);
+      if (!trigger) return;
       if (menuLoadFailed && !menuData) return;
 
-      toggleMenu(event);
+      toggleMenu(event, trigger);
     }, true);
 
     loadMenuData();
@@ -302,7 +342,7 @@
     document.addEventListener('click', function (event) {
       if (!isOpen()) return;
       if (event.target.closest('#atelier-services-menu')) return;
-      if (isServicesLink(event.target.closest('a'))) return;
+      if (findServicesTrigger(event.target)) return;
       closeMenu();
     });
   }

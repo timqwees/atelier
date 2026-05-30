@@ -3,12 +3,17 @@
   top: 64px;
   left: 0;
   right: 0;
-  z-index: 45;
+  z-index: 80;
   display: none;
 }
 
 .atelier-services-menu.is-open {
   display: block;
+}
+
+html.atelier-services-menu-open,
+body.atelier-services-menu-open {
+  overflow: hidden;
 }
 
 .atelier-services-menu__backdrop {
@@ -149,15 +154,31 @@
 @media (max-width: 767px) {
   .atelier-services-menu {
     top: 64px;
+    bottom: 0;
   }
 
   .atelier-services-menu__panel {
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
     max-width: none;
-    width: calc(100vw - 24px);
-    margin: 0 12px;
+    width: 100vw;
+    margin: 0;
+    border-left: 0;
+    border-right: 0;
+    overflow: hidden;
+  }
+
+  .atelier-services-menu__backdrop {
+    background: rgba(0, 0, 0, 0.24);
   }
 
   .atelier-services-menu__header {
+    flex-shrink: 0;
     padding: 18px 18px;
   }
 
@@ -166,8 +187,12 @@
   }
 
   .atelier-services-menu__columns {
-    grid-auto-columns: minmax(240px, 82vw);
-    max-height: calc(100vh - 170px);
+    flex: 1 1 auto;
+    grid-auto-columns: minmax(260px, 86vw);
+    max-height: none;
+    min-height: 0;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   .atelier-services-menu__column {

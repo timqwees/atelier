@@ -5,10 +5,12 @@
   right: 0;
   z-index: 80;
   display: none;
+  pointer-events: none;
 }
 
 .atelier-services-menu.is-open {
   display: block;
+  pointer-events: auto;
 }
 
 html.atelier-services-menu-open,
@@ -27,22 +29,33 @@ body.atelier-services-menu-open {
 
 .atelier-services-menu__panel {
   position: relative;
-  max-width: 1280px;
-  margin: 0 auto;
+  z-index: 1;
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 88px);
+  max-height: calc(100dvh - 88px);
+  margin: 10px auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: hsl(var(--background) / 0.98);
-  border: 1px solid hsl(var(--border) / 0.7);
-  border-top: 0;
+  border: 1px solid hsl(var(--border) / 0.75);
+  border-radius: 8px;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12);
   backdrop-filter: blur(18px);
 }
 
 .atelier-services-menu__header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 40px;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 22px 32px;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 18px;
   border-bottom: 1px solid hsl(var(--border) / 0.7);
+}
+
+.atelier-services-menu__header > div {
+  min-width: 0;
 }
 
 .atelier-services-menu__eyebrow {
@@ -55,12 +68,14 @@ body.atelier-services-menu-open {
 
 .atelier-services-menu__title {
   margin: 0;
+  overflow-wrap: anywhere;
   font-family: "Cormorant Garamond", serif;
   font-size: 30px;
   font-weight: 300;
   line-height: 1.1;
 }
 
+.atelier-services-menu__back,
 .atelier-services-menu__close {
   width: 40px;
   height: 40px;
@@ -69,50 +84,33 @@ body.atelier-services-menu-open {
   justify-content: center;
   border: 1px solid hsl(var(--border));
   border-radius: 6px;
+  background: transparent;
   color: hsl(var(--muted-foreground));
-  transition: color 160ms ease, background 160ms ease;
+  font: inherit;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
+.atelier-services-menu__back:hover,
 .atelier-services-menu__close:hover {
   color: hsl(var(--foreground));
   background: hsl(var(--accent) / 0.5);
+  border-color: hsl(var(--border));
 }
 
-.atelier-services-menu__columns {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(230px, 1fr);
-  gap: 0;
-  overflow-x: auto;
-  max-height: min(68vh, 640px);
+.atelier-services-menu__back.is-hidden {
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.atelier-services-menu__column {
-  min-width: 230px;
-  padding: 26px 24px 30px;
-  border-right: 1px solid hsl(var(--border) / 0.65);
-}
-
-.atelier-services-menu__column:last-child {
-  border-right: 0;
-}
-
-.atelier-services-menu__column-kicker {
-  display: block;
-  margin-bottom: 10px;
-  color: hsl(var(--muted-foreground) / 0.7);
-  font-family: "Cormorant Garamond", serif;
-  font-size: 24px;
-  line-height: 1;
-}
-
-.atelier-services-menu__column-title {
-  margin: 0 0 18px;
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  line-height: 1.45;
-  text-transform: uppercase;
-  color: hsl(var(--muted-foreground));
+.atelier-services-menu__body {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 18px 18px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .atelier-services-menu__items {
@@ -122,26 +120,37 @@ body.atelier-services-menu-open {
 
 .atelier-services-menu__item {
   width: 100%;
-  min-height: 44px;
+  min-height: 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 11px 12px;
+  padding: 12px 14px;
+  border: 0;
   border-radius: 6px;
+  background: transparent;
   color: hsl(var(--foreground));
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.3;
   text-align: left;
-  font-size: 14px;
-  line-height: 1.35;
+  text-decoration: none;
+  cursor: pointer;
   transition: background 160ms ease, color 160ms ease;
 }
 
 .atelier-services-menu__item:hover,
-.atelier-services-menu__item.is-active {
+.atelier-services-menu__item:focus-visible {
   background: hsl(var(--accent) / 0.55);
+  outline: none;
+}
+
+.atelier-services-menu__leaf {
+  cursor: pointer;
 }
 
 .atelier-services-menu__arrow {
+  flex: 0 0 auto;
   color: hsl(var(--muted-foreground));
   font-size: 18px;
   line-height: 1;
@@ -152,50 +161,40 @@ body.atelier-services-menu-open {
 }
 
 @media (max-width: 767px) {
-  .atelier-services-menu {
-    top: 64px;
-    bottom: 0;
-  }
-
-  .atelier-services-menu__panel {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    max-width: none;
-    width: 100vw;
-    margin: 0;
-    border-left: 0;
-    border-right: 0;
-    overflow: hidden;
-  }
-
   .atelier-services-menu__backdrop {
     background: rgba(0, 0, 0, 0.24);
   }
 
+  .atelier-services-menu__panel {
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 80px);
+    max-height: calc(100dvh - 80px);
+    margin: 8px auto 0;
+  }
+
   .atelier-services-menu__header {
-    flex-shrink: 0;
-    padding: 18px 18px;
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    gap: 10px;
+    padding: 16px;
+  }
+
+  .atelier-services-menu__back,
+  .atelier-services-menu__close {
+    width: 38px;
+    height: 38px;
   }
 
   .atelier-services-menu__title {
-    font-size: 25px;
+    font-size: 27px;
   }
 
-  .atelier-services-menu__columns {
-    flex: 1 1 auto;
-    grid-auto-columns: minmax(260px, 86vw);
-    max-height: none;
-    min-height: 0;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
+  .atelier-services-menu__body {
+    padding: 10px 12px 14px;
   }
 
-  .atelier-services-menu__column {
-    padding: 22px 18px 26px;
+  .atelier-services-menu__item {
+    min-height: 50px;
+    padding: 12px;
+    font-size: 17px;
   }
 }

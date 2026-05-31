@@ -84,13 +84,14 @@
       '<div class="atelier-services-menu__backdrop" data-services-menu-close></div>' +
       '<div class="atelier-services-menu__panel" role="dialog" aria-modal="false" aria-label="Меню услуг">' +
       '  <div class="atelier-services-menu__header">' +
+      '    <button class="atelier-services-menu__back is-hidden" type="button" aria-label="Назад" data-services-menu-back>←</button>' +
       '    <div>' +
-      '      <p class="atelier-services-menu__eyebrow">Услуги</p>' +
-      '      <h2 class="atelier-services-menu__title">Ателье 15/13</h2>' +
+      '      <p class="atelier-services-menu__eyebrow" data-services-menu-kicker>01</p>' +
+      '      <h2 class="atelier-services-menu__title" data-services-menu-title>Услуги</h2>' +
       '    </div>' +
       '    <button class="atelier-services-menu__close" type="button" aria-label="Закрыть меню" data-services-menu-close>×</button>' +
       '  </div>' +
-      '  <div class="atelier-services-menu__columns" data-services-menu-columns></div>' +
+      '  <div class="atelier-services-menu__body" data-services-menu-body></div>' +
       '</div>';
 
     root.addEventListener('click', function (event) {
@@ -99,6 +100,18 @@
         event.preventDefault();
         event.stopPropagation();
         closeMenu();
+        return;
+      }
+
+      var backTarget = event.target.closest('[data-services-menu-back]');
+      if (backTarget) {
+        event.preventDefault();
+        event.stopPropagation();
+
+        if (selectedPath.length) {
+          selectedPath = selectedPath.slice(0, -1);
+          renderMenu();
+        }
         return;
       }
 
@@ -142,6 +155,7 @@
     document.documentElement.classList.remove('atelier-services-menu-open');
     document.body.classList.remove('atelier-services-menu-open');
     updateNavState(false);
+    selectedPath = [];
   }
 
   function toggleMenu(event, trigger) {
@@ -199,93 +213,78 @@
     return menuLoadPromise;
   }
 
-  function getColumnTitle(depth) {
-    if (depth === 0) return menuData.title;
-    return selectedPath[depth - 1] ? selectedPath[depth - 1].title : '';
+  function getCurrentNode() {
+    return selectedPath.length ? selectedPath[selectedPath.length - 1] : menuData;
   }
 
-  function getColumnItems(depth) {
-    if (depth === 0) return menuData.children || [];
-    return selectedPath[depth - 1] ? selectedPath[depth - 1].children || [] : [];
+  function getCurrentItems() {
+    var currentNode = getCurrentNode();
+    return currentNode && currentNode.children ? currentNode.children : [];
   }
 
-  function buildColumns() {
-    var columns = [];
-    var depth = 0;
-
-    while (true) {
-      var items = getColumnItems(depth);
-      if (!items.length) break;
-
-      columns.push({
-        depth: depth,
-        title: getColumnTitle(depth),
-        items: items,
-      });
-
-      if (!selectedPath[depth]) break;
-      depth += 1;
-    }
-
-    return columns;
+  function getLevelLabel() {
+    return String(selectedPath.length + 1).padStart(2, '0');
   }
 
   function renderMenu() {
     if (!menuRoot || !menuData) return;
 
-    var columnsNode = menuRoot.querySelector('[data-services-menu-columns]');
-    var columns = buildColumns();
+    var bodyNode = menuRoot.querySelector('[data-services-menu-body]');
+    var backButton = menuRoot.querySelector('[data-services-menu-back]');
+    var titleNode = menuRoot.querySelector('[data-services-menu-title]');
+    var kickerNode = menuRoot.querySelector('[data-services-menu-kicker]');
+    var currentNode = getCurrentNode();
+    var items = getCurrentItems();
 
-    columnsNode.innerHTML = columns.map(function (column, index) {
-      var activeItem = selectedPath[column.depth];
+    if (!bodyNode) return;
 
-      return (
-        '<section class="atelier-services-menu__column">' +
-        '  <span class="atelier-services-menu__column-kicker">' + String(index + 1).padStart(2, '0') + '</span>' +
-        '  <h3 class="atelier-services-menu__column-title">' + escapeHtml(column.title) + '</h3>' +
-        '  <div class="atelier-services-menu__items">' +
-        column.items.map(function (item, itemIndex) {
-          var hasChildren = item.children && item.children.length > 0;
-          var activeClass = activeItem && activeItem.path === item.path ? ' is-active' : '';
-          var leafClass = hasChildren ? '' : ' atelier-services-menu__leaf';
+    if (backButton) {
+      backButton.classList.toggle('is-hidden', !selectedPath.length);
+      backButton.setAttribute('aria-hidden', selectedPath.length ? 'false' : 'true');
+    }
 
-          if (!hasChildren) {
-            return (
-              '<a class="atelier-services-menu__item' + leafClass + '" href="' + escapeHtml(item.path) + '">' +
-              '  <span>' + escapeHtml(item.title) + '</span>' +
-              '  <span class="atelier-services-menu__arrow" aria-hidden="true">↗</span>' +
-              '</a>'
-            );
-          }
+    if (titleNode) titleNode.textContent = currentNode.title || menuData.title;
+    if (kickerNode) kickerNode.textContent = getLevelLabel();
 
+    bodyNode.innerHTML =
+      '<div class="atelier-services-menu__items">' +
+      items.map(function (item, itemIndex) {
+        var hasChildren = item.children && item.children.length > 0;
+        var itemClass = hasChildren ? '' : ' atelier-services-menu__leaf';
+
+        if (!hasChildren) {
           return (
-            '<button class="atelier-services-menu__item' + activeClass + '" type="button" data-depth="' + column.depth + '" data-index="' + itemIndex + '">' +
+            '<a class="atelier-services-menu__item' + itemClass + '" href="' + escapeHtml(item.path) + '">' +
             '  <span>' + escapeHtml(item.title) + '</span>' +
-            '  <span class="atelier-services-menu__arrow" aria-hidden="true">›</span>' +
-            '</button>'
+            '  <span class="atelier-services-menu__arrow" aria-hidden="true">↗</span>' +
+            '</a>'
           );
-        }).join('') +
-        '  </div>' +
-        '</section>'
-      );
-    }).join('');
+        }
 
-    Array.prototype.slice.call(columnsNode.querySelectorAll('[data-depth][data-index]')).forEach(function (button) {
+        return (
+          '<button class="atelier-services-menu__item' + itemClass + '" type="button" data-services-menu-index="' + itemIndex + '">' +
+          '  <span>' + escapeHtml(item.title) + '</span>' +
+          '  <span class="atelier-services-menu__arrow" aria-hidden="true">›</span>' +
+          '</button>'
+        );
+      }).join('') +
+      '</div>';
+
+    Array.prototype.slice.call(bodyNode.querySelectorAll('[data-services-menu-index]')).forEach(function (button) {
       button.addEventListener('click', function (event) {
         event.preventDefault();
         event.stopPropagation();
 
-        var depth = Number(button.getAttribute('data-depth'));
-        var index = Number(button.getAttribute('data-index'));
-        var item = getColumnItems(depth)[index];
-        var hasChildren = item.children && item.children.length > 0;
+        var index = Number(button.getAttribute('data-services-menu-index'));
+        var item = getCurrentItems()[index];
 
-        if (hasChildren) {
-          selectedPath = selectedPath.slice(0, depth);
-          selectedPath[depth] = item;
+        if (!item) return;
+        if (item.children && item.children.length > 0) {
+          selectedPath = selectedPath.concat(item);
           renderMenu();
           return;
         }
+
         window.location.href = item.path;
       });
     });

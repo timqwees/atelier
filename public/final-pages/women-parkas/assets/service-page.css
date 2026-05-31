@@ -116,6 +116,8 @@
     color: #fff;
     font-size: 13px;
     line-height: 1.48;
+    text-align: left;
+    overflow-wrap: break-word;
     white-space: pre-wrap;
 }
 
@@ -876,6 +878,17 @@
 
     .service-hero-assistant__messages {
         max-height: 300px;
+    }
+
+    .service-hero-assistant__message {
+        width: 100%;
+        max-width: none;
+        box-sizing: border-box;
+        text-align: left;
+    }
+
+    .service-hero-assistant__message--bot {
+        align-self: stretch;
     }
 
     .service-hero-assistant__form {

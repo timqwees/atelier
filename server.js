@@ -1763,6 +1763,122 @@ USLOZHNENNY_KROY | усложненный крой | percent | 50% | base_price
 ТОПЫ | 2 | Спроси только то, что неочевидно по фото: подкладка, рисунок ткани, размер одежды.
 `;
 
+const ALTERATION_PRICE_DATA = `
+=== КОРРЕКТИРОВКА ИЗДЕЛИЙ ===
+(Указаны минимальные цены. На подкладке +50%.)
+
+--- Пиджак ---
+Длина рукава через шлицу, с переносом петель — от 4 500 ₽
+Длина рукава через низ без переноса петель со шлицей — от 2 500 ₽
+Длина рукава через окат с плечевыми накладками — от 5 500 ₽
+Длина рукава через окат, облегчённый вариант — от 3 500 ₽
+Корректировка проймы, длина плеча — от 5 000 ₽
+Ушить / расставить по среднему шву без шлицы — от 1 200 ₽
+Ушить / расставить по среднему шву со шлицей — от 2 500 ₽
+Ушить / расставить по рельефам без шлиц — от 3 000 ₽
+Ушить / расставить по рельефам со шлицей — от 4 500 ₽
+Корректировка линии ростка без плечевых — от 2 700 ₽
+Корректировка линии ростка с плечевыми — от 4 500 ₽
+Изменение длины изделия — от 2 500 ₽
+Изменение длины изделия с одной шлицей — от 3 500 ₽
+Изменение длины изделия с 2 шлицами — от 4 500 ₽
+Ушить рукава по переднему шву с корректировкой низа — от 2 200 ₽
+Ушить рукава по локтевому до шлицы — от 2 200 ₽
+Замена подкладки частичная — от 3 000 ₽
+Замена подкладки полная с изготовлением карманов — от 14 000 ₽
+Восстановление ручного стяжка (10 см) — от 200 ₽
+
+--- Брюки ---
+Ушить / расшить средний шов пояса — от 1 500 ₽
+Ушить / расшить по боковым без затрагивания пояса — от 1 800 ₽
+Ушить / расшить по боковым с затрагиванием пояса — от 3 000 ₽
+Ушить / расшить по шаговым — от 1 500 ₽
+Коррекция переднезаднего баланса — от 3 000 ₽
+Изменение длины с тесьмой — от 1 800 ₽
+Изменение длины под строчку (чиносы) — от 1 500 ₽
+Изменение длины с манжетой (с тесьмой) — от 2 000 ₽
+Изменение длины с манжетой без тесьмы — от 1 800 ₽
+Восстановить мешковину кармана — от 2 500 ₽
+Перекрой задней половинки — от 3 500 ₽
+Перенос окантовки (10 см) — от 200 ₽
+Углубить шов сиденья — от 1 000 ₽
+
+--- Джинсы ---
+Изменение длины с сохранением вара — от 2 300 ₽
+Изменение длины без сохранения вара — от 1 800 ₽
+Изменить объём талии (ушить пояс, отформовать кокетку) — от 2 700 ₽
+Ушить по боковым или шаговым без отделочной строчки — от 2 300 ₽
+Ушить по боковым или шаговым с отделочной строчкой — от 2 500 ₽
+Штопка (1 кв. см) — от 500 ₽
+Штопка под карманами с восстановлением строчек (1 карман) — от 1 200 ₽
+Замена молнии с вмешательством в пояс — от 2 500 ₽
+Изменение баланса (перенос шлевок) — от 3 000 ₽
+Замена мешковины кармана — от 2 500 ₽
+
+--- Сорочка / Блузка ---
+Изменение длины рукава с переносом планки — от 3 000 ₽
+Изменение длины рукава без переноса планки — от 2 000 ₽
+Изменение длины изделия с восст. уголков по боковым — от 2 250 ₽
+Изменение длины изделия — от 1 500 ₽
+Ушить по вытачкам — от 1 000 ₽
+Ушить по боковым (запаковочный шов) — от 2 500 ₽
+Ушить по боковым под оверлок — от 1 500 ₽
+Ушить рукава (запаковочный шов) до манжеты — от 2 500 ₽
+Ушить рукава под оверлок — от 1 500 ₽
+Корректировка проймы (запаковочный шов) — от 3 000 ₽
+Корректировка проймы под оверлок — от 2 000 ₽
+Корректировка баланса (кокетка) — от 2 500 ₽
+
+--- Юбка ---
+Изменение длины прямого силуэта без шлицы — от 2 000 ₽
+Изменение длины прямого силуэта со шлицей — от 2 500 ₽
+Ушить по боковым — от 1 500 ₽
+Ушить по среднему с переносом молнии — от 2 000 ₽
+Корректировка баланса — от 2 000 ₽
+Шов «американка» (10 см) — от 150 ₽
+Ролевый шов (10 см) — от 100 ₽
+
+--- Платье ---
+Изменение длины бретелей — от 1 500 ₽
+Изменение баланса с перекроем плечевого пояса — от 3 000 ₽
+Коррекция пройм — от 3 000 ₽
+Корректировка линии талии с переносом молнии — от 3 000 ₽
+Ушить по боковым или рельефам — от 2 500 ₽
+Ушить по вытачкам по спинке или переду — от 1 500 ₽
+Перенос / замена молнии — от 2 000 ₽
+Ушить длинные рукава без корректировки низа — от 1 900 ₽
+Ушить рукава с корректировкой низа — от 2 200 ₽
+Изменение длины подкладки (прямой крой) — от 1 300 ₽
+Изготовить подкладку (прямой крой, без ткани) — от 15 000 ₽
+
+--- Пуховики ---
+Укоротить рукава по низу — от 5 000 ₽
+Укоротить рукава через окат — от 9 000 ₽
+Укоротить длину — от 5 000 ₽
+Ушить по боковым или рельефам — от 9 000 ₽
+Ушить по среднему шву — от 4 500 ₽
+
+--- Дополнительно ---
+Изготовление глазковой петли — 350 ₽
+Пришить пуговицу — 150 ₽
+Поставить кнопку — 250 ₽
+Замена молнии на ветрозащитном клапане — от 5 000 ₽
+Замена молнии с кантами на ветрозащитном клапане — от 6 500 ₽
+Ремонт кармана (1 ед.) — от 2 500 ₽
+Замена молнии без ветрозащитного клапана — от 4 000 ₽
+
+--- Трикотаж ---
+Укоротить футболку на распошиве — от 1 200 ₽
+Укоротить футболку с разрезами по бокам — от 1 500 ₽
+Укоротить рукава на футболке — от 1 200 ₽
+Укоротить низ трикотаж 7–10 класс (петля в петлю) — от 8 000 ₽
+Укоротить низ трикотаж 10–14 класс (петля в петлю) — от 12 000 ₽
+
+--- Галантерея ---
+Пробивка отверстия в ремне — 140 ₽
+Укорачивание ремня с винтовым отверстием — 170 ₽
+`;
+
 // === Parse PRICE_DATA into named sections ===
 function parseSections(text) {
   const sections = {};
@@ -1784,6 +1900,714 @@ const SECTIONS = parseSections(PRICE_DATA);
 console.log('[Init] Parsed sections:', Object.keys(SECTIONS).length, 'keys:', Object.keys(SECTIONS).join(', '));
 console.log('[Init] БАЗА_ИЗДЕЛИЙ length:', (SECTIONS['БАЗА_ИЗДЕЛИЙ'] || 'MISSING').length);
 console.log('[Init] ДРАЙВЕРЫ length:', (SECTIONS['ДРАЙВЕРЫ'] || 'MISSING').length);
+
+function normalizeRuText(value = '') {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/ё/g, 'е')
+    .replace(/[«»"']/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractMessageText(message = {}) {
+  const content = message.content;
+  if (typeof content === 'string') return content;
+  if (Array.isArray(content)) {
+    return content
+      .filter((part) => part?.type === 'text' && typeof part.text === 'string')
+      .map((part) => part.text)
+      .join(' ');
+  }
+  return '';
+}
+
+function parseRubPrice(value = '') {
+  const digits = String(value || '').replace(/[^\d]/g, '');
+  return digits ? parseInt(digits, 10) : null;
+}
+
+function parseAlterationPriceData(text) {
+  const sections = {};
+  const sectionRegex = /---\s*([^-]+?)\s*---/g;
+  const markers = [];
+  let match;
+
+  while ((match = sectionRegex.exec(text)) !== null) {
+    markers.push({ name: match[1].trim(), start: match.index, headerEnd: match.index + match[0].length });
+  }
+
+  for (let i = 0; i < markers.length; i += 1) {
+    const category = markers[i].name;
+    const contentStart = markers[i].headerEnd;
+    const contentEnd = i + 1 < markers.length ? markers[i + 1].start : text.length;
+    const lines = text.slice(contentStart, contentEnd).split('\n').map((line) => line.trim()).filter(Boolean);
+
+    sections[category] = lines
+      .map((line) => {
+        const priceMatch = line.match(/^(.+?)\s+—\s+(от\s+)?([\d\s]+)\s*₽/i);
+        if (!priceMatch) return null;
+        return {
+          category,
+          name: priceMatch[1].trim(),
+          price: parseRubPrice(priceMatch[3]),
+          from: Boolean(priceMatch[2]),
+        };
+      })
+      .filter((item) => item && item.price);
+  }
+
+  return sections;
+}
+
+const BLOCKED_ALTERATION_ENTRY_PATTERNS = [
+  /полусолн/i,
+  /клин/i,
+];
+
+function isApprovedAlterationEntry(entry) {
+  const normalizedName = normalizeRuText(entry?.name || '');
+  return !BLOCKED_ALTERATION_ENTRY_PATTERNS.some((pattern) => pattern.test(normalizedName));
+}
+
+function buildApprovedAlterationCatalog(sections) {
+  const approved = {};
+  for (const [category, entries] of Object.entries(sections)) {
+    approved[category] = entries.filter(isApprovedAlterationEntry);
+  }
+  return approved;
+}
+
+function formatAlterationCatalogForPrompt(sections) {
+  return Object.entries(sections)
+    .map(([category, entries]) => [
+      `--- ${category} ---`,
+      ...entries.map((entry) => `${entry.name} — ${entry.from ? 'от ' : ''}${formatRub(entry.price)} ₽`),
+    ].join('\n'))
+    .join('\n\n');
+}
+
+const RAW_ALTERATION_SECTIONS = parseAlterationPriceData(ALTERATION_PRICE_DATA);
+const APPROVED_ALTERATION_CATALOG = buildApprovedAlterationCatalog(RAW_ALTERATION_SECTIONS);
+const ALTERATION_SECTIONS = APPROVED_ALTERATION_CATALOG;
+const ALTERATION_APPROVED_PRICE_DATA = formatAlterationCatalogForPrompt(APPROVED_ALTERATION_CATALOG);
+const ALTERATION_LINING_CATEGORIES = new Set(['Пиджак', 'Брюки', 'Юбка', 'Платье']);
+
+function findAlterationEntry(category, matcher) {
+  const entries = ALTERATION_SECTIONS[category] || [];
+  if (typeof matcher === 'string') {
+    const normalizedNeedle = normalizeRuText(matcher);
+    return entries.find((entry) => normalizeRuText(entry.name).includes(normalizedNeedle)) || null;
+  }
+  return entries.find((entry) => matcher(normalizeRuText(entry.name), entry)) || null;
+}
+
+function dedupeAlterationEntries(entries) {
+  const seen = new Set();
+  return entries.filter((entry) => {
+    if (!entry) return false;
+    const key = `${entry.category}|${entry.name}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+function hasTailoringIntent(userText = '') {
+  const text = normalizeRuText(userText);
+  return /(^|\s)(пошив|сшить|пошить|шить|сшиваем|шьем|шьём)(\s|$)|с нуля|на заказ|индивидуальн/.test(text)
+    && !/перешить|подшить|ушить|расшить/.test(text);
+}
+
+function hasAlterationIntent(userText = '', assistantText = '', assistantContext = null) {
+  const text = normalizeRuText(userText);
+  const assistant = normalizeRuText(assistantText);
+  const route = normalizeAssistantRoute(assistantContext?.route || '');
+
+  if (route.includes('/services/alterations')) return true;
+  if (/стоимость корректировки|корректировк[аи]\s+по прайсу|прайс[а-я\s]+корректиров/.test(assistant)) return true;
+  if (hasTailoringIntent(text) && !/коррект|укорот|подшить|ушить|расшить|замен|ремонт|подгон|перешить/.test(text)) return false;
+
+  return /корректиров|скоррект|подгон|подогнать|укорот|подшить|ушить|расшить|сузить|расширить|уменьшить|увеличить|перешить|заменить|поменять|ремонт|штопк|молни|пуговиц|кнопк|петл|подкладк|шлиц|манжет|сохранени[ея]\s+(?:шва|вара)|фабричн[а-я\s]+шв|готов[а-я\s]+издел/.test(text);
+}
+
+const ALTERATION_GARMENT_CATEGORY_RULES = [
+  { category: 'Джинсы', pattern: /джинс|деним/ },
+  { category: 'Пуховики', pattern: /пуховик|пуховк|пухов|стеган[а-я]*\s+куртк|стеган[а-я]*\s+жилет/ },
+  { category: 'Пиджак', pattern: /пиджак|жакет|блейзер/ },
+  { category: 'Брюки', pattern: /брюк|брюч|штан|чинос/ },
+  { category: 'Сорочка / Блузка', pattern: /сорочк|рубашк|блуз/ },
+  { category: 'Юбка', pattern: /юбк/ },
+  { category: 'Платье', pattern: /плать/ },
+  { category: 'Трикотаж', pattern: /трикотаж|футболк|лонгслив|свитер|джемпер|кофт|худи|свитшот|поло/ },
+  { category: 'Галантерея', pattern: /ремен|ремня|ремне|отверсти[ея]/ },
+];
+
+function getAlterationCategoryPattern(category) {
+  return ALTERATION_GARMENT_CATEGORY_RULES.find((rule) => rule.category === category)?.pattern || null;
+}
+
+function getAlterationCategoryMentions(userText = '', assistantText = '') {
+  const text = normalizeRuText(`${userText} ${assistantText}`);
+  return Array.from(new Set(
+    ALTERATION_GARMENT_CATEGORY_RULES
+      .filter((rule) => rule.pattern.test(text))
+      .map((rule) => rule.category)
+  ));
+}
+
+function detectAlterationCategory(userText = '', assistantText = '', photoCategory = '') {
+  if (photoCategory && ALTERATION_SECTIONS[photoCategory]) return photoCategory;
+
+  const text = normalizeRuText(`${userText} ${assistantText}`);
+  const unique = getAlterationCategoryMentions(userText, assistantText);
+
+  if (unique.length === 1) return unique[0];
+  if (unique.length > 1) return { ambiguous: unique };
+  if (/пуговиц|кнопк|молни|карман|глазков|ветрозащитн|клапан|петл/.test(text)) return 'Дополнительно';
+  return null;
+}
+
+function resolveAlterationCategorySelection(ambiguousCategories = [], latestUserText = '', options = {}) {
+  const text = normalizeRuText(latestUserText);
+  if (!Array.isArray(ambiguousCategories) || ambiguousCategories.length === 0 || !text) return null;
+  const allowExclusion = options.allowExclusion !== false;
+
+  const mentioned = getAlterationCategoryMentions(text, '')
+    .filter((category) => ambiguousCategories.includes(category));
+  const isExclusion = /без|убер|убира|исключ|отмен|не\s+над|не\s+нуж/.test(text)
+    && !/остав|оставим|оставля|берем|берём|выбира|счита|посчита|нужен|нужно/.test(text);
+
+  if (mentioned.length === 1) {
+    if (allowExclusion && isExclusion && ambiguousCategories.length === 2) {
+      return ambiguousCategories.find((category) => category !== mentioned[0]) || null;
+    }
+    return mentioned[0];
+  }
+
+  if (/перв/.test(text)) return ambiguousCategories[0] || null;
+  if (/втор/.test(text)) return ambiguousCategories[1] || null;
+  if (/трет|треть/.test(text)) return ambiguousCategories[2] || null;
+  return null;
+}
+
+function extractAlterationWorkTextForCategory(category, allUserTexts = '', latestUserText = '', userTextParts = []) {
+  const normalizedParts = (Array.isArray(userTextParts) && userTextParts.length > 0 ? userTextParts : [allUserTexts])
+    .map((part) => normalizeRuText(part))
+    .filter(Boolean);
+  const normalized = normalizedParts.join(' ');
+  const categoryPattern = getAlterationCategoryPattern(category);
+  if (!categoryPattern) return allUserTexts;
+
+  const mentionedCategories = getAlterationCategoryMentions(normalized, '');
+  if (mentionedCategories.length <= 1) return allUserTexts;
+
+  const fragments = normalizedParts
+    .flatMap((part) => part.split(/(?:[.!?;,\n]+|\s+(?:и|а)\s+)/))
+    .map((fragment) => fragment.trim())
+    .filter(Boolean);
+  const categoryFragments = fragments.filter((fragment) => categoryPattern.test(fragment));
+
+  if (categoryFragments.length === 0) return allUserTexts;
+  return normalizeRuText(`${categoryFragments.join(' ')} ${latestUserText}`);
+}
+
+function getAlterationLiningState(text = '') {
+  const normalized = normalizeRuText(text);
+  if (/без\s+подкладк|подкладк[а-я\s]*(?:нет|не\s+нужн)|не\s+на\s+подкладк/.test(normalized)) return 'no';
+  if (/с\s+подкладк|на\s+подкладк|есть\s+подкладк|подкладк[а-я\s]*(?:есть|нужн)/.test(normalized)) return 'yes';
+  return 'unknown';
+}
+
+function getAlterationLiningStateFromContext(workText = '', latestUserText = '', latestAssistantText = '') {
+  const directState = getAlterationLiningState(workText);
+  if (directState !== 'unknown') return directState;
+
+  const assistant = normalizeRuText(latestAssistantText);
+  const latest = normalizeRuText(latestUserText);
+  if (!/подкладк/.test(assistant) || !latest) return 'unknown';
+
+  if (/^(да|с|на|есть|нужн)/.test(latest) || /\bда\b/.test(latest)) return 'yes';
+  if (/^(нет|без|не\s+нужн|не\s+надо)/.test(latest) || /\bнет\b/.test(latest)) return 'no';
+  return 'unknown';
+}
+
+function isAlterationLiningApplicable(entry) {
+  if (!entry || !ALTERATION_LINING_CATEGORIES.has(entry.category)) return false;
+  return !/подкладк/.test(normalizeRuText(entry.name));
+}
+
+function getAlterationKnownWorkSignal(text = '') {
+  const normalized = normalizeRuText(text);
+  return /укорот|длин|подшить|ушить|расшить|сузить|расширить|замен|помен|перенос|штоп|молни|пуговиц|кнопк|петл|карман|баланс|пройм|плеч|ростк|тал|пояс|бретел|манжет|шлиц|дыр|отверст|окантов|стяж|сидень|кокетк|вытачк|рельеф|планк|оверлок|распошив|футболк/.test(normalized);
+}
+
+function addAlterationMatch(matches, category, matcher) {
+  const entry = findAlterationEntry(category, matcher);
+  if (entry) matches.push(entry);
+  return entry;
+}
+
+function matchPantsAlterations(text, matches, questions) {
+  if (/(тал|пояс|средн)/.test(text) && /(уш|расш|суз|расшир|уменьш|увелич|измен)/.test(text)) {
+    addAlterationMatch(matches, 'Брюки', 'Ушить / расшить средний шов пояса');
+  }
+  if (/бок/.test(text) && /(уш|расш|суз|расшир)/.test(text)) {
+    if (/без\s+(?:затраг|пояс)|не\s+трог/.test(text)) addAlterationMatch(matches, 'Брюки', 'Ушить / расшить по боковым без затрагивания пояса');
+    else if (/с\s+(?:затраг|пояс)|затрагиванием\s+пояса/.test(text)) addAlterationMatch(matches, 'Брюки', 'Ушить / расшить по боковым с затрагиванием пояса');
+    else questions.push('Скажите, нужно затрагивать пояс или не трогать его?');
+  }
+  if (/шагов/.test(text) && /(уш|расш|суз|расшир)/.test(text)) addAlterationMatch(matches, 'Брюки', 'Ушить / расшить по шаговым');
+  if (/баланс|переднезад/.test(text)) addAlterationMatch(matches, 'Брюки', 'Коррекция переднезаднего баланса');
+  if (/(длин|укорот|подшить)/.test(text)) {
+    if (/манжет/.test(text) && /без\s+тесьм/.test(text)) addAlterationMatch(matches, 'Брюки', 'Изменение длины с манжетой без тесьмы');
+    else if (/манжет/.test(text)) addAlterationMatch(matches, 'Брюки', 'Изменение длины с манжетой (с тесьмой)');
+    else if (/чинос|строч/.test(text)) addAlterationMatch(matches, 'Брюки', 'Изменение длины под строчку (чиносы)');
+    else if (/тесьм/.test(text)) addAlterationMatch(matches, 'Брюки', 'Изменение длины с тесьмой');
+    else questions.push('Скажите, обработка низа брюк с тесьмой, под строчку или с манжетой?');
+  }
+  if (/мешковин|карман/.test(text)) addAlterationMatch(matches, 'Брюки', 'Восстановить мешковину кармана');
+  if (/задн[а-я\s]+полов|перекрой/.test(text)) addAlterationMatch(matches, 'Брюки', 'Перекрой задней половинки');
+  if (/окантов/.test(text)) addAlterationMatch(matches, 'Брюки', 'Перенос окантовки');
+  if (/сидень/.test(text)) addAlterationMatch(matches, 'Брюки', 'Углубить шов сиденья');
+}
+
+function matchAlterationWorks(category, userText = '', photoWorkNames = []) {
+  const text = normalizeRuText(userText);
+  const matches = [];
+  const questions = [];
+  const unavailable = [];
+
+  for (const workName of photoWorkNames || []) {
+    const exact = findAlterationEntry(category, (_name, entry) => normalizeRuText(entry.name) === normalizeRuText(workName));
+    if (exact) matches.push(exact);
+  }
+
+  if (category === 'Пиджак') {
+    if (/подкладк/.test(text) && /(замен|помен|нов|изготов)/.test(text)) {
+      if (/полн|целик|вся|карман/.test(text)) addAlterationMatch(matches, category, 'Замена подкладки полная');
+      else if (/частич/.test(text)) addAlterationMatch(matches, category, 'Замена подкладки частичная');
+      else questions.push('Скажите, нужна частичная или полная замена подкладки?');
+    }
+    if (/ручн|стяж/.test(text)) addAlterationMatch(matches, category, 'Восстановление ручного стяжка');
+    if (/рукав/.test(text) && /(укорот|длин|измен)/.test(text)) {
+      if (/окат/.test(text)) {
+        if (/плечев|наклад/.test(text)) addAlterationMatch(matches, category, 'Длина рукава через окат с плечевыми накладками');
+        else if (/облег/.test(text)) addAlterationMatch(matches, category, 'Длина рукава через окат, облегчённый вариант');
+        else questions.push('Скажите, рукав через окат с плечевыми накладками или облегченный вариант?');
+      } else if (/шлиц/.test(text)) {
+        if (/без\s+перенос/.test(text)) addAlterationMatch(matches, category, 'Длина рукава через низ без переноса петель со шлицей');
+        else if (/перенос|петел|петель/.test(text)) addAlterationMatch(matches, category, 'Длина рукава через шлицу, с переносом петель');
+        else questions.push('Скажите, нужен перенос петель или без переноса?');
+      } else {
+        questions.push('Скажите, рукав пиджака укорачиваем через шлицу, через низ без переноса петель или через окат?');
+      }
+    }
+    if (/пройм|длин[а-я\s]+плеч/.test(text)) addAlterationMatch(matches, category, 'Корректировка проймы, длина плеча');
+    if (/ростк/.test(text)) {
+      if (/с\s+плечев|плечев/.test(text)) addAlterationMatch(matches, category, 'Корректировка линии ростка с плечевыми');
+      else if (/без\s+плечев/.test(text)) addAlterationMatch(matches, category, 'Корректировка линии ростка без плечевых');
+      else questions.push('Скажите, пиджак с плечевыми накладками или без?');
+    }
+    if (/средн/.test(text) && /(уш|расстав|расш)/.test(text)) {
+      if (/со\s+шлиц|с\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Ушить / расставить по среднему шву со шлицей');
+      else if (/без\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Ушить / расставить по среднему шву без шлицы');
+      else questions.push('Скажите, по среднему шву пиджака есть шлица или без шлицы?');
+    }
+    if (/рельеф/.test(text) && /(уш|расстав|расш)/.test(text)) {
+      if (/со\s+шлиц|с\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Ушить / расставить по рельефам со шлицей');
+      else if (/без\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Ушить / расставить по рельефам без шлиц');
+      else questions.push('Скажите, по рельефам пиджака есть шлица или без шлиц?');
+    }
+    if (/(длин|укорот|подшить|низ)/.test(text) && !/рукав/.test(text)) {
+      if (/2\s+шлиц|дв[ае]\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Изменение длины изделия с 2 шлицами');
+      else if (/без\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Изменение длины изделия');
+      else if (/шлиц/.test(text)) addAlterationMatch(matches, category, 'Изменение длины изделия с одной шлицей');
+      else addAlterationMatch(matches, category, 'Изменение длины изделия');
+    }
+    if (/(уш|суз).{0,20}рукав/.test(text)) {
+      if (/локт/.test(text)) addAlterationMatch(matches, category, 'Ушить рукава по локтевому до шлицы');
+      else addAlterationMatch(matches, category, 'Ушить рукава по переднему шву с корректировкой низа');
+    }
+  }
+
+  if (category === 'Брюки') matchPantsAlterations(text, matches, questions);
+
+  if (category === 'Джинсы') {
+    if (/(длин|укорот|подшить)/.test(text)) {
+      if (/сохран|фабрич|родн|вар|шов/.test(text)) addAlterationMatch(matches, category, 'Изменение длины с сохранением вара');
+      else if (/без\s+сохран|обыч/.test(text)) addAlterationMatch(matches, category, 'Изменение длины без сохранения вара');
+      else questions.push('Скажите, джинсы подшиваем с сохранением фабричного низа или без сохранения?');
+    }
+    if (/(тал|пояс|кокет)/.test(text) && /(уш|измен|суз|уменьш|увелич)/.test(text)) addAlterationMatch(matches, category, 'Изменить объём талии');
+    if (/(бок|шагов)/.test(text) && /(уш|суз|расш)/.test(text)) {
+      if (/отделочн|строч/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым или шаговым с отделочной строчкой');
+      else addAlterationMatch(matches, category, 'Ушить по боковым или шаговым без отделочной строчки');
+    }
+    if (/штоп/.test(text)) {
+      if (/карман/.test(text)) addAlterationMatch(matches, category, 'Штопка под карманами');
+      else addAlterationMatch(matches, category, 'Штопка (1 кв. см)');
+    }
+    if (/молни/.test(text)) addAlterationMatch(matches, category, 'Замена молнии с вмешательством в пояс');
+    if (/баланс|шлев/.test(text)) addAlterationMatch(matches, category, 'Изменение баланса');
+    if (/мешковин|карман/.test(text) && !/штоп/.test(text)) addAlterationMatch(matches, category, 'Замена мешковины кармана');
+  }
+
+  if (category === 'Сорочка / Блузка') {
+    if (/рукав/.test(text) && /(длин|укорот|измен)/.test(text)) {
+      if (/без\s+перенос|без\s+планк/.test(text)) addAlterationMatch(matches, category, 'Изменение длины рукава без переноса планки');
+      else if (/перенос|планк/.test(text)) addAlterationMatch(matches, category, 'Изменение длины рукава с переносом планки');
+      else questions.push('Скажите, рукав укорачиваем с переносом планки или без переноса?');
+    }
+    if (/(длин|укорот|подшить)/.test(text) && !/рукав/.test(text)) {
+      if (/угол|боков/.test(text)) addAlterationMatch(matches, category, 'Изменение длины изделия с восст. уголков по боковым');
+      else addAlterationMatch(matches, category, 'Изменение длины изделия');
+    }
+    if (/вытач/.test(text)) addAlterationMatch(matches, category, 'Ушить по вытачкам');
+    if (/бок/.test(text) && /(уш|суз)/.test(text)) {
+      if (/запаков/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым (запаковочный шов)');
+      else if (/оверлок/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым под оверлок');
+      else questions.push('Скажите, по боковым нужен запаковочный шов или обработка под оверлок?');
+    }
+    if (/рукав/.test(text) && /(уш|суз)/.test(text)) {
+      if (/запаков|манжет/.test(text)) addAlterationMatch(matches, category, 'Ушить рукава (запаковочный шов) до манжеты');
+      else if (/оверлок/.test(text)) addAlterationMatch(matches, category, 'Ушить рукава под оверлок');
+      else questions.push('Скажите, рукава ушиваем запаковочным швом до манжеты или под оверлок?');
+    }
+    if (/пройм/.test(text)) {
+      if (/запаков/.test(text)) addAlterationMatch(matches, category, 'Корректировка проймы (запаковочный шов)');
+      else if (/оверлок/.test(text)) addAlterationMatch(matches, category, 'Корректировка проймы под оверлок');
+      else questions.push('Скажите, пройму корректируем запаковочным швом или под оверлок?');
+    }
+    if (/баланс|кокет/.test(text)) addAlterationMatch(matches, category, 'Корректировка баланса');
+  }
+
+  if (category === 'Юбка') {
+    if (/(длин|укорот|подшить)/.test(text)) {
+      if (/полусолн|клин/.test(text)) unavailable.push('Стоимость этой работы нужно уточнить после осмотра.');
+      else if (/без\s+шлиц/.test(text)) addAlterationMatch(matches, category, 'Изменение длины прямого силуэта без шлицы');
+      else if (/со\s+шлиц|с\s+шлиц|шлиц/.test(text)) addAlterationMatch(matches, category, 'Изменение длины прямого силуэта со шлицей');
+      else questions.push('Скажите, юбка со шлицей или без?');
+    }
+    if (/бок/.test(text) && /(уш|суз)/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым');
+    if (/средн|молни/.test(text) && /(уш|суз|перенос)/.test(text)) addAlterationMatch(matches, category, 'Ушить по среднему с переносом молнии');
+    if (/баланс/.test(text)) addAlterationMatch(matches, category, 'Корректировка баланса');
+    if (/американ/.test(text)) addAlterationMatch(matches, category, 'Шов «американка»');
+    if (/ролев/.test(text)) addAlterationMatch(matches, category, 'Ролевый шов');
+  }
+
+  if (category === 'Платье') {
+    if (/бретел/.test(text) && /(длин|укорот|измен)/.test(text)) addAlterationMatch(matches, category, 'Изменение длины бретелей');
+    if (/баланс|плечев/.test(text)) addAlterationMatch(matches, category, 'Изменение баланса с перекроем плечевого пояса');
+    if (/пройм/.test(text)) addAlterationMatch(matches, category, 'Коррекция пройм');
+    if (/тал/.test(text) && /молни|перенос|коррект/.test(text)) addAlterationMatch(matches, category, 'Корректировка линии талии с переносом молнии');
+    if (/(бок|рельеф)/.test(text) && /(уш|суз)/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым или рельефам');
+    if (/вытач/.test(text)) addAlterationMatch(matches, category, 'Ушить по вытачкам');
+    if (/молни/.test(text)) addAlterationMatch(matches, category, 'Перенос / замена молнии');
+    if (/рукав/.test(text) && /(уш|суз)/.test(text)) {
+      if (/низ|длин|укорот/.test(text)) addAlterationMatch(matches, category, 'Ушить рукава с корректировкой низа');
+      else addAlterationMatch(matches, category, 'Ушить длинные рукава без корректировки низа');
+    }
+    if (/подкладк/.test(text)) {
+      if (/изготов|нов/.test(text)) addAlterationMatch(matches, category, 'Изготовить подкладку');
+      else if (/длин|укорот|подшить/.test(text)) addAlterationMatch(matches, category, 'Изменение длины подкладки');
+    }
+    if (/(длин|укорот|подшить)/.test(text) && !/(бретел|подкладк|рукав)/.test(text)) {
+      unavailable.push('Стоимость изменения длины платья нужно уточнить после осмотра.');
+    }
+  }
+
+  if (category === 'Пуховики') {
+    if (/рукав/.test(text) && /окат/.test(text)) addAlterationMatch(matches, category, 'Укоротить рукава через окат');
+    else if (/рукав/.test(text) && /(укорот|длин|подшить)/.test(text)) addAlterationMatch(matches, category, 'Укоротить рукава по низу');
+    if (/(длин|укорот|подшить|низ)/.test(text) && !/рукав/.test(text)) addAlterationMatch(matches, category, 'Укоротить длину');
+    if (/(бок|рельеф)/.test(text) && /(уш|суз)/.test(text)) addAlterationMatch(matches, category, 'Ушить по боковым или рельефам');
+    if (/средн/.test(text) && /(уш|суз)/.test(text)) addAlterationMatch(matches, category, 'Ушить по среднему шву');
+  }
+
+  if (category === 'Трикотаж') {
+    if (/футболк/.test(text) && /(рукав|длин[а-я\s]+рукав)/.test(text)) addAlterationMatch(matches, category, 'Укоротить рукава на футболке');
+    if (/футболк/.test(text) && /(укорот|длин|подшить)/.test(text)) {
+      if (/разрез/.test(text)) addAlterationMatch(matches, category, 'Укоротить футболку с разрезами по бокам');
+      else addAlterationMatch(matches, category, 'Укоротить футболку на распошиве');
+    }
+    if (/7\s*[–-]\s*10|7\s*10/.test(text)) addAlterationMatch(matches, category, 'Укоротить низ трикотаж 7–10 класс');
+    if (/10\s*[–-]\s*14|10\s*14/.test(text)) addAlterationMatch(matches, category, 'Укоротить низ трикотаж 10–14 класс');
+    if (/петля\s+в\s+петлю/.test(text) && !/7|10|14/.test(text)) questions.push('Скажите, класс вязки 7–10 или 10–14?');
+  }
+
+  if (category === 'Галантерея') {
+    if (/отверсти|дыр|пробив/.test(text)) addAlterationMatch(matches, category, 'Пробивка отверстия в ремне');
+    if (/укорот|укорачив|винтов/.test(text)) addAlterationMatch(matches, category, 'Укорачивание ремня с винтовым отверстием');
+  }
+
+  if (category === 'Дополнительно') {
+    if (/глазков|петл/.test(text) && /изготов/.test(text)) addAlterationMatch(matches, category, 'Изготовление глазковой петли');
+    if (/пуговиц/.test(text)) addAlterationMatch(matches, category, 'Пришить пуговицу');
+    if (/кнопк/.test(text)) addAlterationMatch(matches, category, 'Поставить кнопку');
+    if (/карман/.test(text)) addAlterationMatch(matches, category, 'Ремонт кармана');
+    if (/молни/.test(text)) {
+      if (/кант/.test(text) && /ветрозащит/.test(text)) addAlterationMatch(matches, category, 'Замена молнии с кантами на ветрозащитном клапане');
+      else if (/без\s+ветрозащит/.test(text)) addAlterationMatch(matches, category, 'Замена молнии без ветрозащитного клапана');
+      else if (/ветрозащит/.test(text)) addAlterationMatch(matches, category, 'Замена молнии на ветрозащитном клапане');
+      else questions.push('Скажите, молния с ветрозащитным клапаном, с кантами на клапане или без клапана?');
+    }
+  }
+
+  if (category !== 'Дополнительно' && /пуговиц|кнопк|глазков|ветрозащит|клапан/.test(text)) {
+    const extra = matchAlterationWorks('Дополнительно', userText);
+    matches.push(...extra.matches);
+    questions.push(...extra.questions);
+  }
+
+  return {
+    matches: dedupeAlterationEntries(matches),
+    questions: Array.from(new Set(questions)),
+    unavailable: Array.from(new Set(unavailable)),
+  };
+}
+
+const ALTERATION_FINAL_MULTIPLIER = 1.1;
+
+const ALTERATION_CATEGORY_NOMINATIVE = {
+  'Пиджак': 'пиджак',
+  'Брюки': 'брюки',
+  'Джинсы': 'джинсы',
+  'Сорочка / Блузка': 'сорочка или блузка',
+  'Юбка': 'юбка',
+  'Платье': 'платье',
+  'Пуховики': 'пуховик',
+  'Трикотаж': 'трикотажное изделие',
+  'Галантерея': 'изделие',
+  'Дополнительно': 'изделие',
+};
+
+const ALTERATION_CATEGORY_GENITIVE = {
+  'Пиджак': 'пиджака',
+  'Брюки': 'брюк',
+  'Джинсы': 'джинсов',
+  'Сорочка / Блузка': 'сорочки или блузки',
+  'Юбка': 'юбки',
+  'Платье': 'платья',
+  'Пуховики': 'пуховика',
+  'Трикотаж': 'трикотажного изделия',
+  'Галантерея': 'изделия',
+  'Дополнительно': 'изделия',
+};
+
+function formatRub(value) {
+  return new Intl.NumberFormat('ru-RU').format(value);
+}
+
+function roundUpToHundred(value) {
+  return Math.ceil(value / 100) * 100;
+}
+
+function calculateAlterationSubtotal(entries, liningState) {
+  return entries.reduce((sum, entry) => {
+    const liningAdd = liningState === 'yes' && isAlterationLiningApplicable(entry)
+      ? entry.price * 0.5
+      : 0;
+    return sum + entry.price + liningAdd;
+  }, 0);
+}
+
+function calculateAlterationTotal(entries, liningState) {
+  return roundUpToHundred(calculateAlterationSubtotal(entries, liningState) * ALTERATION_FINAL_MULTIPLIER);
+}
+
+function getAlterationLiningQuestion(category) {
+  const garment = ALTERATION_CATEGORY_NOMINATIVE[category] || 'изделие';
+  return `Скажите, ${garment} с подкладкой или без?`;
+}
+
+function getAlterationLiningPhrase(entry, liningState) {
+  if (!isAlterationLiningApplicable(entry)) return '';
+  if (liningState === 'yes') return ' с подкладкой';
+  if (liningState === 'no') return ' без подкладки';
+  return '';
+}
+
+function getAlterationClientWorkName(entry, liningState) {
+  const name = normalizeRuText(entry?.name || '');
+  const genitive = ALTERATION_CATEGORY_GENITIVE[entry?.category] || 'изделия';
+  const lining = getAlterationLiningPhrase(entry, liningState);
+
+  if (/длина рукава|изменение длины рукава|укоротить рукава/.test(name)) return `Укорачивание рукава ${genitive}${lining}`;
+  if (/изменение длины подкладки/.test(name)) return `Укорачивание подкладки ${genitive}`;
+  if (/изменение длины|укоротить длину|укоротить футболку|укоротить низ/.test(name)) return `Укорачивание ${genitive}${lining}`;
+  if (/ушить|расшить|расставить|изменить объем|изменить объём/.test(name)) return `Корректировка посадки ${genitive}${lining}`;
+  if (/замена подкладки|изготовить подкладку/.test(name)) return `Замена подкладки ${genitive}`;
+  if (/замена молнии|перенос \/ замена молнии/.test(name)) {
+    return entry.category === 'Дополнительно' ? 'Замена молнии' : `Замена молнии ${genitive}`;
+  }
+  if (/ремонт кармана|мешковин/.test(name)) return `Ремонт кармана ${genitive}`;
+  if (/штопка/.test(name)) return `Штопка ${genitive}`;
+  if (/пробивка отверстия/.test(name)) return 'Пробивка отверстия';
+  if (/укорачивание ремня/.test(name)) return 'Укорачивание ремня';
+  if (/пришить пуговицу/.test(name)) return 'Пришивание пуговицы';
+  if (/поставить кнопку/.test(name)) return 'Установка кнопки';
+  if (/изготовление глазковой петли/.test(name)) return 'Изготовление глазковой петли';
+  return `Корректировка ${genitive}${lining}`;
+}
+
+function renderAlterationQuote(category, entries, liningState, unavailable = []) {
+  const total = calculateAlterationTotal(entries, liningState);
+  const subject = entries.length === 1
+    ? getAlterationClientWorkName(entries[0], liningState)
+    : 'Выбранные работы';
+  const lines = [
+    `${subject} стоит от ${formatRub(total)} руб.`,
+    'Запишитесь на консультацию для точной оценки.',
+  ];
+  if (unavailable.length > 0) {
+    lines.push('По дополнительным работам стоимость нужно уточнить после осмотра изделия.');
+  }
+  return lines.join(' ');
+}
+
+function renderAlterationUnavailable() {
+  return 'По этой работе стоимость нужно уточнить после осмотра изделия. Запишитесь на консультацию для точной оценки.';
+}
+
+function renderAlterationWorkQuestion(category) {
+  const garment = ALTERATION_CATEGORY_GENITIVE[category] || 'изделия';
+  return `Скажите, какую корректировку нужно выполнить для ${garment}?`;
+}
+
+function shouldAskIntentBeforeTailoring(userText, assistantText, hasAnyImage, lockedAssistantContext) {
+  if (lockedAssistantContext || hasAnyImage) return false;
+  if (hasTailoringIntent(userText) || hasAlterationIntent(userText, assistantText)) return false;
+  const category = detectAlterationCategory(userText, '');
+  return typeof category === 'string' && category !== 'Дополнительно';
+}
+
+function buildAlterationPhotoPrompt() {
+  return `Ты — классификатор корректировок ателье. Работай только с утвержденным каталогом ниже.
+
+${ALTERATION_APPROVED_PRICE_DATA}
+
+Задача: по фото и тексту определить категорию изделия и возможные работы корректировки.
+Не придумывай работы и цены вне утвержденного каталога.
+Если важная деталь не видна или неясна (подкладка, шлица, манжета, перенос петель, фабричный шов, ветрозащитный клапан), верни вопрос в missing_questions.
+
+Ответ строго JSON:
+{
+  "category": "Пиджак|Брюки|Джинсы|Сорочка / Блузка|Юбка|Платье|Пуховики|Дополнительно|Трикотаж|Галантерея|null",
+  "work_names": ["точные названия работ из утвержденного каталога"],
+  "missing_questions": ["короткий вопрос клиенту"],
+  "analysis": "кратко что видно"
+}`;
+}
+
+async function runAlterationPhotoAnalysis(provider, model, currentSessionMessages) {
+  if (!provider || !model) return null;
+
+  const options = {
+    temperature: 0,
+    max_tokens: 700,
+  };
+  if (provider === 'openai') options.response_format = { type: 'json_object' };
+
+  const result = await callLLM(provider, model, [
+    { role: 'system', content: buildAlterationPhotoPrompt() },
+    ...currentSessionMessages,
+  ], options);
+
+  if (result.error || !result.content) return null;
+
+  try {
+    return JSON.parse(result.content);
+  } catch (err) {
+    console.error('[AlterationPhoto] Failed to parse JSON:', result.content);
+    return null;
+  }
+}
+
+async function handleAlterationFlow({
+  allUserTexts,
+  userTextParts,
+  latestUserText,
+  latestAssistantText,
+  allAssistantTexts,
+  assistantContext,
+  hasAnyImage,
+  currentSessionMessages,
+  provider,
+  model,
+}) {
+  if (!hasAlterationIntent(allUserTexts, allAssistantTexts, assistantContext)) return null;
+
+  let photoAnalysis = null;
+  if (hasAnyImage) {
+    photoAnalysis = await runAlterationPhotoAnalysis(provider, model, currentSessionMessages);
+  }
+
+  let categoryResult = detectAlterationCategory(
+    allUserTexts,
+    '',
+    photoAnalysis?.category || ''
+  );
+
+  if (categoryResult && typeof categoryResult === 'object' && categoryResult.ambiguous) {
+    const selectedCategory = resolveAlterationCategorySelection(categoryResult.ambiguous, latestUserText)
+      || resolveAlterationCategorySelection(categoryResult.ambiguous, latestAssistantText, { allowExclusion: false });
+    if (selectedCategory) {
+      categoryResult = selectedCategory;
+    } else {
+      const garmentList = categoryResult.ambiguous
+        .map((item) => ALTERATION_CATEGORY_NOMINATIVE[item] || item.toLowerCase())
+        .join(', ');
+      return {
+        reply: `Вы указали несколько изделий: ${garmentList}. Скажите, по какому изделию рассчитать корректировку?`,
+      };
+    }
+  }
+
+  const category = categoryResult;
+  if (!category) {
+    if (hasAnyImage && !photoAnalysis) {
+      return {
+        reply: 'Скажите, какое это изделие и какую корректировку нужно выполнить?',
+      };
+    }
+    return {
+      reply: 'Скажите, какое изделие нужно скорректировать?',
+    };
+  }
+
+  const photoWorkNames = Array.isArray(photoAnalysis?.work_names) ? photoAnalysis.work_names : [];
+  const workText = extractAlterationWorkTextForCategory(category, allUserTexts, latestUserText, userTextParts);
+  const matched = matchAlterationWorks(category, workText, photoWorkNames);
+  if (photoAnalysis?.missing_questions?.length && matched.matches.length === 0) {
+    return { reply: photoAnalysis.missing_questions[0] };
+  }
+
+  if (matched.questions.length > 0 && matched.matches.length === 0) {
+    return { reply: matched.questions[0] };
+  }
+
+  if (matched.matches.length === 0) {
+    if (getAlterationKnownWorkSignal(workText) || matched.unavailable.length > 0) {
+      return { reply: renderAlterationUnavailable(category, workText, matched.unavailable) };
+    }
+    return { reply: renderAlterationWorkQuestion(category) };
+  }
+
+  if (matched.questions.length > 0) {
+    return { reply: matched.questions[0] };
+  }
+
+  const liningState = getAlterationLiningStateFromContext(workText, latestUserText, latestAssistantText);
+  const needsLiningAnswer = matched.matches.some(isAlterationLiningApplicable);
+  if (needsLiningAnswer && liningState === 'unknown') {
+    return { reply: getAlterationLiningQuestion(category) };
+  }
+
+  return {
+    reply: renderAlterationQuote(category, matched.matches, liningState, matched.unavailable),
+  };
+}
 
 const SPEC_LOOKUP = {
   'топ': 'СПЕЦ_ТОП',
@@ -3446,7 +4270,7 @@ app.post('/api/chat', async (req, res) => {
   let lastCalcIndex = -1;
   for (let idx = messages.length - 1; idx >= 0; idx--) {
     if (messages[idx].role === 'assistant' && typeof messages[idx].content === 'string' &&
-        /ориентировочная стоимость|стоимость пошива/i.test(messages[idx].content)) {
+        /ориентировочная стоимость|стоимость пошива|стоимость корректировки|стоит от/i.test(messages[idx].content)) {
       lastCalcIndex = idx;
       break;
     }
@@ -3487,10 +4311,6 @@ app.post('/api/chat', async (req, res) => {
           ? 'groq'
           : null;
 
-  if (!provider) {
-    return res.status(500).json({ error: 'AI provider/API key not configured' });
-  }
-
   try {
     const lockedAssistantContext = resolveLockedAssistantContext(assistantContext);
 
@@ -3528,9 +4348,11 @@ app.post('/api/chat', async (req, res) => {
 
     // Проверяем наличие фото только в текущей сессии расчёта
     const hasAnyImage = messages.some((m, idx) => idx > lastCalcIndex && ((m.images && m.images.length > 0) || !!m.image));
-    const model = provider === 'openai'
-      ? (hasAnyImage ? OPENAI_MODEL_VISION : OPENAI_MODEL_TEXT)
-      : (hasAnyImage ? GROQ_MODEL_VISION : GROQ_MODEL_TEXT);
+    const model = provider
+      ? (provider === 'openai'
+        ? (hasAnyImage ? OPENAI_MODEL_VISION : OPENAI_MODEL_TEXT)
+        : (hasAnyImage ? GROQ_MODEL_VISION : GROQ_MODEL_TEXT))
+      : null;
 
     // === Сообщения только текущей сессии расчёта (после последнего завершённого) ===
     const currentSessionMessages = lastCalcIndex >= 0
@@ -3538,21 +4360,45 @@ app.post('/api/chat', async (req, res) => {
       : conversationMessages;
 
     // === УТИЛИТА: собрать тексты только текущей сессии ===
-    const allUserTexts = currentSessionMessages
+    const userTextParts = currentSessionMessages
       .filter(m => m.role === 'user')
-      .map(m => {
-        if (typeof m.content === 'string') return m.content.toLowerCase();
-        if (Array.isArray(m.content)) {
-          return m.content.filter(p => p.type === 'text').map(p => p.text.toLowerCase()).join(' ');
-        }
-        return '';
-      })
-      .join(' ');
+      .map(m => extractMessageText(m).toLowerCase());
+    const allUserTexts = userTextParts.join(' ');
 
     const allAssistantTexts = currentSessionMessages
       .filter(m => m.role === 'assistant')
-      .map(m => typeof m.content === 'string' ? m.content.toLowerCase() : '')
+      .map(m => extractMessageText(m).toLowerCase())
       .join(' ');
+
+    const latestUserMessage = [...currentSessionMessages].reverse().find(m => m.role === 'user');
+    const latestUserText = extractMessageText(latestUserMessage || {}).toLowerCase();
+    const latestAssistantMessage = [...currentSessionMessages].reverse().find(m => m.role === 'assistant');
+    const latestAssistantText = extractMessageText(latestAssistantMessage || {}).toLowerCase();
+
+    const alterationResult = await handleAlterationFlow({
+      allUserTexts,
+      userTextParts,
+      latestUserText,
+      latestAssistantText,
+      allAssistantTexts,
+      assistantContext,
+      hasAnyImage,
+      currentSessionMessages,
+      provider,
+      model,
+    });
+    if (alterationResult?.reply) {
+      console.log('[Alteration] Deterministic branch');
+      return res.json({ reply: alterationResult.reply });
+    }
+
+    if (shouldAskIntentBeforeTailoring(allUserTexts, allAssistantTexts, hasAnyImage, lockedAssistantContext)) {
+      return res.json({ reply: 'Скажите, вы хотите сшить новое изделие или скорректировать готовое?' });
+    }
+
+    if (!provider) {
+      return res.status(500).json({ error: 'AI provider/API key not configured' });
+    }
 
     // === ADDON-MODE: после расчёта клиент добавляет элементы ===
     if (lastCalcIndex >= 0 && !hasAnyImage) {

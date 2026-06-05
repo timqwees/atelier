@@ -34,6 +34,8 @@ deploy/
 | `OPENAI_MODEL_TEXT` | Текстовая модель OpenAI (по умолчанию `gpt-4o-mini`) | Нет |
 | `OPENAI_MODEL_VISION` | Мультимодальная модель OpenAI (по умолчанию `gpt-4o`) | Нет |
 | `BITRIX_WEBHOOK_URL` | Webhook URL Bitrix24 CRM для формы заявок | Да (для формы) |
+| `CRM_WEBHOOK_SECRET` | Secret для передачи заявок в Atelier CRM | Да (для Atelier CRM) |
+| `CRM_REQUEST_ENDPOINT` | Endpoint Atelier CRM для заявок с сайта (по умолчанию `https://crm.atelie1513.ru/api/index.php?action=site_request`) | Нет |
 | `PORT` | Порт сервера (Railway задаёт автоматически) | Нет |
 
 ### 3. Деплой

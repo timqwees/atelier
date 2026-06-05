@@ -42,6 +42,9 @@ const FINAL_SERVICE_PAGE_ROUTES = FINAL_SERVICE_PAGES.map((page) => page.route);
 app.set('trust proxy', true);
 
 const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL || '';
+const CRM_REQUEST_ENDPOINT =
+  process.env.CRM_REQUEST_ENDPOINT || 'https://crm.atelie1513.ru/api/index.php?action=site_request';
+const CRM_WEBHOOK_SECRET = process.env.CRM_WEBHOOK_SECRET || '';
 const GROQ_API_KEY = process.env.GROQ_API_KEY || '';
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 const AI_PROVIDER = (process.env.AI_PROVIDER || 'auto').toLowerCase();
@@ -4111,6 +4114,49 @@ async function bitrixRequest(method, params = {}, retries = 2) {
   return null;
 }
 
+async function sendCrmSiteRequest(payload, retries = 2) {
+  if (!CRM_WEBHOOK_SECRET) {
+    console.error('[CRM] CRM_WEBHOOK_SECRET not configured');
+    return null;
+  }
+
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    try {
+      const response = await fetch(CRM_REQUEST_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CRM-Webhook-Secret': CRM_WEBHOOK_SECRET,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const text = await response.text();
+      let data = null;
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        console.error('[CRM] invalid JSON', text.slice(0, 200));
+        throw new Error('Invalid JSON');
+      }
+
+      if (!response.ok || data?.error) {
+        console.error('[CRM] API error', response.status, data?.error || text.slice(0, 200));
+        return null;
+      }
+
+      return data;
+    } catch (err) {
+      console.error('[CRM] request failed', err.message);
+      if (attempt < retries) {
+        await new Promise((r) => setTimeout(r, 500 * (attempt + 1)));
+      }
+    }
+  }
+
+  return null;
+}
+
 async function getBookedSlotsFromBitrix(startDate, endDate) {
   const booked = [];
   let start = 0;
@@ -4178,7 +4224,7 @@ function generateConfirmationCode() {
 
 // --- API Routes ---
 app.post('/api/contact', async (req, res) => {
-  const { name, phone, email, message } = req.body;
+  const { name, phone, email, message, service } = req.body;
   if (!name || !phone) {
     return res.status(400).json({ error: 'Name and phone are required' });
   }
@@ -4201,6 +4247,20 @@ app.post('/api/contact', async (req, res) => {
     } else {
       console.error('[Contact Form] Bitrix24 error:', JSON.stringify(bitrixData));
     }
+
+    const crmData = await sendCrmSiteRequest({
+      name,
+      phone,
+      email,
+      contact: email || '',
+      service: service || 'Заявка с контактной формы',
+      message: message || '',
+      source: 'site_contact',
+    });
+    if (crmData?.request?.id) {
+      console.log(`[Contact Form] Request created in Atelier CRM, ID: ${crmData.request.id}`);
+    }
+
     return res.json({ success: true });
   } catch (err) {
     console.error('[Contact Form] Failed to create Bitrix24 lead:', err);
@@ -4899,6 +4959,19 @@ app.post('/api/bookings', async (req, res) => {
       detail: 'Не удалось создать бронирование в системе. Пожалуйста, попробуйте еще раз или свяжитесь с администратором.',
       error_type: 'system_error',
     });
+  }
+
+  const crmData = await sendCrmSiteRequest({
+    name,
+    phone,
+    email,
+    contact: email || '',
+    service: `Бронирование: ${formatLabel}`,
+    message: `Дата: ${date}\nВремя: ${time} — ${endDt.toFormat('HH:mm')}\nФормат: ${formatLabel}\nКод: ${confirmationCode}`,
+    source: 'site_booking',
+  });
+  if (crmData?.request?.id) {
+    console.log(`[Bookings] Request created in Atelier CRM, ID: ${crmData.request.id}`);
   }
 
   return res.json({

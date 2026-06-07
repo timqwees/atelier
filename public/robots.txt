@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /docs/
+Disallow: /final-pages/*/assets/
+
+Sitemap: https://atelier1513.ru/sitemap.xml

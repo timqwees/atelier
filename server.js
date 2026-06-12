@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { readFileSync, readdirSync } from 'fs';
+import { readFileSync, readdirSync, statSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomUUID } from 'crypto';
@@ -243,10 +243,12 @@ function loadStandardHtmlPages() {
   return STANDARD_HTML_PAGE_FILES.map((fileName) => {
     const index = join(PUBLIC_DIR, fileName);
     const html = readFileSync(index, 'utf8');
+    const stats = statSync(index);
 
     return {
       route: extractCanonicalRoute(html, 'public/' + fileName),
       index,
+      lastmod: stats.mtime,
     };
   });
 }
@@ -260,6 +262,7 @@ function loadFinalServicePages() {
       const folder = entry.name;
       const index = join(FINAL_PAGES_DIR, folder, 'index.html');
       const html = readFileSync(index, 'utf8');
+      const stats = statSync(index);
       const route = extractCanonicalRoute(html, 'public/final-pages/' + folder + '/index.html');
 
       if (routes.has(route)) {
@@ -268,7 +271,7 @@ function loadFinalServicePages() {
 
       routes.add(route);
 
-      return { route, index };
+      return { route, index, lastmod: stats.mtime };
     });
 }
 
@@ -692,26 +695,86 @@ function renderServiceNotFoundPage(req) {
 </html>`;
 }
 
+function getPagePriority(path) {
+  if (path === '/') return '1.0';
+  if (path === '/services') return '0.9';
+  if (path === '/pricing') return '0.9';
+  if (path === '/process') return '0.8';
+  if (path === '/about') return '0.8';
+  if (path === '/location') return '0.7';
+  if (path === '/contacts') return '0.7';
+  if (path === '/consultant') return '0.6';
+  if (path.startsWith('/services/')) return '0.8';
+  if (path.startsWith('/final-pages/')) return '0.7';
+  return '0.5';
+}
+
+function getPageChangefreq(path) {
+  if (path === '/') return 'daily';
+  if (path === '/services') return 'weekly';
+  if (path === '/pricing') return 'monthly';
+  if (path === '/process') return 'monthly';
+  if (path === '/about') return 'monthly';
+  if (path === '/location') return 'monthly';
+  if (path === '/contacts') return 'monthly';
+  if (path === '/consultant') return 'weekly';
+  if (path.startsWith('/services/')) return 'weekly';
+  if (path.startsWith('/final-pages/')) return 'monthly';
+  return 'monthly';
+}
+
 function renderSitemap(req) {
   const origin = getOrigin(req);
-  const pagesByPath = new Map(
-    STANDARD_HTML_PAGES.map(page => [page.route, page.route])
-      .concat(servicePages.map(page => [page.path, page.path]))
-      .concat(FINAL_SERVICE_PAGES.map(page => [page.route, page.route]))
-  );
+  
+  const pages = [
+    ...STANDARD_HTML_PAGES.map(page => ({
+      path: page.route,
+      lastmod: page.lastmod || new Date(),
+      type: 'standard'
+    })),
+    ...servicePages.map(page => ({
+      path: page.path,
+      lastmod: new Date(),
+      type: 'service'
+    })),
+    ...FINAL_SERVICE_PAGES.map(page => ({
+      path: page.route,
+      lastmod: page.lastmod || new Date(),
+      type: 'final'
+    }))
+  ];
 
-  const urls = Array.from(pagesByPath.values())
-    .map(path => `
+  const MAX_URLS = 50000;
+  if (pages.length > MAX_URLS) {
+    console.warn(`Sitemap exceeds maximum URL limit: ${pages.length} > ${MAX_URLS}`);
+  }
+
+  const urls = pages
+    .slice(0, MAX_URLS)
+    .map(page => {
+      const priority = getPagePriority(page.path);
+      const changefreq = getPageChangefreq(page.path);
+      const lastmod = page.lastmod instanceof Date ? page.lastmod.toISOString() : new Date(page.lastmod).toISOString();
+      
+      return `
       <url>
-        <loc>${origin}${path}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
+        <loc>${origin}${page.path}</loc>
+        <lastmod>${lastmod}</lastmod>
+        <changefreq>${changefreq}</changefreq>
+        <priority>${priority}</priority>
       </url>
-    `)
+    `;
+    })
     .join('\n');
 
-  return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
+  
+  const MAX_SIZE = 50 * 1024 * 1024; // 50MB
+  if (Buffer.byteLength(sitemap, 'utf8') > MAX_SIZE) {
+    console.warn(`Sitemap exceeds maximum size limit: ${Buffer.byteLength(sitemap, 'utf8')} bytes > ${MAX_SIZE} bytes`);
+  }
+
+  return sitemap;
 }
 
 function renderStaticHtmlPage(page) {
@@ -742,6 +805,165 @@ app.get('/robots.txt', (req, res) => {
 
 app.get('/sitemap.xml', (req, res) => {
   res.type('application/xml').send(renderSitemap(req));
+});
+
+function renderHtmlSitemap(req) {
+  const origin = getOrigin(req);
+  
+  const standardPages = STANDARD_HTML_PAGES.map(page => ({
+    path: page.route,
+    title: getPageTitle(page.route),
+    lastmod: page.lastmod || new Date()
+  }));
+  
+  const servicePagesList = servicePages.map(page => ({
+    path: page.path,
+    title: page.title,
+    lastmod: new Date()
+  }));
+  
+  const finalPages = FINAL_SERVICE_PAGES.map(page => ({
+    path: page.route,
+    title: getPageTitle(page.route),
+    lastmod: page.lastmod || new Date()
+  }));
+
+  return `<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Карта сайта - Atelier</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      line-height: 1.6;
+      background: #f5f5f5;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    .sitemap-section {
+      background: white;
+      padding: 25px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .sitemap-section h2 {
+      color: #555;
+      margin-top: 0;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 10px;
+    }
+    .sitemap-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .sitemap-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .sitemap-list li:last-child {
+      border-bottom: none;
+    }
+    .sitemap-list a {
+      color: #0066cc;
+      text-decoration: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sitemap-list a:hover {
+      color: #004499;
+      text-decoration: underline;
+    }
+    .lastmod {
+      color: #999;
+      font-size: 0.85em;
+    }
+  </style>
+</head>
+<body>
+  <h1>Карта сайта</h1>
+  
+  <div class="sitemap-section">
+    <h2>Основные страницы</h2>
+    <ul class="sitemap-list">
+      ${standardPages.map(page => `
+        <li>
+          <a href="${origin}${page.path}">
+            <span>${page.title}</span>
+            <span class="lastmod">${formatDate(page.lastmod)}</span>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
+  </div>
+  
+  <div class="sitemap-section">
+    <h2>Услуги</h2>
+    <ul class="sitemap-list">
+      ${servicePagesList.map(page => `
+        <li>
+          <a href="${origin}${page.path}">
+            <span>${page.title}</span>
+            <span class="lastmod">${formatDate(page.lastmod)}</span>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
+  </div>
+  
+  <div class="sitemap-section">
+    <h2>Финальные страницы услуг</h2>
+    <ul class="sitemap-list">
+      ${finalPages.map(page => `
+        <li>
+          <a href="${origin}${page.path}">
+            <span>${page.title}</span>
+            <span class="lastmod">${formatDate(page.lastmod)}</span>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
+  </div>
+  
+</body>
+</html>`;
+}
+
+function getPageTitle(path) {
+  const titles = {
+    '/': 'Главная',
+    '/services': 'Услуги',
+    '/pricing': 'Цены',
+    '/process': 'Процесс',
+    '/about': 'О нас',
+    '/location': 'Расположение',
+    '/contacts': 'Контакты',
+    '/consultant': 'Консультант'
+  };
+  return titles[path] || path;
+}
+
+function formatDate(date) {
+  const d = date instanceof Date ? date : new Date(date);
+  return d.toLocaleDateString('ru-RU', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+
+app.get('/sitemap.html', (req, res) => {
+  res.type('text/html').send(renderHtmlSitemap(req));
 });
 
 app.get(FINAL_SERVICE_PAGE_ROUTES, (req, res, next) => {

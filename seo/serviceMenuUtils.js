@@ -53,11 +53,13 @@ export function getServiceBreadcrumbs(path) {
 }
 
 export function getServicePagesForSitemap() {
-  return servicePages.map((page) => ({
-    path: page.path,
-    title: page.title,
-    type: page.type,
-  }));
+  return servicePages
+    .filter((page) => page.indexable === true)
+    .map((page) => ({
+      path: page.path,
+      title: page.title,
+      type: page.type,
+    }));
 }
 
 export function validateServiceMenu(root = serviceMenuData) {

@@ -473,9 +473,52 @@ function renderSectionIntro(eyebrow, title, lead = '') {
   `;
 }
 
+function getServicePageContext(page) {
+  const isAlteration = page.path.startsWith('/services/alterations');
+  const isTailoring = page.path.startsWith('/services/custom-tailoring');
+
+  if (isAlteration) {
+    return {
+      eyebrow: 'Корректировка изделий',
+      galleryTitle: 'Посадка и детали корректировки',
+      galleryLead: 'Показываем посадку, аккуратную обработку и детали, которые важны при работе с готовым изделием.',
+      whyTitle: 'Аккуратная работа с готовым изделием',
+      priceTitle: 'Корректировка',
+      processTitle: 'От примерки до готового изделия',
+      materialsTitle: 'Материалы и конструкция',
+      materialsLead: 'Способ корректировки зависит от ткани, подкладки, фурнитуры и конструкции изделия.',
+    };
+  }
+
+  if (isTailoring) {
+    return {
+      eyebrow: 'Индивидуальный пошив',
+      galleryTitle: 'Кейсы, посадка и детали пошива',
+      galleryLead: 'Показываем посадку, пропорции, материалы и детали, которые формируют характер изделия.',
+      whyTitle: 'Изделие под задачу, фигуру и материал',
+      priceTitle: 'Пошив',
+      processTitle: 'От идеи до готового изделия',
+      materialsTitle: 'Ткани и сезонность',
+      materialsLead: 'Материалы подбираются под событие, сезон, силуэт и желаемую пластику изделия.',
+    };
+  }
+
+  return {
+    eyebrow: 'Услуги ателье',
+    galleryTitle: 'Кейсы, посадка и детали',
+    galleryLead: 'Показываем подход к посадке, материалам и деталям изделия.',
+    whyTitle: 'Работа под задачу клиента',
+    priceTitle: 'Стоимость',
+    processTitle: 'Этапы работы',
+    materialsTitle: 'Материалы',
+    materialsLead: 'Материалы и способ работы подбираются под задачу, изделие и желаемый результат.',
+  };
+}
+
 function renderServiceContent(page, req) {
   const breadcrumbs = getServiceBreadcrumbs(page.path);
   const priceLabel = page.priceFrom ? `от ${formatPrice(page.priceFrom)} ₽` : 'индивидуально';
+  const context = getServicePageContext(page);
 
   return `
     ${renderStaticNav()}
@@ -488,7 +531,7 @@ function renderServiceContent(page, req) {
         </div>
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
           <div class="max-w-3xl">
-            <p class="service-hero__eyebrow inline-block text-xs tracking-[0.35em] uppercase text-white/70 border border-white/25 px-4 py-2 rounded-md mb-6">Индивидуальный пошив</p>
+            <p class="service-hero__eyebrow inline-block text-xs tracking-[0.35em] uppercase text-white/70 border border-white/25 px-4 py-2 rounded-md mb-6">${escapeHtml(context.eyebrow)}</p>
             <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white leading-tight mb-6">${escapeHtml(page.h1)}</h1>
             <p class="service-hero__lead text-base sm:text-lg text-white/75 max-w-2xl mb-6 leading-relaxed">${escapeHtml(page.introText)}</p>
             <p class="service-hero__usp">${escapeHtml(page.heroUsp)}</p>
@@ -504,14 +547,14 @@ function renderServiceContent(page, req) {
 
       <section class="py-24 sm:py-32 bg-background">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          ${renderSectionIntro('Галерея', 'Кейсы, посадка и детали пошива', 'Блок подготовлен под будущие фотографии изделий, крупные планы ткани и примеры посадки.')}
+          ${renderSectionIntro('Галерея', context.galleryTitle, context.galleryLead)}
           ${renderGallerySlider(page.galleryItems)}
         </div>
       </section>
 
       <section class="py-24 sm:py-32 bg-card">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          ${renderSectionIntro('Почему ателье', 'Платье под событие, фигуру и материал')}
+          ${renderSectionIntro('Почему ателье', context.whyTitle)}
           ${renderTextCards(page.whyItems)}
         </div>
       </section>
@@ -522,7 +565,7 @@ function renderServiceContent(page, req) {
             <div>
               <div class="max-w-3xl mb-14 service-price">
                 <p class="service-price__eyebrow text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"><strong>Стоимость</strong></p>
-                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">Пошив <strong>${escapeHtml(priceLabel)}</strong></h2>
+                <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">${escapeHtml(context.priceTitle)} <strong>${escapeHtml(priceLabel)}</strong></h2>
                 <p class="text-muted-foreground leading-relaxed">${escapeHtml(page.priceNote)}</p>
                 <div class="service-price__cta-row">
                   <a href="/contacts" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-11 px-8 py-3">${escapeHtml(page.ctaLabel)}</a>
@@ -539,7 +582,7 @@ function renderServiceContent(page, req) {
 
       <section class="py-24 sm:py-32 bg-card">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          ${renderSectionIntro('Процесс', 'От идеи до готового изделия')}
+          ${renderSectionIntro('Процесс', context.processTitle)}
           ${renderProcessList(page.processSteps)}
         </div>
       </section>
@@ -548,7 +591,7 @@ function renderServiceContent(page, req) {
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             <div>
-              ${renderSectionIntro('Материалы', 'Ткани и сезонность', 'Материалы подбираются под событие, сезон, силуэт и желаемую пластику изделия.')}
+              ${renderSectionIntro('Материалы', context.materialsTitle, context.materialsLead)}
             </div>
             <div class="rounded-md border border-border bg-card p-8">
               ${renderMaterialsList(page.materials)}
@@ -626,6 +669,7 @@ function renderServiceSchemas(page, req) {
 function renderServicePage(page, req) {
   const canonical = `${getOrigin(req)}${page.canonical || page.path}`;
   const content = renderServiceContent(page, req);
+  const robotsMeta = page.indexable === true ? '' : '    <meta name="robots" content="noindex,follow" />\n';
 
   return `<!DOCTYPE html>
 <html lang="ru">
@@ -635,7 +679,7 @@ function renderServicePage(page, req) {
     <title>${escapeHtml(page.seoTitle)}</title>
     <meta name="description" content="${escapeHtml(page.seoDescription)}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
-    <meta property="og:title" content="${escapeHtml(page.seoTitle)}" />
+${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}" />
     <meta property="og:description" content="${escapeHtml(page.seoDescription)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
@@ -732,11 +776,13 @@ function renderSitemap(req) {
       lastmod: page.lastmod || new Date(),
       type: 'standard'
     })),
-    ...servicePages.map(page => ({
-      path: page.path,
-      lastmod: new Date(),
-      type: 'service'
-    })),
+    ...servicePages
+      .filter(page => page.indexable === true)
+      .map(page => ({
+        path: page.path,
+        lastmod: new Date(),
+        type: 'service'
+      })),
     ...FINAL_SERVICE_PAGES.map(page => ({
       path: page.route,
       lastmod: page.lastmod || new Date(),
@@ -816,11 +862,13 @@ function renderHtmlSitemap(req) {
     lastmod: page.lastmod || new Date()
   }));
   
-  const servicePagesList = servicePages.map(page => ({
-    path: page.path,
-    title: page.title,
-    lastmod: new Date()
-  }));
+  const servicePagesList = servicePages
+    .filter(page => page.indexable === true)
+    .map(page => ({
+      path: page.path,
+      title: page.title,
+      lastmod: new Date()
+    }));
   
   const finalPages = FINAL_SERVICE_PAGES.map(page => ({
     path: page.route,
@@ -990,6 +1038,10 @@ app.get('/services/*', (req, res) => {
   if (!page) {
     res.status(404).send(renderServiceNotFoundPage(req));
     return;
+  }
+
+  if (page.indexable !== true) {
+    res.setHeader('X-Robots-Tag', 'noindex, follow');
   }
 
   res.send(renderServicePage(page, req));

@@ -1,5 +1,6 @@
 import { existsSync, readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
+import { servicePages } from '../seo/serviceMenuUtils.js';
 
 const root = process.cwd();
 const publicDir = join(root, 'public');
@@ -16,6 +17,17 @@ const standardPageFiles = [
 ];
 const routes = new Map();
 const errors = [];
+const draftTextPatterns = [
+  /SEO-заготовка/i,
+  /SEO-фундамент/i,
+  /SEO-страница/i,
+  /SEO-структура/i,
+  /будущих SEO/i,
+  /будет раскрыт/i,
+  /будущие фотографии/i,
+  /Блок подготовлен/i,
+  /прайс-листа/i,
+];
 
 function getAttr(tag, name) {
   const pattern = "\\b" + name + "=[\"']([^\"']*)[\"']";
@@ -68,6 +80,7 @@ function validateHtmlPage(filePath, source, options = {}) {
 
   const html = readFileSync(filePath, 'utf8');
   const htmlHead = head(html);
+  validateNoDraftText(html, source);
 
   if (!htmlHead) errors.push(`${source}: missing <head>`);
   if (!title(htmlHead)) errors.push(`${source}: missing <title>`);
@@ -80,6 +93,13 @@ function validateHtmlPage(filePath, source, options = {}) {
 
   if (options.finalPage && /(href|src|content)=["']\.\//.test(html)) {
     errors.push(`${source}: contains relative ./ asset paths`);
+  }
+}
+
+function validateNoDraftText(text, source) {
+  const matched = draftTextPatterns.find((pattern) => pattern.test(text));
+  if (matched) {
+    errors.push(`${source}: contains draft SEO text (${matched.source})`);
   }
 }
 
@@ -96,6 +116,27 @@ readdirSync(finalPagesDir, { withFileTypes: true })
       { finalPage: true }
     );
   });
+
+servicePages.forEach((page) => {
+  validateNoDraftText(
+    [
+      page.seoTitle,
+      page.seoDescription,
+      page.h1,
+      page.introText,
+      page.heroUsp,
+      page.priceNote,
+      ...(page.availableOptions || []),
+      ...(page.pricingFactors || []),
+      ...(page.processSteps || []),
+      ...(page.materials || []),
+      ...(page.galleryItems || []).flatMap((item) => [item.title, item.description]),
+      ...(page.whyItems || []).flatMap((item) => [item.title, item.description]),
+      ...(page.faq || []).flatMap((item) => [item.question, item.answer]),
+    ].filter(Boolean).join('\n'),
+    `serviceMenuData:${page.path}`
+  );
+});
 
 if (errors.length) {
   console.error(`HTML head validation failed: ${errors.length} error(s)`);

@@ -694,22 +694,21 @@ function renderServiceNotFoundPage(req) {
 
 function renderSitemap(req) {
   const origin = getOrigin(req);
-  const pagesByPath = new Map();
-
-  STANDARD_HTML_PAGES.forEach((page) => {
-    pagesByPath.set(page.route, page.route);
-  });
-
-  servicePages.forEach((page) => {
-    pagesByPath.set(page.path, page.path);
-  });
-
-  FINAL_SERVICE_PAGES.forEach((page) => {
-    pagesByPath.set(page.route, page.route);
-  });
+  const pagesByPath = new Map(
+    STANDARD_HTML_PAGES.map(page => [page.route, page.route])
+      .concat(servicePages.map(page => [page.path, page.path]))
+      .concat(FINAL_SERVICE_PAGES.map(page => [page.route, page.route]))
+  );
 
   const urls = Array.from(pagesByPath.values())
-    .map((path) => `  <url><loc>${origin}${path}</loc></url>`)
+    .map(path => `
+      <url>
+        <loc>${origin}${path}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+      </url>
+    `)
     .join('\n');
 
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<yml_catalog date="2026-06-08">
+    <shop>
+        <name>Ателье 15/13</name>
+        <company>Ателье 15/13</company>
+        <url>https://atelier1513.ru</url>
+        <currencies>
+            <currency id="RUR" rate="1"/>
+        </currencies>
+        <categories>
+            <category id="1">Индивидуальный пошив</category>
+            <category id="2" parentId="1">Женская одежда</category>
+            <category id="3" parentId="1">Мужская одежда</category>
+            <category id="4">Корректировка изделий</category>
+            <category id="5" parentId="4">Женская одежда</category>
+            <category id="6" parentId="4">Мужская одежда</category>
+        </categories>
+        <offers>
+            <!-- Женская одежда - Индивидуальный пошив -->
+            <offer id="1001" available="true">
+                <name>Вечернее платье на заказ</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>25000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив вечернего платья по вашим меркам. Премиальные ткани, точная посадка, примерки.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/evening-dresses</url>
+            </offer>
+            <offer id="1002" available="true">
+                <name>Платье по фото</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>22000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Пошив платья по фотографии или эскизу. Воспроизведение любого фасона с учетом вашей фигуры.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/dresses-from-photo</url>
+            </offer>
+            <offer id="1003" available="true">
+                <name>Юбка по косой</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>12000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Юбка по косой крой с идеальной посадкой. Различные длины и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/bias-cut-skirts</url>
+            </offer>
+            <offer id="1004" available="true">
+                <name>Макси-юбка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>10000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Длинная юбка макси с индивидуальным кроем. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/maxi-skirts</url>
+            </offer>
+            <offer id="1005" available="true">
+                <name>Мини-юбка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>8000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Короткая юбка мини по вашим меркам. Различные фасоны и материалы.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/mini-skirts</url>
+            </offer>
+            <offer id="1006" available="true">
+                <name>Прямая юбка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>9000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Классическая прямая юбка с идеальной посадкой. Различные ткани и длины.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/straight-skirts</url>
+            </offer>
+            <offer id="1007" available="true">
+                <name>Юбка по фото</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>11000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Пошив юбки по фотографии или эскизу. Воспроизведение любого фасона.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/skirts-from-photo</url>
+            </offer>
+            <offer id="1008" available="true">
+                <name>Платье-футляр</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>15000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Классическое платье-футляр с идеальной посадкой. Различные ткани и длины.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/sheath-dresses</url>
+            </offer>
+            <offer id="1009" available="true">
+                <name>Прямое платье</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>14000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Прямое платье с индивидуальным кроем. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/straight-dresses</url>
+            </offer>
+            <offer id="1010" available="true">
+                <name>Платье с отрезной талией</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>16000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Платье с отрезной талией и идеальной посадкой. Различные фасоны.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/cut-off-waist-dresses</url>
+            </offer>
+            <offer id="1011" available="true">
+                <name>Платье по бренду</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>18000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Пошив платья в стиле известного бренда. Качественные ткани и точное воспроизведение.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/brand-reference-dresses</url>
+            </offer>
+            <offer id="1012" available="true">
+                <name>Блузка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>7000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив блузки. Различные фасоны, ткани и отделка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/blouses</url>
+            </offer>
+            <offer id="1013" available="true">
+                <name>Женский бомбер</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>18000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Женский бомбер на заказ. Различные материалы и цвета.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/bombers</url>
+            </offer>
+            <offer id="1014" available="true">
+                <name>Женское пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>35000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив женского пальто. Премиальные ткани, точная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/coats</url>
+            </offer>
+            <offer id="1015" available="true">
+                <name>Женский пуховик</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>28000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Женский пуховик на заказ. Качественный наполнитель и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/down-jackets</url>
+            </offer>
+            <offer id="1016" available="true">
+                <name>Женский худи</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>9000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Женский худи на заказ. Комфортные ткани и идеальная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/hoodies</url>
+            </offer>
+            <offer id="1017" available="true">
+                <name>Женский жакет</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>20000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив женского жакета. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/jackets</url>
+            </offer>
+            <offer id="1018" available="true">
+                <name>Женский корсет</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>12000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Женский корсет на заказ. Качественные материалы и точная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/corsets</url>
+            </offer>
+            <offer id="1019" available="true">
+                <name>Женский полукорсет</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>8000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>2</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Женский полукорсет на заказ. Различные фасоны и материалы.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/women/half-corsets</url>
+            </offer>
+
+            <!-- Мужская одежда - Индивидуальный пошив -->
+            <offer id="2001" available="true">
+                <name>Мужской пиджак bespoke</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>35000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив мужского пиджака bespoke. Премиальные ткани, точная посадка, примерки.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/bespoke-jackets</url>
+            </offer>
+            <offer id="2002" available="true">
+                <name>Мужской бомбер</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>20000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужской бомбер на заказ. Различные материалы и цвета.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/bombers</url>
+            </offer>
+            <offer id="2003" available="true">
+                <name>Мужской casual жакет</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>18000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужской casual жакет на заказ. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/casual-jackets</url>
+            </offer>
+            <offer id="2004" available="true">
+                <name>Мужские классические брюки</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>12000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужские классические брюки на заказ. Идеальная посадка, качественные ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/classic-trousers</url>
+            </offer>
+            <offer id="2005" available="true">
+                <name>Мужское пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>40000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив мужского пальто. Премиальные ткани, точная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/coats</url>
+            </offer>
+            <offer id="2006" available="true">
+                <name>Мужской пуховик</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>30000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужской пуховик на заказ. Качественный наполнитель и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/down-jackets</url>
+            </offer>
+            <offer id="2007" available="true">
+                <name>Мужской худи</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>10000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужской худи на заказ. Комфортные ткани и идеальная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/hoodies</url>
+            </offer>
+            <offer id="2008" available="true">
+                <name>Мужской жакет</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>22000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив мужского жакета. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/jackets</url>
+            </offer>
+            <offer id="2009" available="true">
+                <name>Мужская парка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>25000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужская парка на заказ. Различные материалы и цвета.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/parkas</url>
+            </offer>
+            <offer id="2010" available="true">
+                <name>Мужское пальто с мехом</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>45000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужское пальто с меховой отделкой. Премиальные материалы.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/shearling-coats</url>
+            </offer>
+            <offer id="2011" available="true">
+                <name>Мужская рубашка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>8000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Индивидуальный пошив мужской рубашки. Различные фасоны и ткани.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/shirts</url>
+            </offer>
+            <offer id="2012" available="true">
+                <name>Мужской свитшот</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>9000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужской свитшот на заказ. Комфортные ткани и идеальная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/sweatshirts</url>
+            </offer>
+            <offer id="2013" available="true">
+                <name>Мужская футболка</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>5000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>3</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Мужская футболка на заказ. Качественные материалы и идеальная посадка.</description>
+                <url>https://atelier1513.ru/services/custom-tailoring/men/t-shirts</url>
+            </offer>
+
+            <!-- Корректировка женской одежды -->
+            <offer id="3001" available="true">
+                <name>Корректировка женских платьев</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>3000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских платьев: посадка по фигуре, изменение длины, подшив, ушивание.</description>
+                <url>https://atelier1513.ru/services/alterations/women/dresses</url>
+            </offer>
+            <offer id="3002" available="true">
+                <name>Корректировка вечерних платьев</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>5000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка вечерних платьев: сложная подгонка, работа с деликатными тканями.</description>
+                <url>https://atelier1513.ru/services/alterations/women/evening-dresses</url>
+            </offer>
+            <offer id="3003" available="true">
+                <name>Корректировка женских пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>6000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских пальто: посадка по фигуре, изменение длины, подшив, замена подкладки.</description>
+                <url>https://atelier1513.ru/services/alterations/women/coats</url>
+            </offer>
+            <offer id="3004" available="true">
+                <name>Корректировка женских меховых пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>8000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских меховых пальто: работа с мехом, сложная подгонка.</description>
+                <url>https://atelier1513.ru/services/alterations/women/fur-coats</url>
+            </offer>
+            <offer id="3005" available="true">
+                <name>Корректировка женских плащей</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>5500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских плащей: посадка по фигуре, изменение длины, подшив, перешивка.</description>
+                <url>https://atelier1513.ru/services/alterations/women/trench-coats</url>
+            </offer>
+            <offer id="3006" available="true">
+                <name>Корректировка женских джинсов</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских джинсов: укоротить, подшить, ушить в талии.</description>
+                <url>https://atelier1513.ru/services/alterations/women/jeans</url>
+            </offer>
+            <offer id="3007" available="true">
+                <name>Корректировка женских трикотажных изделий</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>3500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских трикотажных изделий: работа с эластичными тканями.</description>
+                <url>https://atelier1513.ru/services/alterations/women/knitwear</url>
+            </offer>
+            <offer id="3008" available="true">
+                <name>Корректировка женских футболок</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских футболок: укоротить, подшить, аккуратная подгонка.</description>
+                <url>https://atelier1513.ru/services/alterations/women/t-shirts</url>
+            </offer>
+            <offer id="3009" available="true">
+                <name>Корректировка женских брюк</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских брюк: укоротить, подшить, ушить, подшить в талии.</description>
+                <url>https://atelier1513.ru/services/alterations/women/trousers</url>
+            </offer>
+            <offer id="3010" available="true">
+                <name>Корректировка женских меховых изделий</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>7000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>5</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка женских меховых изделий: работа с мехом, сложная подгонка.</description>
+                <url>https://atelier1513.ru/services/alterations/women/shearling-coats</url>
+            </offer>
+
+            <!-- Корректировка мужской одежды -->
+            <offer id="4001" available="true">
+                <name>Корректировка мужских пиджаков</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>4000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских пиджаков: ушить пиджак, ушить в плечах, посадка по фигуре.</description>
+                <url>https://atelier1513.ru/services/alterations/men/blazers</url>
+            </offer>
+            <offer id="4002" available="true">
+                <name>Корректировка мужских пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>6000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских пальто: укоротить, ушить, подшить, поменять подкладку.</description>
+                <url>https://atelier1513.ru/services/alterations/men/coats</url>
+            </offer>
+            <offer id="4003" available="true">
+                <name>Корректировка мужских джинсов</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских джинсов: укоротить, подшить, ушить в талии.</description>
+                <url>https://atelier1513.ru/services/alterations/men/jeans</url>
+            </offer>
+            <offer id="4004" available="true">
+                <name>Корректировка мужских трикотажных изделий</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>3500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских трикотажных изделий: работа с эластичными тканями.</description>
+                <url>https://atelier1513.ru/services/alterations/men/knitwear</url>
+            </offer>
+            <offer id="4005" available="true">
+                <name>Корректировка мужских меховых пальто</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>8000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских меховых пальто: работа с мехом, сложная подгонка.</description>
+                <url>https://atelier1513.ru/services/alterations/men/shearling-coats</url>
+            </offer>
+            <offer id="4006" available="true">
+                <name>Корректировка мужских футболок</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2000</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских футболок: укоротить, подшить, аккуратная подгонка.</description>
+                <url>https://atelier1513.ru/services/alterations/men/t-shirts</url>
+            </offer>
+            <offer id="4007" available="true">
+                <name>Корректировка мужских плащей</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>5500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских плащей: посадка по фигуре, изменение длины, подшив.</description>
+                <url>https://atelier1513.ru/services/alterations/men/trench-coats</url>
+            </offer>
+            <offer id="4008" available="true">
+                <name>Корректировка мужских брюк</name>
+                <vendor>Ателье 15/13</vendor>
+                <price>2500</price>
+                <currencyId>RUR</currencyId>
+                <categoryId>6</categoryId>
+                <picture>https://atelier1513.ru/images/hero-atelier.png</picture>
+                <description>Корректировка мужских брюк: укоротить, подшить, ушить, подшить в талии.</description>
+                <url>https://atelier1513.ru/services/alterations/men/trousers</url>
+            </offer>
+        </offers>
+    </shop>
+</yml_catalog>

@@ -328,7 +328,16 @@ function renderStaticFooter() {
           </div>
         </div>
       </div>
-    </footer>
+    </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
+  <meta itemprop="name" content="Ателье 15/13" />
+  <meta itemprop="url" content="https://atelie1513.ru/" />
+  <meta itemprop="telephone" content="+7 (915) 371-50-41" />
+  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+    <meta itemprop="addressLocality" content="Москва" />
+    <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
+    <meta itemprop="addressCountry" content="RU" />
+  </div>
+</div>
   `;
 }
 
@@ -674,7 +683,7 @@ function renderServicePage(page, req) {
   return `<!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" /><meta name="Cache-control" content="public, max-age=31536000, immutable">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>${escapeHtml(page.seoTitle)}</title>
     <meta name="description" content="${escapeHtml(page.seoDescription)}" />
@@ -707,7 +716,7 @@ function renderServiceNotFoundPage(req) {
   return `<!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8" /><meta name="Cache-control" content="public, max-age=31536000, immutable">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Страница услуги не найдена — Ателье 15/13</title>
     <meta name="robots" content="noindex" />

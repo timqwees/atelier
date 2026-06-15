@@ -416,6 +416,23 @@
                 </div>
             </div>
         </main>
+        <script>
+            window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
+            (function (d, t) {
+                var BASE_URL = "https://app.chatwoot.com";
+                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = BASE_URL + "/packs/js/sdk.js";
+                g.async = true;
+                s.parentNode.insertBefore(g, s);
+                g.onload = function () {
+                    window.chatwootSDK.run({
+                        websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H',
+                        baseUrl: BASE_URL
+                    })
+                }
+            })(document, "script");
+        </script>
+
 
         <footer class="py-12 bg-background border-t border-border/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

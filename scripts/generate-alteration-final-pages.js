@@ -417,21 +417,8 @@ ${faqHtml(faqItems)}
                     <a href="tel:+79153715041" class="service-sticky-cta__secondary">Позвонить</a>
                 </div>
             </div>
-        </main>
-
-        <footer class="py-12 bg-background border-t border-border/50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-                    <p class="text-xs text-muted-foreground">© 2025 Ателье 15/13. Все права защищены.</p>
-                    <div class="flex items-center gap-4">
-                        <span class="text-xs text-muted-foreground">Москва</span>
-                        <span class="text-xs text-muted-foreground">|</span>
-                        <a class="text-xs text-muted-foreground hover:text-foreground transition-colors" href="tel:+79153715041">+7 (915) 371-50-41</a>
-                    </div>
-                </div>
-            </div>
-        </footer> <script>
+        </main><script>
+  window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":""};
   (function(d,t) {
     var BASE_URL="https://app.chatwoot.com";
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -445,7 +432,22 @@ ${faqHtml(faqItems)}
       })
     }
   })(document,"script");
-</script> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
+</script>
+
+
+        <footer class="py-12 bg-background border-t border-border/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
+                    <p class="text-xs text-muted-foreground">© 2025 Ателье 15/13. Все права защищены.</p>
+                    <div class="flex items-center gap-4">
+                        <span class="text-xs text-muted-foreground">Москва</span>
+                        <span class="text-xs text-muted-foreground">|</span>
+                        <a class="text-xs text-muted-foreground hover:text-foreground transition-colors" href="tel:+79153715041">+7 (915) 371-50-41</a>
+                    </div>
+                </div>
+            </div>
+        </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
   <meta itemprop="name" content="Ателье 15/13" />
   <meta itemprop="url" content="https://atelie1513.ru/" />
   <meta itemprop="telephone" content="+7 (915) 371-50-41" />

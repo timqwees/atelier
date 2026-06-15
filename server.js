@@ -328,17 +328,7 @@ function renderStaticFooter() {
           </div>
         </div>
       </div>
-    </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
-  <meta itemprop="name" content="Ателье 15/13" />
-  <meta itemprop="url" content="https://atelie1513.ru/" />
-  <meta itemprop="telephone" content="+7 (915) 371-50-41" />
-  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-    <meta itemprop="addressLocality" content="Москва" />
-    <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
-    <meta itemprop="addressCountry" content="RU" />
-  </div>
-</div>
-<script>
+    </footer> <script>
   (function(d,t) {
     var BASE_URL="https://app.chatwoot.com";
     var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
@@ -352,7 +342,16 @@ function renderStaticFooter() {
       })
     }
   })(document,"script");
-</script>
+</script> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
+  <meta itemprop="name" content="Ателье 15/13" />
+  <meta itemprop="url" content="https://atelie1513.ru/" />
+  <meta itemprop="telephone" content="+7 (915) 371-50-41" />
+  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+    <meta itemprop="addressLocality" content="Москва" />
+    <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
+    <meta itemprop="addressCountry" content="RU" />
+  </div>
+</div>
   `;
 }
 

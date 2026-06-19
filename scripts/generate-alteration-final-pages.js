@@ -6,6 +6,26 @@ import { womenAlterationPagesMatrix } from '../seo/womenAlterationPagesMatrix.js
 const TEMPLATE_FOLDER = 'women-jackets';
 const FINAL_PAGES_DIR = join(process.cwd(), 'public', 'final-pages');
 const TEMPLATE_DIR = join(FINAL_PAGES_DIR, TEMPLATE_FOLDER);
+const ALTERATION_GALLERY_BY_FOLDER = {
+  'alterations-women-dresses': '/images/custom-tailoring/women/straight-dress.png',
+  'alterations-women-evening-dresses': '/images/custom-tailoring/women/evening-dress.png',
+  'alterations-women-trousers': '/images/custom-tailoring/women/trousers.png',
+  'alterations-women-jeans': '/images/custom-tailoring/men/jeans.png',
+  'alterations-women-coats': '/images/custom-tailoring/men/coat.png',
+  'alterations-women-trench-coats': '/images/custom-tailoring/women/trench-coat.png',
+  'alterations-women-t-shirts': '/images/custom-tailoring/women/t-shirt.png',
+  'alterations-women-knitwear': '/images/custom-tailoring/women/long-sleeve.png',
+  'alterations-women-fur-coats': '/images/shearling.PNG',
+  'alterations-women-shearling-coats': '/images/shearling.PNG',
+  'alterations-men-trousers': '/images/alterations-men/trousers.png',
+  'alterations-men-jeans': '/images/alterations-men/jeans.png',
+  'alterations-men-blazers': '/images/alterations-men/blazers.png',
+  'alterations-men-coats': '/images/alterations-men/coats.png',
+  'alterations-men-trench-coats': '/images/alterations-men/parkas.png',
+  'alterations-men-t-shirts': '/images/alterations-men/t-shirts.png',
+  'alterations-men-knitwear': '/images/alterations-men/knitwear.png',
+  'alterations-men-shearling-coats': '/images/alterations-men/shearling-coats.png',
+};
 
 function formatPrice(price) {
   if (!price) return 'по прайс-листу';
@@ -19,6 +39,24 @@ function escapeHtml(value) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function finalPageAsset(page, assetPath) {
+  return `/final-pages/${page.folder}/${assetPath.replace(/^\//, '')}`;
+}
+
+function copyAlterationVisuals(page, dir) {
+  const galleryImage = ALTERATION_GALLERY_BY_FOLDER[page.folder];
+  if (!galleryImage) {
+    throw new Error(`Missing alteration gallery mapping for: ${page.folder}`);
+  }
+
+  const source = join(process.cwd(), 'public', galleryImage.replace(/^\//, ''));
+  if (!existsSync(source)) {
+    throw new Error(`Missing alteration gallery image: ${source}`);
+  }
+
+  cpSync(source, join(dir, 'images', 'gallery-main.png'));
 }
 
 function highlight(text, phrases) {
@@ -146,6 +184,14 @@ function pageData(page) {
 function renderPage(page) {
   const data = pageData(page);
   const faqItems = data.faq;
+  const heroImagePath = finalPageAsset(page, 'images/hero-atelier.png');
+  const galleryImagePath = finalPageAsset(page, 'images/gallery-main.png');
+  const faviconPath = finalPageAsset(page, 'favicon.png');
+  const indexCssPath = finalPageAsset(page, 'assets/index-B-os_Paw.css');
+  const menuCssPath = finalPageAsset(page, 'assets/services-menu.css?v=6');
+  const serviceCssPath = finalPageAsset(page, 'assets/service-page.css?v=6');
+  const menuJsPath = finalPageAsset(page, 'assets/services-menu.js?v=6');
+  const serviceJsPath = finalPageAsset(page, 'assets/service-page.js?v=2');
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -157,7 +203,7 @@ function renderPage(page) {
       inLanguage: 'ru-RU',
       isPartOf: { '@id': '/#website' },
       breadcrumb: { '@id': `${page.route}#breadcrumb` },
-      primaryImageOfPage: { '@type': 'ImageObject', url: '/images/hero-atelier.png' },
+      primaryImageOfPage: { '@type': 'ImageObject', url: heroImagePath },
     },
     breadcrumbJson(page),
     {
@@ -186,7 +232,7 @@ function renderPage(page) {
   return `<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8" /><meta name="Cache-control" content="public, max-age=31536000, immutable">
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>${escapeHtml(data.seoTitle)}</title>
     <meta name="description" content="${escapeHtml(data.seoDescription)}">
@@ -197,24 +243,24 @@ function renderPage(page) {
     <meta property="og:url" content="${page.route}">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="ru_RU" />
-    <meta property="og:image" content="/images/hero-atelier.png">
+    <meta property="og:image" content="${heroImagePath}">
     <meta property="og:image:alt" content="${escapeHtml(data.h1)} — Ателье 15/13, Москва" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(data.seoTitle)}" />
     <meta name="twitter:description" content="${escapeHtml(data.seoDescription)}" />
-    <meta name="twitter:image" content="/images/hero-atelier.png" />
-    <link rel="icon" type="image/png" href="./favicon.png">
-    <link rel="preload" as="image" href="./images/hero-atelier.png" fetchpriority="high" />
+    <meta name="twitter:image" content="${heroImagePath}" />
+    <link rel="icon" type="image/png" href="${faviconPath}">
+    <link rel="preload" as="image" href="${heroImagePath}" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" crossorigin href="./assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="./assets/services-menu.css?v=6">
-    <link rel="stylesheet" href="./assets/service-page.css?v=6">
-    <script defer src="./assets/services-menu.js?v=6"></script>
-    <script defer src="./assets/service-page.js?v=2"></script>
+    <link rel="stylesheet" crossorigin href="${indexCssPath}">
+    <link rel="stylesheet" href="${menuCssPath}">
+    <link rel="stylesheet" href="${serviceCssPath}">
+    <script defer src="${menuJsPath}"></script>
+    <script defer src="${serviceJsPath}"></script>
     <style>html, body { overflow-x: hidden; }</style>
 ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(item)}</script>`).join('\n')}
 </head>
@@ -242,8 +288,8 @@ ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(
         <main class="service-page min-h-screen pt-16 bg-background">
             <section class="service-hero relative min-h-screen flex items-center overflow-hidden">
                 <div class="absolute inset-0">
-                    <img src="./images/hero-atelier.png" alt="${escapeHtml(data.h1)} — Ателье 15/13"
-                        class="w-full h-full object-cover" width="1920" height="1080" fetchpriority="high" decoding="async">
+                    <img src="${heroImagePath}" alt="${escapeHtml(data.h1)} — Ателье 15/13"
+                        class="w-full h-full object-cover" width="1408" height="768" fetchpriority="high" decoding="async">
                     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/30"></div>
                 </div>
@@ -275,7 +321,7 @@ ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(
                         <div class="service-approach__grid">
                             <article class="service-approach__visual" aria-label="Корректировка изделий">
                                 <div class="service-approach__media">
-                                    <img src="./images/measurement.png" alt="${escapeHtml(data.h1)} — примерка и корректировка" width="1200" height="1400" loading="lazy" decoding="async">
+                                    <img src="${galleryImagePath}" alt="${escapeHtml(data.h1)} — примерка и корректировка" width="1024" height="1536" loading="lazy" decoding="async">
                                 </div>
                                 <div class="service-approach__visual-body">
                                     <h3 class="service-approach__visual-title">${escapeHtml(data.accentTitle)}</h3>
@@ -417,23 +463,7 @@ ${faqHtml(faqItems)}
                     <a href="tel:+79153715041" class="service-sticky-cta__secondary">Позвонить</a>
                 </div>
             </div>
-        </main><script>
-  window.chatwootSettings = {"position":"right","type":"standard","launcherTitle":""};
-  (function(d,t) {
-    var BASE_URL="https://app.chatwoot.com";
-    var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=BASE_URL+"/packs/js/sdk.js";
-    g.async = true;
-    s.parentNode.insertBefore(g,s);
-    g.onload=function(){
-      window.chatwootSDK.run({
-        websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H',
-        baseUrl: BASE_URL
-      })
-    }
-  })(document,"script");
-</script>
-
+        </main>
 
         <footer class="py-12 bg-background border-t border-border/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -447,16 +477,7 @@ ${faqHtml(faqItems)}
                     </div>
                 </div>
             </div>
-        </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
-  <meta itemprop="name" content="Ателье 15/13" />
-  <meta itemprop="url" content="https://atelie1513.ru/" />
-  <meta itemprop="telephone" content="+7 (915) 371-50-41" />
-  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-    <meta itemprop="addressLocality" content="Москва" />
-    <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
-    <meta itemprop="addressCountry" content="RU" />
-  </div>
-</div>
+        </footer>
     </div>
 </body>
 </html>`;
@@ -470,6 +491,7 @@ function generatePage(page) {
   if (existsSync(dir)) rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   cpSync(TEMPLATE_DIR, dir, { recursive: true });
+  copyAlterationVisuals(page, dir);
   writeFileSync(join(dir, 'index.html'), renderPage(page), 'utf8');
   writeFileSync(join(dir, 'page-data.json'), JSON.stringify(pageData(page), null, 2), 'utf8');
 }

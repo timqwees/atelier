@@ -288,32 +288,6 @@ function serializeServiceMenuNode(node) {
   };
 }
 
-function renderStaticNav() {
-  const links = [
-    ['Консультант', '/consultant'],
-    ['Услуги', '/services'],
-    ['Прайс', '/pricing'],
-    ['Процесс', '/process'],
-    ['О нас', '/about'],
-    ['Локация', '/location'],
-    ['Контакты', '/contacts'],
-  ];
-
-  return `
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between gap-4 h-16">
-          <a href="/" class="font-serif text-xl sm:text-2xl tracking-wide">Ателье 15/13</a>
-          <div class="hidden md:flex items-center gap-6">
-            ${links.map(([label, href]) => `<a href="${href}" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">${escapeHtml(label)}</a>`).join('')}
-            <a href="/contacts" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-9 px-4 py-2">Записаться</a>
-          </div>
-        </div>
-      </div>
-    </nav>
-  `;
-}
-
 function renderStaticFooter() {
   return `
     <footer class="py-12 bg-background border-t border-border/50">

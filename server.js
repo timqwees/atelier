@@ -530,7 +530,6 @@ function renderServiceContent(page, req) {
   const context = getServicePageContext(page);
 
   return `
-    ${renderStaticNav()}
     <main class="min-h-screen pt-16 bg-background">
       <section class="service-hero relative min-h-screen flex items-center overflow-hidden">
         <div class="absolute inset-0">
@@ -744,7 +743,7 @@ function renderServiceNotFoundPage(req) {
   </head>
   <body>
     <div id="root">
-      ${renderStaticNav()}
+
       <main class="min-h-screen pt-16 bg-background">
         <section class="py-24 sm:py-32">
           <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

@@ -278,6 +278,7 @@ ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(
                         <a href="/about" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">О нас</a>
                         <a href="/location" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Локация</a>
                         <a href="/contacts" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Контакты</a>
+                        <a href="tel:+79153715041" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-4 py-2">+7 (915) 371-50-41</a>
                         <a href="/contacts" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-9 px-4 py-2">Записаться</a>
                     </div>
                 </div>

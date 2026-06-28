@@ -14,6 +14,7 @@ const standardPageFiles = [
   'about.html',
   'location.html',
   'contacts.html',
+  'privacy-policy.html',
 ];
 const routes = new Map();
 const errors = [];

@@ -103,7 +103,7 @@
                         <div class="service-approach__grid">
                             <article class="service-approach__visual" aria-label="Корректировка изделий">
                                 <div class="service-approach__media">
-                                    <img src="/final-pages/alterations-women-t-shirts/images/gallery-main.png" alt="Корректировка женских футболок — примерка и корректировка" width="1024" height="1536" loading="lazy" decoding="async">
+                                    <img src="/final-pages/final-pages/images/gallery-main.png" alt="Корректировка женских футболок — примерка и корректировка" loading="lazy"  width="1024" height="1536" loading="lazy" decoding="async">
                                 </div>
                                 <div class="service-approach__visual-body">
                                     <h3 class="service-approach__visual-title">Аккуратная работа с трикотажем</h3>
@@ -286,7 +286,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-                    <p class="text-xs text-muted-foreground">© 2025 Ателье 15/13. Все права защищены.</p>
+                    <p class="text-xs text-muted-foreground"><span id="copyright-year"></span> Ателье 15/13. Все права защищены.</p>
                     <div class="flex items-center gap-4">
                         <span class="text-xs text-muted-foreground">Москва</span>
                         <span class="text-xs text-muted-foreground">|</span>
@@ -296,5 +296,5 @@
             </div>
         </footer>
     </div>
-</body>
+<script>document.getElementById("copyright-year").textContent="u00A9 "+new Date().getFullYear();</script></body>
 </html>

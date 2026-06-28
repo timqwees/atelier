@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import { readFileSync, readdirSync, statSync } from 'fs';
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomUUID } from 'crypto';
@@ -33,6 +33,7 @@ const STANDARD_HTML_PAGE_FILES = [
   'about.html',
   'location.html',
   'contacts.html',
+  'privacy-policy.html',
 ];
 const STANDARD_HTML_PAGES = loadStandardHtmlPages();
 const STANDARD_HTML_ROUTES = STANDARD_HTML_PAGES.map((page) => page.route);
@@ -294,7 +295,7 @@ function renderStaticFooter() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
           <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-          <p class="text-xs text-muted-foreground">© 2025 Ателье 15/13. Все права защищены.</p>
+          <p class="text-xs text-muted-foreground">© ${new Date().getFullYear()} Ателье 15/13. Все права защищены.</p>
           <div class="flex items-center gap-4">
             <span class="text-xs text-muted-foreground">Москва</span>
             <span class="text-xs text-muted-foreground">|</span>
@@ -308,7 +309,7 @@ function renderStaticFooter() {
   <meta itemprop="telephone" content="+7 (915) 371-50-41" />
   <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
     <meta itemprop="addressLocality" content="Москва" />
-    <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
+    <meta itemprop="streetAddress" content="ул. Петровка 15/13, стр. 3" />
     <meta itemprop="addressCountry" content="RU" />
   </div>
 </div>
@@ -343,7 +344,7 @@ function renderCardGrid(items) {
       ${items.map((item) => `
         <article class="group rounded-md border border-border bg-card overflow-hidden">
           <div class="aspect-[3/4] overflow-hidden bg-muted">
-            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+            <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
           </div>
           <div class="p-6">
             <h3 class="font-serif text-xl mb-3">${escapeHtml(item.title)}</h3>
@@ -375,7 +376,7 @@ function renderGallerySlider(items) {
         ${items.map((item) => `
           <article class="service-slider__card">
             <div class="service-slider__media">
-              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+              <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}" loading="lazy">
             </div>
             <div class="service-slider__body">
               <h3 class="service-slider__title"><strong>${escapeHtml(item.title)}</strong></h3>
@@ -665,14 +666,15 @@ function renderServiceSchemas(page, req) {
 }
 
 function renderServicePage(page, req) {
-  const canonical = `${getOrigin(req)}${page.canonical || page.path}`;
+  const origin = getOrigin(req);
+  const canonical = `${origin}${page.canonical || page.path}`;
   const content = renderServiceContent(page, req);
   const robotsMeta = page.indexable === true ? '' : '    <meta name="robots" content="noindex,follow" />\n';
 
   return `<!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" /><meta name="Cache-control" content="public, max-age=31536000, immutable">
+    <meta charset="UTF-8" /><meta name="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>${escapeHtml(page.seoTitle)}</title>
     <meta name="description" content="${escapeHtml(page.seoDescription)}" />
@@ -681,6 +683,13 @@ ${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}
     <meta property="og:description" content="${escapeHtml(page.seoDescription)}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:image" content="${escapeHtml(origin)}/images/hero-atelier.png" />
+    <meta property="og:image:alt" content="${escapeHtml(page.h1)} — Ателье 15/13, Москва" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${escapeHtml(page.seoTitle)}" />
+    <meta name="twitter:description" content="${escapeHtml(page.seoDescription)}" />
+    <meta name="twitter:image" content="${escapeHtml(origin)}/images/hero-atelier.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -700,16 +709,22 @@ ${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}
 }
 
 function renderServiceNotFoundPage(req) {
-  const canonical = `${getOrigin(req)}/services`;
+  const origin = getOrigin(req);
+  const canonical = `${origin}/services`;
 
   return `<!DOCTYPE html>
 <html lang="ru">
   <head>
-    <meta charset="UTF-8" /><meta name="Cache-control" content="public, max-age=31536000, immutable">
+    <meta charset="UTF-8" /><meta name="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Страница услуги не найдена — Ателье 15/13</title>
     <meta name="robots" content="noindex" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
+    <meta property="og:title" content="Страница услуги не найдена — Ателье 15/13" />
+    <meta property="og:description" content="Такой страницы в структуре услуг пока нет." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="${escapeHtml(canonical)}" />
+    <meta property="og:locale" content="ru_RU" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="/assets/services-menu.css?v=6">
@@ -762,6 +777,7 @@ function getPagePriority(path) {
   if (path === '/location') return '0.7';
   if (path === '/contacts') return '0.7';
   if (path === '/consultant') return '0.6';
+  if (path === '/privacy-policy') return '0.3';
   if (path.startsWith('/services/')) return '0.8';
   if (path.startsWith('/final-pages/')) return '0.7';
   return '0.5';
@@ -776,6 +792,7 @@ function getPageChangefreq(path) {
   if (path === '/location') return 'monthly';
   if (path === '/contacts') return 'monthly';
   if (path === '/consultant') return 'weekly';
+  if (path === '/privacy-policy') return 'yearly';
   if (path.startsWith('/services/')) return 'weekly';
   if (path.startsWith('/final-pages/')) return 'monthly';
   return 'monthly';
@@ -843,13 +860,40 @@ function renderStaticHtmlPage(page) {
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
-app.use('/assets/demo-block.css', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/assets/demo-block.js', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/assets/services-menu.css', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/assets/services-menu.js', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/assets/service-page.css', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/assets/service-page.js', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
-app.use('/final-pages', (req, res, next) => { res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate'); next(); });
+
+app.use('/images', (req, res, next) => {
+  const accept = req.get('Accept') || '';
+  if (accept.includes('image/webp')) {
+    const ext = req.path.split('.').pop().toLowerCase();
+    if (ext === 'png' || ext === 'jpg' || ext === 'jpeg') {
+      const webpPath = join(PUBLIC_DIR, 'images', req.path.replace(/\.(png|jpg|jpeg)$/i, '.webp'));
+      if (existsSync(webpPath)) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        return res.type('image/webp').send(readFileSync(webpPath));
+      }
+    }
+  }
+  next();
+});
+
+app.use('/final-pages', (req, res, next) => {
+  const accept = req.get('Accept') || '';
+  if (accept.includes('image/webp') && /\/images\/.*\.(png|jpg|jpeg)$/i.test(req.path)) {
+    const webpPath = join(PUBLIC_DIR, 'final-pages', req.path.replace(/\.(png|jpg|jpeg)$/i, '.webp'));
+    if (existsSync(webpPath)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      return res.type('image/webp').send(readFileSync(webpPath));
+    }
+  }
+  next();
+});
+app.use('/assets/demo-block.css', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/assets/demo-block.js', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/assets/services-menu.css', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/assets/services-menu.js', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/assets/service-page.css', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/assets/service-page.js', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=31536000, immutable'); next(); });
+app.use('/final-pages', (req, res, next) => { res.setHeader('Cache-Control', 'public, max-age=86400'); next(); });
 
 app.get('/api/service-menu', (req, res) => {
   res.json(serializeServiceMenuNode(serviceMenuData));
@@ -860,7 +904,13 @@ app.get(Object.keys(LEGACY_ROUTES), (req, res) => {
 });
 
 app.get('/robots.txt', (req, res) => {
-  res.type('text/plain').send(`User-agent: *\nAllow: /\nSitemap: ${getOrigin(req)}/sitemap.xml\n`);
+  res.type('text/plain').send(`User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /docs/
+Disallow: /final-pages/*/assets/
+Sitemap: ${getOrigin(req)}/sitemap.xml
+`);
 });
 
 app.get('/sitemap.xml', (req, res) => {

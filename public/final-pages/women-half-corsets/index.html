@@ -601,7 +601,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                     <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-                    <p class="text-xs text-muted-foreground">© 2025 Ателье 15/13. Все права защищены.</p>
+                    <p class="text-xs text-muted-foreground"><span id="copyright-year"></span> Ателье 15/13. Все права защищены.</p>
                     <div class="flex items-center gap-4">
                         <span class="text-xs text-muted-foreground">Москва</span>
                         <span class="text-xs text-muted-foreground">|</span>
@@ -636,12 +636,12 @@
             <meta itemprop="telephone" content="+7 (915) 371-50-41" />
             <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                 <meta itemprop="addressLocality" content="Москва" />
-                <meta itemprop="streetAddress" content="ул. Петровка, 15/13с5" />
+                <meta itemprop="streetAddress" content="ул. Петровка 15/13, стр. 3" />
                 <meta itemprop="addressCountry" content="RU" />
             </div>
         </div>
 
     </div>
-</body>
+<script>document.getElementById("copyright-year").textContent="u00A9 "+new Date().getFullYear();</script></body>
 
 </html>

@@ -699,7 +699,7 @@ function renderServicePage(page, req) {
 <html lang="ru">
   <head>
     <meta charset="UTF-8" /><meta name="Cache-control" content="no-cache, no-store, must-revalidate">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
     <title>${escapeHtml(page.seoTitle)}</title>
     <meta name="description" content="${escapeHtml(page.seoDescription)}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
@@ -743,7 +743,7 @@ function renderServiceNotFoundPage(req) {
 <html lang="ru">
   <head>
     <meta charset="UTF-8" /><meta name="Cache-control" content="no-cache, no-store, must-revalidate">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
     <title>Страница услуги не найдена — Ателье 15/13</title>
     <meta name="robots" content="noindex" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />

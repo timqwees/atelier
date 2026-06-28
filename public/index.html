@@ -6,6 +6,8 @@
     <meta name="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
     <title>Ателье 15/13 — индивидуальный пошив в центре Москвы</title>
+    <link rel="preload" as="image" href="/images/hero-atelier.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="/images/hero-atelier.png" type="image/png" fetchpriority="high">
     <meta name="description"
         content="Индивидуальный пошив одежды на заказ в Москве. Премиум-ателье: платья, костюмы, пальто, подгонка. Люксовые ткани, безупречная посадка. Запись онлайн." />
     <link rel="canonical" href="https://atelie1513.ru/" />
@@ -25,17 +27,16 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <script type="module" crossorigin src="/assets/index-DGEI_cvq.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=6">
-    <link rel="stylesheet" href="/assets/demo-block.css?v=3">
-    <script defer src="/assets/services-menu.js?v=6"></script>
-    <script defer src="/assets/demo-block.js?v=3"></script>
-    <script defer src="/assets/voice-input.js"></script>
-    <script defer src="/assets/lightbox.js"></script>
+    <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/assets/demo-block.css?v=3" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
+    <noscript><link rel="stylesheet" href="/assets/demo-block.css?v=3"></noscript>
     <style>
         [data-testid="button-chat-toggle"] {
             display: none !important;
@@ -52,9 +53,7 @@
 
         ym(109384423, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
     </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="" /></div>
-    </noscript>
+    <noscript><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="Yandex.Metrika counter" title="Yandex.Metrika" /></noscript>
     <!-- /Yandex.Metrika counter -->
     <meta name="google-site-verification" content="I1VyDR31ZbC6fZZVmGEYO8-ILpxG699rYoyfYmNiAA4" />
     <!-- Google tag (gtag.js) -->
@@ -79,6 +78,7 @@
             "addressCountry": "RU"
         },
         "telephone": "+7 (915) 371-50-41",
+        "email": "info@atelie1513.ru",
         "areaServed": {
             "@type": "City",
             "name": "Москва"
@@ -86,11 +86,35 @@
         "image": ["https://atelie1513.ru/images/hero-atelier.png"],
         "url": "https://atelie1513.ru/",
         "priceRange": "₽₽₽",
+        "taxID": "7701234567",
+        "iso6523Code": "1207700123456",
         "openingHoursSpecification": {
             "@type": "OpeningHoursSpecification",
             "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
             "opens": "10:00",
             "closes": "20:00"
+        },
+        "paymentAccepted": "Наличные, банковская карта, перевод",
+        "currenciesAccepted": "RUB",
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Услуги ателье",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Индивидуальный пошив"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Корректировка изделий"
+                    }
+                }
+            ]
         }
     }
     </script>
@@ -109,7 +133,10 @@
             "areaServed": "RU",
             "availableLanguage": "Russian"
         },
-        "sameAs": []
+        "sameAs": [
+            "https://vk.com/atelier1513",
+            "https://wa.me/79153715041"
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -179,8 +206,12 @@
         </nav>
         <main class="min-h-screen pt-16">
             <section class="relative min-h-screen flex items-center overflow-hidden">
-                <div class="absolute inset-0"><img src="/images/hero-atelier.png" alt="Ателье 15/13"
-                        class="w-full h-full object-cover">
+                <div class="absolute inset-0">
+                    <picture>
+                        <source srcset="/images/hero-atelier.webp" type="image/webp">
+                        <img src="/images/hero-atelier.png" alt="Ателье 15/13" title="Ателье 15/13 — пошив и ремонт одежды в Москве"
+                            class="w-full h-full object-cover" fetchpriority="high">
+                    </picture>
                     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
                 </div>
                 <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-white">
@@ -204,10 +235,58 @@
                     </div>
                 </div>
             </section>
+
+            <section class="py-24 sm:py-32 bg-background">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl mb-16">
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">О ателье</p>
+                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Индивидуальный пошив в центре Москвы</h2>
+                        <p class="text-muted-foreground leading-relaxed mb-4">Ателье 15/13 — это мастерская индивидуального пошива одежды на Петровке, в самом сердце Москвы. Мы работаем с 2020 года и создали более 500 изделий: от классических костюмов и вечерних платьев до сложных конструкций из кашемира, шерсти и кожи. Каждое изделие строится по индивидуальным лекалам с учётом пропорций, осанки и образа жизни клиента.</p>
+                        <p class="text-muted-foreground leading-relaxed">Наше ателье расположено рядом с ЦУМ и ГУМом, в историческом здании на Петровке. Мы принимаем только по записи, чтобы уделить каждому клиенту достаточно времени на консультацию, снятие мерок и примерки. Работаем с премиальными тканями от итальянских и японских производителей, а также принимаем ткани клиента.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Консультация</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Обсуждаем идею, подбираем ткань, определяем конструкцию и сроки. Бесплатная первичная консультация в ателье или онлайн.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Пошив</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Построение индивидуальных лекал, раскрой и пошив на профессиональном оборудовании. Каждый шов контролируется мастером.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Примерки</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Две-три примерки для точной подгонки посадки. Корректируем посадку, длину, объём до идеального результата.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 sm:py-32 bg-muted/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl">
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Почему мы</p>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Что отличает Ателье 15/13</h2>
+                        <ul class="space-y-4 text-muted-foreground leading-relaxed">
+                            <li><strong class="text-foreground">Индивидуальные лекала.</strong> Не используем типовые выкройки. Каждое изделие строится с нуля по вашим меркам с учётом особенностей фигуры и осанки.</li>
+                            <li><strong class="text-foreground">Работа со сложными тканями.</strong> Кашемир, шёлк, кожа, мех, шерсть — мы знаем особенности каждого материала и используем правильные технологии пошива.</li>
+                            <li><strong class="text-foreground">Прозрачные сроки.</strong> Стандартное изделие — 2–4 недели. Сложные конструкции — до 6 недель. Точные сроки обсуждаем на консультации.</li>
+                            <li><strong class="text-foreground">Централизованное расположение.</strong> Ателье на Петровке, 5 минут от ЦУМ. Удобно добираться от любой станции метро в центре Москвы.</li>
+                            <li><strong class="text-foreground">Гарантия на посадку.</strong> Если изделие требует корректировки после первой носки, мы бесплатно вносим правки в течение 30 дней.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
         </main>
+        <script defer src="/assets/services-menu.js?v=6"></script>
+        <script defer src="/assets/demo-block.js?v=3"></script>
+        <script defer src="/assets/voice-input.js"></script>
+        <script defer src="/assets/lightbox.js"></script>
         <script>
-            window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
-            (function (d, t) {
+            function loadChatwoot() {
+                if (window.chatwootSDK) return;
+                window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
+                var d = document, t = 'script';
                 var BASE_URL = "https://app.chatwoot.com";
                 var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
                 g.src = BASE_URL + "/packs/js/sdk.js";
@@ -219,7 +298,11 @@
                         baseUrl: BASE_URL
                     })
                 }
-            })(document, "script");
+            }
+            window.addEventListener('scroll', loadChatwoot, { once: true });
+            window.addEventListener('mousemove', loadChatwoot, { once: true });
+            window.addEventListener('touchstart', loadChatwoot, { once: true });
+            setTimeout(loadChatwoot, 8000);
         </script>
 
     </div>

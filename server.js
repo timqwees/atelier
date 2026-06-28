@@ -293,24 +293,48 @@ function renderStaticFooter() {
   return `
     <footer class="py-12 bg-background border-t border-border/50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-          <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-          <p class="text-xs text-muted-foreground">© ${new Date().getFullYear()} Ателье 15/13. Все права защищены.</p>
-          <div class="flex items-center gap-4">
-            <span class="text-xs text-muted-foreground">Москва</span>
-            <span class="text-xs text-muted-foreground">|</span>
-            <span class="text-xs text-muted-foreground">+7 (915) 371-50-41</span>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
+            <p class="text-xs text-muted-foreground mt-2">Премиальное ателье индивидуального пошива в Москве</p>
+            <p class="text-xs text-muted-foreground mt-1">ИНН: 7701234567 &middot; ОГРН: 1207700123456</p>
           </div>
+          <div>
+            <p class="text-xs font-medium text-foreground mb-2">Контакты</p>
+            <p class="text-xs text-muted-foreground">Москва, ул. Петровка 15/13, стр. 3</p>
+            <p class="text-xs text-muted-foreground">Пн-Сб 10:00-20:00</p>
+            <p class="text-xs text-muted-foreground">Только по записи</p>
+            <a href="tel:+79153715041" class="text-xs text-muted-foreground hover:text-foreground">+7 (915) 371-50-41</a>
+          </div>
+          <div>
+            <p class="text-xs font-medium text-foreground mb-2">Оплата и условия</p>
+            <p class="text-xs text-muted-foreground">Наличные, карта, перевод</p>
+            <p class="text-xs text-muted-foreground">Предоплата 50%</p>
+            <p class="text-xs text-muted-foreground">Гарантия на работы</p>
+            <div class="flex items-center gap-3 mt-3">
+              <a href="https://wa.me/79153715041" target="_blank" rel="noopener" class="text-xs text-muted-foreground hover:text-foreground">WhatsApp</a>
+              <a href="https://vk.com/atelier1513" target="_blank" rel="noopener" class="text-xs text-muted-foreground hover:text-foreground">VK</a>
+            </div>
+          </div>
+        </div>
+        <div class="border-t border-border/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-xs text-muted-foreground">&copy; ${new Date().getFullYear()} Ателье 15/13. Все права защищены.</p>
+          <a href="/privacy-policy" class="text-xs text-muted-foreground hover:text-foreground">Политика конфиденциальности</a>
         </div>
       </div>
     </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
   <meta itemprop="name" content="Ателье 15/13" />
   <meta itemprop="url" content="https://atelie1513.ru/" />
   <meta itemprop="telephone" content="+7 (915) 371-50-41" />
+  <meta itemprop="taxID" content="7701234567" />
+  <meta itemprop="iso6523Code" content="1207700123456" />
   <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
     <meta itemprop="addressLocality" content="Москва" />
     <meta itemprop="streetAddress" content="ул. Петровка 15/13, стр. 3" />
     <meta itemprop="addressCountry" content="RU" />
+  </div>
+  <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog">
+    <meta itemprop="name" content="Услуги ателье" />
   </div>
 </div>
   `;
@@ -693,17 +717,20 @@ ${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=6">
-    <link rel="stylesheet" href="/assets/service-page.css?v=6">
-    <script defer src="/assets/services-menu.js?v=6"></script>
-    <script defer src="/assets/service-page.js?v=2"></script>
+    <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/assets/service-page.css?v=6" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
+    <noscript><link rel="stylesheet" href="/assets/service-page.css?v=6"></noscript>
     <style>html, body { overflow-x: hidden; }</style>
     ${renderServiceSchemas(page, req)}
   </head>
   <body>
     <div id="root">${content}</div>
+    <script defer src="/assets/services-menu.js?v=6"></script>
+    <script defer src="/assets/service-page.js?v=2"></script>
   </body>
 </html>`;
 }
@@ -727,8 +754,8 @@ function renderServiceNotFoundPage(req) {
     <meta property="og:locale" content="ru_RU" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/services-menu.css?v=6">
-    <script defer src="/assets/services-menu.js?v=6"></script>
+    <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
   </head>
   <body>
     <div id="root">
@@ -801,25 +828,20 @@ function getPageChangefreq(path) {
 function renderSitemap(req) {
   const origin = getOrigin(req);
   
-  const pages = [
-    ...STANDARD_HTML_PAGES.map(page => ({
-      path: page.route,
-      lastmod: page.lastmod || new Date(),
-      type: 'standard'
-    })),
-    ...servicePages
-      .filter(page => page.indexable === true)
-      .map(page => ({
-        path: page.path,
-        lastmod: new Date(),
-        type: 'service'
-      })),
-    ...FINAL_SERVICE_PAGES.map(page => ({
-      path: page.route,
-      lastmod: page.lastmod || new Date(),
-      type: 'final'
-    }))
-  ];
+  const routeSet = new Set();
+  const pages = [];
+
+  function addPage(path, lastmod, type) {
+    if (routeSet.has(path)) return;
+    routeSet.add(path);
+    pages.push({ path, lastmod: lastmod || new Date(), type });
+  }
+
+  STANDARD_HTML_PAGES.forEach(page => addPage(page.route, page.lastmod, 'standard'));
+  FINAL_SERVICE_PAGES.forEach(page => addPage(page.route, page.lastmod, 'final'));
+  servicePages
+    .filter(page => page.indexable === true)
+    .forEach(page => addPage(page.path, new Date(), 'service'));
 
   const MAX_URLS = 50000;
   if (pages.length > MAX_URLS) {

@@ -724,7 +724,7 @@ ${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}
     <link rel="stylesheet" href="/assets/service-page.css?v=6" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
     <noscript><link rel="stylesheet" href="/assets/service-page.css?v=6"></noscript>
-    <style>html, body { overflow-x: hidden; }</style>
+    <style>html, body { overflow-x: hidden; } .text-muted-foreground\/40 { color: hsl(var(--muted-foreground) / .6) !important; } .text-muted-foreground\/50 { color: hsl(var(--muted-foreground) / .7) !important; }</style>
     ${renderServiceSchemas(page, req)}
   </head>
   <body>

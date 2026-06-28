@@ -1,21 +1,25 @@
-# Ателье 15/13 — Премиальное ателье индивидуального пошива в Москве
+# Ателье 15/13
 
-## О компании
-Ателье 15/13 — премиальное ателье индивидуального пошива одежды в центре Москвы. Работаем с 2020 года, создали более 500 изделий из премиальных тканей.
+> Премиальное ателье индивидуального пошива одежды в центре Москвы. Работаем с 2020 года, более 500 созданных изделий из премиальных тканей.
 
-- Главная: https://atelie1513.ru/
-- Услуги: https://atelie1513.ru/services
-- Прайс: https://atelie1513.ru/pricing
-- Процесс: https://atelie1513.ru/process
-- О нас: https://atelie1513.ru/about
-- Локация: https://atelie1513.ru/location
-- Контакты: https://atelie1513.ru/contacts
-- AI-консультант: https://atelie1513.ru/consultant
+Адрес: ул. Петровка 15/13, стр. 3, Москва. Телефон: +7 (915) 371-50-41. Режим работы: Пн-Сб 10:00-20:00, по записи.
 
-## Основные услуги
-- Индивидуальный пошив: https://atelie1513.ru/services/custom-tailoring
-- Корректировка изделий: https://atelie1513.ru/services/alterations
-- Ремонт изделий: https://atelie1513.ru/services/repairs
+## Страницы
 
-## Целевая аудитория
-Клиенты, которые ценят индивидуальный подход, качество материалов и точную посадку. Люди, готовые инвестировать в качественную одежду.
+- [Главная](https://atelie1513.ru/)
+- [Услуги](https://atelie1513.ru/services)
+- [Прайс](https://atelie1513.ru/pricing)
+- [Процесс](https://atelie1513.ru/process)
+- [О нас](https://atelie1513.ru/about)
+- [Локация](https://atelie1513.ru/location)
+- [Контакты](https://atelie1513.ru/contacts)
+- [AI-консультант](https://atelie1513.ru/consultant)
+
+## Услуги
+
+- [Индивидуальный пошив](https://atelie1513.ru/services/custom-tailoring)
+- [Корректировка изделий](https://atelie1513.ru/services/alterations)
+- [Ремонт изделий](https://atelie1513.ru/services/repairs)
+- [Пальто на заказ](https://atelie1513.ru/services/coat)
+- [Платья на заказ](https://atelie1513.ru/services/dress)
+- [Костюмы на заказ](https://atelie1513.ru/services/suit)

@@ -261,7 +261,7 @@ function renderPage(page) {
     <link rel="stylesheet" href="${serviceCssPath}">
     <script defer src="${menuJsPath}"></script>
     <script defer src="${serviceJsPath}"></script>
-    <style>html, body { overflow-x: hidden; }</style>
+    <style>html, body { overflow-x: hidden; } .text-muted-foreground\/40 { color: hsl(var(--muted-foreground) / .6) !important; } .text-muted-foreground\/50 { color: hsl(var(--muted-foreground) / .7) !important; }</style>
 ${jsonLd.map((item) => `    <script type="application/ld+json">${JSON.stringify(item)}</script>`).join('\n')}
 </head>
 <body>

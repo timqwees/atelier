@@ -32,6 +32,10 @@
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
+    <link rel="stylesheet" href="/assets/scroll-reveal.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/scroll-reveal.css"></noscript>
+    <link rel="stylesheet" href="/assets/demo-block.css?v=3" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/demo-block.css?v=3"></noscript>
     <style>
         .blog-card {
             border-radius: 12px;
@@ -375,6 +379,7 @@
     </nav>
 
     <main class="min-h-screen pt-16">
+        <div class="py-24 sm:py-32 bg-background" data-reveal>
         <section class="py-12 sm:py-16 bg-muted/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="max-w-3xl">
@@ -457,6 +462,7 @@
                 </a>
             </div>
         </section>
+        </div>
     </main>
 
     <footer class="border-t border-border/50 py-8">
@@ -554,6 +560,44 @@
             var year = d.getFullYear();
             return day + '.' + month + '.' + year;
         }
+    </script>
+    <script defer src="/assets/services-menu.js?v=6"></script>
+    <script defer src="/assets/demo-block.js?v=3"></script>
+    <script defer src="/assets/voice-input.js"></script>
+    <script defer src="/assets/lightbox.js"></script>
+    <script>
+        function loadChatwoot() {
+            if (window.chatwootSDK) return;
+            window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
+            var d = document, t = 'script';
+            var BASE_URL = "https://app.chatwoot.com";
+            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+            g.src = BASE_URL + "/packs/js/sdk.js";
+            g.async = true;
+            s.parentNode.insertBefore(g, s);
+            g.onload = function () {
+                window.chatwootSDK.run({ websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H', baseUrl: BASE_URL })
+            }
+        }
+        window.addEventListener('scroll', loadChatwoot, { once: true });
+        window.addEventListener('mousemove', loadChatwoot, { once: true });
+        window.addEventListener('touchstart', loadChatwoot, { once: true });
+        setTimeout(loadChatwoot, 8000);
+    </script>
+    <script defer src="/assets/scroll-reveal.js"></script>
+    <script>
+        document.getElementById('mobile-menu-btn')?.addEventListener('click', function() {
+            document.getElementById('mobile-menu-overlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        document.getElementById('mobile-menu-close')?.addEventListener('click', function() {
+            document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function() {
+            document.getElementById('mobile-menu-overlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
     </script>
 </body>
 

@@ -31,6 +31,8 @@
     <noscript><link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <link rel="stylesheet" crossorigin href="https://atelie1513.ru/assets/index-B-os_Paw.css">
+    <link rel="stylesheet" href="/assets/scroll-reveal.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/scroll-reveal.css"></noscript>
     <link rel="stylesheet" href="https://atelie1513.ru/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://atelie1513.ru/assets/demo-block.css?v=3" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://atelie1513.ru/assets/services-menu.css?v=6"></noscript>
@@ -214,7 +216,7 @@
             <section class="py-24 sm:py-32 bg-background">
 
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-3xl">
+                    <div data-reveal class="max-w-3xl">
                         <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Консультант</p>
                         <h1
                             class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
@@ -235,7 +237,7 @@
 
             <section class="py-24 sm:py-32 bg-muted/30">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-3xl">
+                    <div data-reveal class="max-w-3xl">
                         <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Как работает консультант</h2>
                         <p class="text-muted-foreground leading-relaxed mb-4">AI-консультант Ателье 15/13 — это текстовый помощник, который отвечает на вопросы о пошиве, тканях, сроках и ценах. Задайте вопрос текстом или отправьте фото изделия — бот проанализирует запрос и предложит предварительную оценку стоимости.</p>
                         <p class="text-muted-foreground leading-relaxed mb-4">Консультант знает ассортимент услуг ателье, примерные цены и сроки выполнения работ. Он может подсказать, какое изделие лучше сшить из выбранной ткани, сколько примерок потребуется и какие дополнительные элементы стоит заказать.</p>
@@ -246,7 +248,7 @@
 
             <section class="py-24 sm:py-32 bg-background">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-3xl">
+                    <div data-reveal class="max-w-3xl">
                         <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Что можно узнать</h2>
                         <ul class="space-y-4 text-muted-foreground leading-relaxed">
                             <li><strong class="text-foreground">Примерная стоимость.</strong> По описанию или фото консультант оценит бюджет пошива и подскажет, от чего зависит цена.</li>
@@ -301,6 +303,7 @@
                 document.body.style.overflow = "";
             });
         </script>
+    <script defer src="/assets/scroll-reveal.js"></script>
 
 </body>
 

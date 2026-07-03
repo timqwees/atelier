@@ -31,6 +31,8 @@
     <noscript><link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <link rel="stylesheet" crossorigin href="https://atelie1513.ru/assets/index-B-os_Paw.css">
+    <link rel="stylesheet" href="/assets/scroll-reveal.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/assets/scroll-reveal.css"></noscript>
     <link rel="stylesheet" href="https://atelie1513.ru/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://atelie1513.ru/assets/demo-block.css?v=3" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://atelie1513.ru/assets/services-menu.css?v=6"></noscript>
@@ -196,7 +198,7 @@
             <section class="py-24 sm:py-32 bg-background">
 
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-3xl">
+                    <div data-reveal class="max-w-3xl">
                         <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Услуги</p>
                         <h1
                             class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
@@ -217,26 +219,26 @@
 
             <section class="py-24 sm:py-32 bg-muted/30">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div class="max-w-3xl">
+                    <div data-reveal class="max-w-3xl">
                         <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Полный цикл пошива</h2>
                         <p class="text-muted-foreground leading-relaxed mb-4">Мы выполняем всю работу от начала до конца: консультация, снятие мерок, построение лекал, раскрой, пошив, примерки и финальная корректировка. Не передаём заказы на сторону — каждый этап контролируется мастером в нашем ателье.</p>
                         <p class="text-muted-foreground leading-relaxed mb-8">Работаем с любыми тканями: кашемир, шерсть, шёлк, лён, кожа, мех, деним. Принимаем ткани клиента или помогаем подобрать материал у проверенных поставщиков. Используем профессиональное оборудование для тонких и сложных материалов.</p>
 
                         <h3 class="font-serif text-2xl mb-4">Что мы шьём</h3>
-                        <div class="grid sm:grid-cols-2 gap-4">
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
+                        <div data-stagger class="grid sm:grid-cols-2 gap-4">
+                            <div data-stagger-child class="p-4 rounded-lg border border-border/50 bg-card">
                                 <h4 class="font-medium mb-1">Женская одежда</h4>
                                 <p class="text-sm text-muted-foreground">Платья, юбки, блузы, жакеты, брюки, корсеты, пальто, куртки, худи, свитшоты, топы.</p>
                             </div>
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
+                            <div data-stagger-child class="p-4 rounded-lg border border-border/50 bg-card">
                                 <h4 class="font-medium mb-1">Мужская одежда</h4>
                                 <p class="text-sm text-muted-foreground">Пиджаки, брюки, сорочки, пальто, куртки, толстовки, футболки, худи.</p>
                             </div>
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
+                            <div data-stagger-child class="p-4 rounded-lg border border-border/50 bg-card">
                                 <h4 class="font-medium mb-1">Верхняя одежда</h4>
                                 <p class="text-sm text-muted-foreground">Пальто, шубы, дублёнки, куртки, пуховики, парки — из натуральных и смешанных тканей.</p>
                             </div>
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
+                            <div data-stagger-child class="p-4 rounded-lg border border-border/50 bg-card">
                                 <h4 class="font-medium mb-1">Корректировка</h4>
                                 <p class="text-sm text-muted-foreground">Ушивание, подгонка по фигуре, замена молний, подклада, пуговиц, поясов и других элементов.</p>
                             </div>
@@ -288,6 +290,7 @@
                 document.body.style.overflow = "";
             });
         </script>
+    <script defer src="/assets/scroll-reveal.js"></script>
 
 </body>
 

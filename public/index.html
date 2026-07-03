@@ -27,8 +27,7 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-        rel="stylesheet" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <script type="module" crossorigin src="/assets/index-DGEI_cvq.js"></script>
@@ -38,9 +37,6 @@
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
     <noscript><link rel="stylesheet" href="/assets/demo-block.css?v=3"></noscript>
     <style>
-        [data-testid="button-chat-toggle"] {
-            display: none !important;
-        }
         .text-muted-foreground\/40 { color: hsl(var(--muted-foreground) / .6) !important; }
         .text-muted-foreground\/50 { color: hsl(var(--muted-foreground) / .7) !important; }
     </style>
@@ -197,6 +193,7 @@
                                     <a href="/services" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Услуги</a>
                                     <a href="/pricing" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Прайс</a>
                                     <a href="/process" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Процесс</a>
+                                    <a href="/blog" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Блог</a>
                                     <a href="/about" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">О нас</a>
                                     <a href="/location" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Локация</a>
                                     <a href="/contacts" class="text-sm tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors py-2">Контакты</a>
@@ -215,6 +212,8 @@
                             class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Прайс</a><a
                             href="/process"
                             class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Процесс</a><a
+                            href="/blog"
+                            class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Блог</a><a
                             href="/about"
                             class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">О
                             нас</a><a href="/location"
@@ -305,20 +304,6 @@
                 </div>
             </section>
         </main>
-        <script>
-            document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            });
-            document.getElementById('mobile-menu-close')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.add('hidden');
-                document.body.style.overflow = '';
-            });
-            document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.add('hidden');
-                document.body.style.overflow = '';
-            });
-        </script>
         <script defer src="/assets/services-menu.js?v=6"></script>
         <script defer src="/assets/demo-block.js?v=3"></script>
         <script defer src="/assets/voice-input.js"></script>
@@ -361,6 +346,20 @@
             window.addEventListener('scroll', loadGTM, { once: true });
             window.addEventListener('mousemove', loadGTM, { once: true });
             setTimeout(loadGTM, 5000);
+        </script>
+        <script>
+            document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+            document.getElementById('mobile-menu-close')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
         </script>
 
     </div>

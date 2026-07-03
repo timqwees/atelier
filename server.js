@@ -1143,6 +1143,46 @@ app.get(STANDARD_HTML_ROUTES, (req, res, next) => {
   res.send(renderStaticHtmlPage(page));
 });
 
+// Blog data loading
+const BLOG_DATA_PATH = join(__dirname, 'public', 'blog', 'data', 'articles.json');
+let blogArticles = [];
+
+function loadBlogArticles() {
+  try {
+    if (existsSync(BLOG_DATA_PATH)) {
+      const data = readFileSync(BLOG_DATA_PATH, 'utf-8');
+      blogArticles = JSON.parse(data);
+      blogArticles.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+  } catch (err) {
+    console.error('Failed to load blog articles:', err.message);
+    blogArticles = [];
+  }
+}
+
+loadBlogArticles();
+
+// Blog API
+app.get('/api/blog/articles', (req, res) => {
+  res.setHeader('Cache-Control', 'public, max-age=300');
+  res.json(blogArticles);
+});
+
+// Blog listing page
+app.get('/blog', (req, res) => {
+  res.sendFile(join(PUBLIC_DIR, 'blog', 'index.html'));
+});
+
+// Blog article page
+app.get('/blog/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+  if (isNaN(id)) {
+    res.sendFile(join(PUBLIC_DIR, 'blog', 'article.html'));
+    return;
+  }
+  res.sendFile(join(PUBLIC_DIR, 'blog', 'article.html'));
+});
+
 app.use(express.static(join(__dirname, 'public')));
 
 const PRICE_DATA = `

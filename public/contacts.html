@@ -227,19 +227,24 @@
         </nav>
         <main class="min-h-screen pt-16">
             <section class="py-24 sm:py-32 bg-background">
-
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div data-reveal class="max-w-3xl">
-                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Контакты</p>
-                        <h1
-                            class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
-                            Записаться на консультацию</h1>
-                        <p class="text-muted-foreground max-w-3xl mb-8 leading-relaxed">Оставьте заявку, чтобы обсудить
-                            изделие, ткань, сроки, посадку и предварительную стоимость работы.</p>
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Запись</p>
+                        <h1 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Начните с <em>консультации</em></h1>
+                        <p class="text-muted-foreground leading-relaxed mb-8">Оставьте заявку, и мы свяжемся с вами для записи на персональную консультацию. Обсудим ваши пожелания и подберём оптимальное решение.</p>
                         <ul class="space-y-3">
-                            <li class="text-sm text-muted-foreground">Телефон: +7 (915) 371-50-41</li>
-                            <li class="text-sm text-muted-foreground">Адрес: Москва, ул. Петровка 15/13, стр. 3</li>
-                            <li class="text-sm text-muted-foreground">Форма посещения: только по записи</li>
+                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                Персональный подход к каждому клиенту
+                            </li>
+                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                Бесплатная первичная консультация
+                            </li>
+                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary shrink-0"><polyline points="20 6 9 17 4 12"/></svg>
+                                Удобное расположение в центре Москвы
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -248,28 +253,51 @@
             <section class="py-24 sm:py-32 bg-muted/30">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div data-reveal class="max-w-3xl">
-                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Как записаться</h2>
-                        <p class="text-muted-foreground leading-relaxed mb-4">Запишитесь на консультацию по телефону +7 (915) 371-50-41, через WhatsApp или оставьте заявку на сайте. Мы перезвоним в течение рабочего дня и подберём удобное время для визита в ателье.</p>
-                        <p class="text-muted-foreground leading-relaxed mb-8">На первой встрече обсудим вашу идею, подберём ткань, оценим объём работ и стоимость. Консультация бесплатна и ни к чему не обязывает. Приходите с фото, эскизами или описанием того, что вам хотелось бы иметь.</p>
-
-                        <h3 class="font-serif text-2xl mb-4">Частые вопросы</h3>
-                        <div class="space-y-6">
-                            <div>
-                                <h4 class="font-medium mb-1">Нужно ли приходить лично?</h4>
-                                <p class="text-sm text-muted-foreground leading-relaxed">Для первой консультации — да, это важно для обсуждения деталей. Далее возможны онлайн-связь и примерки по согласованию.</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Какие документы нужны?</h4>
-                                <p class="text-sm text-muted-foreground leading-relaxed">Никаких специальных документов не нужно. Просто приходите с идеей или фото.</p>
-                            </div>
-                            <div>
-                                <h4 class="font-medium mb-1">Можно ли привести свою ткань?</h4>
-                                <p class="text-sm text-muted-foreground leading-relaxed">Да, мы работаем с тканями клиента. На консультации оценим качество материала и подскажем, подходит ли он для задуманного изделия.</p>
-                            </div>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Оставить заявку</h2>
+                        <div class="rounded-lg border border-border bg-background p-6 sm:p-8 shadow-sm">
+                            <form id="contact-form" class="space-y-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium mb-1">Ваше имя *</label>
+                                    <input type="text" id="name" name="name" required class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium mb-1">Телефон</label>
+                                    <input type="tel" id="phone" name="phone" class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label for="email" class="block text-sm font-medium mb-1">Email</label>
+                                    <input type="email" id="email" name="email" class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm">
+                                </div>
+                                <div>
+                                    <label for="message" class="block text-sm font-medium mb-1">Сообщение</label>
+                                    <textarea id="message" name="message" rows="4" class="w-full rounded-md border border-border bg-background px-3 py-2 text-sm resize-none"></textarea>
+                                </div>
+                                <button type="submit" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-10 px-8">Отправить заявку</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </section>
+
+            <script>
+                document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const form = e.target;
+                    const data = Object.fromEntries(new FormData(form));
+                    try {
+                        const res = await fetch('/api/contact', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(data)
+                        });
+                        if (res.ok) {
+                            form.innerHTML = '<div class="text-center py-8"><p class="font-serif text-2xl mb-2">Заявка отправлена</p><p class="text-muted-foreground">Мы свяжемся с вами в ближайшее время для согласования удобного времени визита.</p></div>';
+                        }
+                    } catch(err) {
+                        console.error(err);
+                    }
+                });
+            </script>
         </main>
         <script defer src="/assets/services-menu.js?v=6"></script>
         <script defer src="/assets/demo-block.js?v=3"></script>

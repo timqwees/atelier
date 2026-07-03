@@ -196,56 +196,318 @@
         </nav>
         <main class="min-h-screen pt-16">
             <section class="py-24 sm:py-32 bg-background">
-
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div data-reveal class="max-w-3xl">
-                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Прайс</p>
-                        <h1
-                            class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
-                            Прайс-лист услуг</h1>
-                        <p class="text-muted-foreground max-w-3xl mb-8 leading-relaxed">Стоимость пошива рассчитывается
-                            по типу изделия, материалам, конструктивной сложности и дополнительным элементам.</p>
-                        <ul class="space-y-3">
-                            <li class="text-sm text-muted-foreground">Топы, блузы, юбки, брюки и платья</li>
-                            <li class="text-sm text-muted-foreground">Жакеты, пиджаки, пальто, куртки и верхняя одежда
-                            </li>
-                            <li class="text-sm text-muted-foreground">Доплаты за подкладку, сложные ткани, декор,
-                                карманы и ручные работы</li>
-                        </ul>
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Стоимость</p>
+                        <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
+                            Прайс-лист <em>услуг</em>
+                        </h1>
+                        <p class="text-muted-foreground max-w-3xl mb-8 leading-relaxed">Стоимость зависит от сложности изделия, выбранных материалов и объёма работ. Точную цену уточняйте на персональной консультации.</p>
+                        <p class="text-sm text-muted-foreground/50">Стоимость указана без учёта ткани. Финальная цена определяется после консультации.</p>
                     </div>
                 </div>
             </section>
 
             <section class="py-24 sm:py-32 bg-muted/30">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div data-reveal class="max-w-3xl">
-                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Как формируется стоимость</h2>
-                        <p class="text-muted-foreground leading-relaxed mb-4">Стоимость пошива зависит от нескольких факторов: тип изделия, сложность конструкции, вид ткани и количество дополнительных элементов. Точную цену мы называем после консультации, когда видим ткань и понимаем объём работ.</p>
+                    <div data-reveal class="max-w-5xl">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Индивидуальный пошив</h2>
+                        <img src="/images/price-tailoring.png" alt="Прайс на пошив" class="rounded-lg mb-10 w-full max-w-2xl" loading="lazy">
 
-                        <div class="space-y-4 mt-6">
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
-                                <h3 class="font-medium mb-1">Тип изделия</h3>
-                                <p class="text-sm text-muted-foreground">Платье-футляр, классические брюки или простой топ стоят меньше, чем пальто с подкладом или сложный корсет с косточками.</p>
-                            </div>
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
-                                <h3 class="font-medium mb-1">Ткань</h3>
-                                <p class="text-sm text-muted-foreground">Работа с тонким шёлком, кашемиром или кожей требует специальных технологий и занимает больше времени. Стоимость работы выше для капризных материалов.</p>
-                            </div>
-                            <div class="p-4 rounded-lg border border-border/50 bg-card">
-                                <h3 class="font-medium mb-1">Дополнительные элементы</h3>
-                                <p class="text-sm text-muted-foreground">Подклад, карманы, пояса, пуговицы из натурального материала, ручная отстрочка, вышивка — всё это увеличивает объём работы и стоимость.</p>
-                            </div>
-                        </div>
+                        <h3 class="text-lg font-medium mb-4">Основы изделий</h3>
+                        <table class="w-full text-sm mb-12">
+                            <thead>
+                                <tr class="border-b border-border/50">
+                                    <th class="text-left py-3 pr-4 font-medium">Изделие</th>
+                                    <th class="text-right py-3 pl-4 font-medium">Стоимость</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Топ</td><td class="py-3 pl-4 text-right">от 14 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Платье-футляр без рукава</td><td class="py-3 pl-4 text-right">от 25 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Платье прямое с рукавом</td><td class="py-3 pl-4 text-right">от 29 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Платье с отрезной талией</td><td class="py-3 pl-4 text-right">от 35 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Юбка прямая до колена</td><td class="py-3 pl-4 text-right">от 15 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Юбка по косой</td><td class="py-3 pl-4 text-right">от 20 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Блуза с длинным рукавом</td><td class="py-3 pl-4 text-right">от 27 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Блуза без рукава</td><td class="py-3 pl-4 text-right">от 20 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Брюки женские (два кармана)</td><td class="py-3 pl-4 text-right">от 24 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Брюки спорт</td><td class="py-3 pl-4 text-right">от 19 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Джинсы</td><td class="py-3 pl-4 text-right">от 30 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Жилет</td><td class="py-3 pl-4 text-right">от 24 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Жакет «шанель» на органзе</td><td class="py-3 pl-4 text-right">от 55 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Жакет</td><td class="py-3 pl-4 text-right">от 48 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Пальто</td><td class="py-3 pl-4 text-right">от 77 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Плащ</td><td class="py-3 pl-4 text-right">от 68 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Сорочка с длинным рукавом</td><td class="py-3 pl-4 text-right">от 24 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Классические брюки</td><td class="py-3 pl-4 text-right">от 30 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Лонгслив трикотажный</td><td class="py-3 pl-4 text-right">от 14 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Худи с капюшоном</td><td class="py-3 pl-4 text-right">от 16 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Свитшот трикотажный</td><td class="py-3 pl-4 text-right">от 14 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Футболка</td><td class="py-3 pl-4 text-right">от 8 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Куртка без подкладки</td><td class="py-3 pl-4 text-right">от 35 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Корсет</td><td class="py-3 pl-4 text-right">от 50 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Пиджак мужской кэжуал</td><td class="py-3 pl-4 text-right">от 65 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Пиджак мужской беспоук</td><td class="py-3 pl-4 text-right">от 120 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Бейсболка</td><td class="py-3 pl-4 text-right">от 10 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Бомбер мужской без подкладки</td><td class="py-3 pl-4 text-right">от 35 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Парка без подкладки</td><td class="py-3 pl-4 text-right">от 48 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Сорочка мужская</td><td class="py-3 pl-4 text-right">от 25 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Пальто зимнее</td><td class="py-3 pl-4 text-right">от 125 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Жилет пуховой (короткий)</td><td class="py-3 pl-4 text-right">от 40 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Пуховик короткий</td><td class="py-3 pl-4 text-right">от 65 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Пуховик длинный</td><td class="py-3 pl-4 text-right">от 80 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Дублёнка короткая</td><td class="py-3 pl-4 text-right">от 75 000 ₽</td></tr>
+                                <tr class="bg-muted/20"><td class="py-3 pr-4">Парка на меховой подкладке (короткая)</td><td class="py-3 pl-4 text-right">от 150 000 ₽</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h3 class="text-lg font-medium mb-4">Усложняющие элементы</h3>
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b border-border/50">
+                                    <th class="text-left py-3 pr-4 font-medium">Элемент</th>
+                                    <th class="text-right py-3 pl-4 font-medium">Наценка</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Подкладка</td><td class="py-3 pl-4 text-right">+50%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ткань: клетка, полоска, крупный рисунок</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Белая ткань</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Шифон, бархат, велюр, кружево</td><td class="py-3 pl-4 text-right">+50%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Кожа, мех</td><td class="py-3 pl-4 text-right">+100%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Дополнительные рельефы</td><td class="py-3 pl-4 text-right">+15%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Рукав реглан</td><td class="py-3 pl-4 text-right">+15%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Отрезная талия, доп. сечения</td><td class="py-3 pl-4 text-right">+10%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Капюшон</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Фантазийный / сложный воротник</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Супатная застёжка, клеванты</td><td class="py-3 pl-4 text-right">+15%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Дополнительные карманы</td><td class="py-3 pl-4 text-right">2 000 ₽ / шт.</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Отделочные строчки</td><td class="py-3 pl-4 text-right">+5%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ручной стяжек</td><td class="py-3 pl-4 text-right">300 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Обработка в окантовку</td><td class="py-3 pl-4 text-right">200 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ткань дабл</td><td class="py-3 pl-4 text-right">+50%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Манжеты, шлицы</td><td class="py-3 pl-4 text-right">+10%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Пояс</td><td class="py-3 pl-4 text-right">+2 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Декоративные элементы</td><td class="py-3 pl-4 text-right">от 1 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изготовление декор. тесьмы (шанель)</td><td class="py-3 pl-4 text-right">250 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Канты</td><td class="py-3 pl-4 text-right">150 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Размер свыше 56</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Кокетка отлётная</td><td class="py-3 pl-4 text-right">от 2 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Погоны, паты</td><td class="py-3 pl-4 text-right">от 500 ₽ / шт.</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Длинное изделие</td><td class="py-3 pl-4 text-right">+25%</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Шов «американка»</td><td class="py-3 pl-4 text-right">300 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Оверлок ролевый</td><td class="py-3 pl-4 text-right">150 ₽ / 10 см</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Вышивка на рубашке (инициалы), ручная</td><td class="py-3 pl-4 text-right">1 000 ₽ / 2 буквы</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Меховой воротник отложной</td><td class="py-3 pl-4 text-right">от 8 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Меховой воротник английский</td><td class="py-3 pl-4 text-right">от 15 000 ₽</td></tr>
+                                <tr class="border-b border-border/30"><td class="py-3 pr-4">Манжеты меховые</td><td class="py-3 pl-4 text-right">от 10 000 ₽</td></tr>
+                                <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Строчка по трикотажу с застилом</td><td class="py-3 pl-4 text-right">+20%</td></tr>
+                                <tr class="bg-muted/20"><td class="py-3 pr-4">Усложнённый крой</td><td class="py-3 pl-4 text-right">+50%</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </section>
 
             <section class="py-24 sm:py-32 bg-background">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div data-reveal class="max-w-3xl">
-                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Корректировка и ремонт</h2>
-                        <p class="text-muted-foreground leading-relaxed mb-4">Помимо пошива с нуля, мы выполняем корректировку готовых изделий: ушиваем, подгоняем по фигуре, меняем подклад, чиним швы, восстанавливаем застёжки. Стоимость корректировки рассчитывается индивидуально после осмотра изделия.</p>
-                        <p class="text-muted-foreground leading-relaxed">Для корректировки приходите в ателье без записи — или позвоните, чтобы подобрать удобное время. Мы оценим объём работ и назовём стоимость на месте.</p>
+                    <div data-reveal class="max-w-5xl">
+                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Корректировка изделий</h2>
+                        <p class="text-sm text-muted-foreground/50 mb-4">Указаны минимальные цены. На подкладке +50%. Стоимость зависит от сложности.</p>
+                        <img src="/images/price-alterations.png" alt="Прайс на корректировку" class="rounded-lg mb-10 w-full max-w-2xl" loading="lazy">
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Пиджак</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Длина рукава через шлицу, с переносом петель</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Длина рукава через низ без переноса петель со шлицей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Длина рукава через окат с плечевыми накладками</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 5 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Длина рукава через окат, облегчённый вариант</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Корректировка проймы, длина плеча</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 5 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить / расставить по среднему шву без шлицы</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить / расставить по среднему шву со шлицей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить / расставить по рельефам без шлиц</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить / расставить по рельефам со шлицей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Корректировка линии ростка без плечевых</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 700 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Корректировка линии ростка с плечевыми</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины изделия</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины изделия с одной шлицей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины изделия с 2 шлицами</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить рукава по переднему шву с корректировкой низа</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить рукава по локтевому до шлицы</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Замена подкладки частичная</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Замена подкладки полная с изготовлением карманов</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 14 000 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Восстановление ручного стяжка (10 см)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 200 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Брюки</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить / расшить средний шов пояса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить / расшить по боковым без затрагивания пояса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 800 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить / расшить по боковым с затрагиванием пояса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить / расшить по шаговым</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Коррекция переднезаднего баланса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины с тесьмой</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 800 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины под строчку (чиносы)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины с манжетой (с тесьмой)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины с манжетой без тесьмы</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 800 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Восстановить мешковину кармана</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Перекрой задней половинки</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Перенос окантовки (10 см)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 200 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Углубить шов сиденья</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 000 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Джинсы</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины с сохранением вара</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 300 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины без сохранения вара</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 800 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменить объём талии (ушить пояс, отформовать кокетку)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 700 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить по боковым или шаговым без отделочной строчки</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 300 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить по боковым или шаговым с отделочной строчкой</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Штопка (1 кв. см)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Штопка под карманами с восстановлением строчек (1 карман)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Замена молнии с вмешательством в пояс</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение баланса (перенос шлевок)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Замена мешковины кармана</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Сорочка / Блузка</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины рукава с переносом планки</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины рукава без переноса планки</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины изделия с восст. уголков по боковым</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 250 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины изделия</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить по вытачкам</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить по боковым (запаковочный шов)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить по боковым под оверлок</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить рукава (запаковочный шов) до манжеты</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить рукава под оверлок</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Корректировка проймы (запаковочный шов)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Корректировка проймы под оверлок</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Корректировка баланса (кокетка)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Юбка</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины прямого силуэта без шлицы</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины прямого силуэта со шлицей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины (полусолнце или клинья)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 700 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить по боковым</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить по среднему с переносом молнии</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Корректировка баланса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Шов «американка» (10 см)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 150 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Ролевый шов (10 см)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 100 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Платье</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изменение длины бретелей</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение баланса с перекроем плечевого пояса</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Коррекция пройм</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Корректировка линии талии с переносом молнии</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 3 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить по боковым или рельефам</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить по вытачкам по спинке или переду</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Перенос / замена молнии</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить длинные рукава без корректировки низа</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 900 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Ушить рукава с корректировкой низа</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Изменение длины подкладки (прямой крой)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 300 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Изготовить подкладку (прямой крой, без ткани)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 15 000 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Пуховики</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Укоротить рукава по низу</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 5 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Укоротить рукава через окат</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 9 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Укоротить длину</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 5 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ушить по боковым или рельефам</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 9 000 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Ушить по среднему шву</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 500 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Дополнительно</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Изготовление глазковой петли</td><td class="py-3 pl-4 text-right whitespace-nowrap">350 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Пришить пуговицу</td><td class="py-3 pl-4 text-right whitespace-nowrap">150 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Поставить кнопку</td><td class="py-3 pl-4 text-right whitespace-nowrap">250 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Замена молнии на ветрозащитном клапане</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 5 000 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Замена молнии с кантами на ветрозащитном клапане</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 6 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Ремонт кармана (1 ед.)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 2 500 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Замена молнии без ветрозащитного клапана</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 4 000 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Трикотаж</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Укоротить футболку на распошиве</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Укоротить футболку с разрезами по бокам</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 500 ₽</td></tr>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Укоротить рукава на футболке</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 1 200 ₽</td></tr>
+                                        <tr class="border-b border-border/30 bg-muted/20"><td class="py-3 pr-4">Укоротить низ трикотаж 7–10 класс (петля в петлю)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 8 000 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Укоротить низ трикотаж 10–14 класс (петля в петлю)</td><td class="py-3 pl-4 text-right whitespace-nowrap">от 12 000 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
+
+                        <details class="border border-border/50 rounded-lg mb-4">
+                            <summary class="p-4 cursor-pointer font-medium hover:bg-muted/30 transition-colors">Галантерея</summary>
+                            <div class="p-4 border-t border-border/50">
+                                <table class="w-full text-sm">
+                                    <tbody>
+                                        <tr class="border-b border-border/30"><td class="py-3 pr-4">Пробивка отверстия в ремне</td><td class="py-3 pl-4 text-right whitespace-nowrap">140 ₽</td></tr>
+                                        <tr><td class="py-3 pr-4">Укорачивание ремня с винтовым отверстием</td><td class="py-3 pl-4 text-right whitespace-nowrap">170 ₽</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </details>
                     </div>
                 </div>
             </section>

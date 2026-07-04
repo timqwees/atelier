@@ -34,6 +34,7 @@ const STANDARD_HTML_PAGE_FILES = [
   'location.html',
   'contacts.html',
   'privacy-policy.html',
+  'user-agreement.html',
 ];
 const STANDARD_HTML_PAGES = loadStandardHtmlPages();
 const STANDARD_HTML_ROUTES = STANDARD_HTML_PAGES.map((page) => page.route);
@@ -287,57 +288,6 @@ function serializeServiceMenuNode(node) {
     type: node.type,
     children: node.children.map(serializeServiceMenuNode),
   };
-}
-
-function renderStaticFooter() {
-  return `
-    <footer class="py-12 bg-background border-t border-border/50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div>
-            <a href="/" class="font-serif text-lg tracking-wide">Ателье 15/13</a>
-            <p class="text-xs text-muted-foreground mt-2">Премиальное ателье индивидуального пошива в Москве</p>
-            <p class="text-xs text-muted-foreground mt-1">ИНН: 7701234567 &middot; ОГРН: 1207700123456</p>
-          </div>
-          <div>
-            <p class="text-xs font-medium text-foreground mb-2">Контакты</p>
-            <p class="text-xs text-muted-foreground">Москва, ул. Петровка 15/13, стр. 3</p>
-            <p class="text-xs text-muted-foreground">Пн-Сб 10:00-20:00</p>
-            <p class="text-xs text-muted-foreground">Только по записи</p>
-            <a href="tel:+79153715041" class="text-xs text-muted-foreground hover:text-foreground">+7 (915) 371-50-41</a>
-          </div>
-          <div>
-            <p class="text-xs font-medium text-foreground mb-2">Оплата и условия</p>
-            <p class="text-xs text-muted-foreground">Наличные, карта, перевод</p>
-            <p class="text-xs text-muted-foreground">Предоплата 50%</p>
-            <p class="text-xs text-muted-foreground">Гарантия на работы</p>
-            <div class="flex items-center gap-3 mt-3">
-              <a href="https://wa.me/79153715041" target="_blank" rel="noopener" class="text-xs text-muted-foreground hover:text-foreground">WhatsApp</a>
-              <a href="https://vk.com/atelier1513" target="_blank" rel="noopener" class="text-xs text-muted-foreground hover:text-foreground">VK</a>
-            </div>
-          </div>
-        </div>
-        <div class="border-t border-border/50 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-xs text-muted-foreground">&copy; ${new Date().getFullYear()} Ателье 15/13. Все права защищены.</p>
-          <a href="/privacy-policy" class="text-xs text-muted-foreground hover:text-foreground">Политика конфиденциальности</a>
-        </div>
-      </div>
-    </footer> <!-- PDFa --> <div itemscope itemtype="https://schema.org/Organization" style="display: none;">
-  <meta itemprop="name" content="Ателье 15/13" />
-  <meta itemprop="url" content="https://atelie1513.ru/" />
-  <meta itemprop="telephone" content="+7 (915) 371-50-41" />
-  <meta itemprop="taxID" content="7701234567" />
-  <meta itemprop="iso6523Code" content="1207700123456" />
-  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-    <meta itemprop="addressLocality" content="Москва" />
-    <meta itemprop="streetAddress" content="ул. Петровка 15/13, стр. 3" />
-    <meta itemprop="addressCountry" content="RU" />
-  </div>
-  <div itemprop="hasOfferCatalog" itemscope itemtype="https://schema.org/OfferCatalog">
-    <meta itemprop="name" content="Услуги ателье" />
-  </div>
-</div>
-  `;
 }
 
 function renderBreadcrumbs(breadcrumbs) {
@@ -637,7 +587,6 @@ function renderServiceContent(page, req) {
   })(document,"script");
 </script>
 
-    ${renderStaticFooter()}
   `;
 }
 
@@ -789,7 +738,6 @@ function renderServiceNotFoundPage(req) {
   })(document,"script");
 </script>
 
-      ${renderStaticFooter()}
     </div>
   </body>
 </html>`;
@@ -1172,6 +1120,9 @@ app.get('/api/blog/articles', (req, res) => {
 app.get('/blog', (req, res) => {
   res.sendFile(join(PUBLIC_DIR, 'blog', 'index.html'));
 });
+
+// Blog images (must be before /blog/:id to avoid route conflict)
+app.use('/blog/images', express.static(join(PUBLIC_DIR, 'blog', 'images')));
 
 // Blog article page
 app.get('/blog/:id', (req, res) => {

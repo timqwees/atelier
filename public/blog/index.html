@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="Cache-control" content="no-cache, no-store, must-revalidate">
@@ -28,69 +27,78 @@
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <script type="module" crossorigin src="/assets/index-DGEI_cvq.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
     <style>
+        .filter-btn {
+            height: 34px;
+            padding: 0 16px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid hsl(var(--border));
+            background: hsl(var(--background));
+            color: hsl(var(--muted-foreground));
+            transition: all .15s;
+            white-space: nowrap;
+        }
+        .filter-btn:hover {
+            border-color: hsl(var(--muted-foreground) / .4);
+            background: hsl(var(--muted) / .3);
+            color: hsl(var(--foreground));
+        }
+        .filter-btn.active {
+            background: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+            border-color: hsl(var(--primary));
+        }
         .blog-card {
             border-radius: 12px;
             background: hsl(var(--card));
             border: 1px solid hsl(var(--border));
-            transition: box-shadow .2s, transform .2s;
             overflow: hidden;
+            transition: box-shadow .2s, transform .2s;
         }
         .blog-card:hover {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
             transform: translateY(-2px);
         }
-        .blog-card-grid {
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            min-height: 180px;
-        }
-        @media (max-width: 767px) {
-            .blog-card-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-        .blog-card-img-wrap {
-            position: relative;
-            overflow: hidden;
-            min-height: 180px;
+        .blog-card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
             background: hsl(var(--muted));
-        }
-        .blog-card-img-wrap .blog-card-bg {
-            position: absolute;
-            inset: 0;
-            background-size: cover;
-            background-position: center;
             transition: transform .3s;
         }
-        .blog-card:hover .blog-card-img-wrap .blog-card-bg {
-            transform: scale(1.04);
-        }
-        .blog-card-category {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            padding: 3px 10px;
-            border-radius: 4px;
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
-            font-size: 11px;
-            font-weight: 600;
+        .blog-card:hover .blog-card-img {
+            transform: scale(1.03);
         }
         .blog-card-body {
-            padding: 20px 22px 16px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
+            flex: 1;
+        }
+        .blog-card-category {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 4px;
+            background: hsl(var(--primary) / .1);
+            color: hsl(var(--primary));
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .03em;
+            margin-bottom: 10px;
+            width: fit-content;
         }
         .blog-card-title {
             font-family: var(--font-heading);
-            font-size: 18px;
-            line-height: 24px;
+            font-size: 16px;
+            line-height: 22px;
             font-weight: 600;
             color: hsl(var(--foreground));
             display: -webkit-box;
@@ -100,8 +108,8 @@
         }
         .blog-card-text {
             margin-top: 8px;
-            font-size: 14px;
-            line-height: 20px;
+            font-size: 13px;
+            line-height: 19px;
             color: hsl(var(--muted-foreground));
             flex: 1;
             display: -webkit-box;
@@ -113,51 +121,31 @@
             margin-top: 14px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 13px;
-            color: hsl(var(--muted-foreground) / .6);
-        }
-        .blog-btn-more {
-            margin-left: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            height: 30px;
-            padding: 0 14px;
-            border-radius: 6px;
-            color: hsl(var(--primary-foreground));
+            gap: 10px;
             font-size: 12px;
-            font-weight: 600;
-            background: hsl(var(--primary));
-            text-decoration: none;
-            transition: opacity .2s;
+            color: hsl(var(--muted-foreground) / .5);
         }
-        .blog-btn-more:hover {
-            opacity: 0.9;
-        }
-        .blog-btn-more i {
-            font-size: 10px;
-        }
-        .filter-btn {
-            height: 34px;
-            padding: 0 16px;
-            border-radius: 6px;
+        .blog-card-link {
+            margin-left: auto;
             font-size: 13px;
             font-weight: 500;
-            cursor: pointer;
+            color: hsl(var(--primary));
+            text-decoration: none;
+            transition: opacity .15s;
+        }
+        .blog-card-link:hover {
+            opacity: .8;
+        }
+        .featured-card {
+            border-radius: 16px;
+            background: hsl(var(--card));
             border: 1px solid hsl(var(--border));
-            background: hsl(var(--background));
-            color: hsl(var(--foreground));
-            transition: background .15s, border-color .15s;
+            overflow: hidden;
+            transition: box-shadow .2s, transform .2s;
         }
-        .filter-btn:hover {
-            border-color: hsl(var(--muted-foreground) / .4);
-            background: hsl(var(--muted) / .3);
-        }
-        .filter-btn.active {
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
-            border-color: hsl(var(--primary));
+        .featured-card:hover {
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+            transform: translateY(-2px);
         }
         .sidebar-card {
             border-radius: 12px;
@@ -166,14 +154,14 @@
             overflow: hidden;
         }
         .sidebar-card-header {
-            padding: 14px 18px;
-            border-bottom: 1px solid hsl(var(--border));
-            font-size: 15px;
-            font-weight: 700;
+            padding: 16px 18px 12px;
+            font-family: var(--font-heading);
+            font-size: 16px;
+            font-weight: 600;
             color: hsl(var(--foreground));
         }
         .sidebar-card-body {
-            padding: 12px 18px;
+            padding: 4px 18px 16px;
         }
         .popular-item {
             display: flex;
@@ -184,29 +172,16 @@
             transition: opacity .15s;
         }
         .popular-item:hover {
-            opacity: 0.8;
+            opacity: .8;
         }
         .popular-item:last-child {
             border-bottom: none;
         }
-        .popular-item-num {
-            width: 24px;
-            height: 24px;
-            min-width: 24px;
-            border-radius: 4px;
-            background: hsl(var(--primary));
-            color: hsl(var(--primary-foreground));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 700;
-        }
         .popular-item-img {
             width: 72px;
-            height: 52px;
+            height: 54px;
             min-width: 72px;
-            border-radius: 6px;
+            border-radius: 8px;
             object-fit: cover;
             background: hsl(var(--muted));
         }
@@ -216,7 +191,7 @@
         }
         .popular-item-title {
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 500;
             color: hsl(var(--foreground));
             line-height: 17px;
             display: -webkit-box;
@@ -226,8 +201,45 @@
         }
         .popular-item-meta {
             font-size: 11px;
-            color: hsl(var(--muted-foreground) / .6);
-            margin-top: 3px;
+            color: hsl(var(--muted-foreground) / .5);
+            margin-top: 4px;
+        }
+        .services-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background .15s;
+        }
+        .services-item:hover {
+            background: hsl(var(--muted) / .3);
+        }
+        .services-item-icon {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 8px;
+            background: hsl(var(--primary) / .08);
+            color: hsl(var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .services-item-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+        .services-item-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: hsl(var(--foreground));
+        }
+        .services-item-desc {
+            font-size: 11px;
+            color: hsl(var(--muted-foreground));
+            margin-top: 1px;
         }
         .pagination-btn {
             display: inline-flex;
@@ -236,7 +248,7 @@
             height: 36px;
             min-width: 36px;
             padding: 0 12px;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 13px;
             font-weight: 500;
             color: hsl(var(--foreground));
@@ -282,9 +294,7 @@
                 "@id": "https://atelie1513.ru/#website",
                 "url": "https://atelie1513.ru/",
                 "name": "Ателье 15/13",
-                "publisher": {
-                    "@id": "https://atelie1513.ru/#organization"
-                }
+                "publisher": { "@id": "https://atelie1513.ru/#organization" }
             },
             {
                 "@type": "Blog",
@@ -292,26 +302,14 @@
                 "url": "https://atelie1513.ru/blog",
                 "name": "Блог — Ателье 15/13",
                 "description": "Полезные статьи о пошиве одежды, выборе тканей, уходе за изделиями и трендах моды.",
-                "publisher": {
-                    "@id": "https://atelie1513.ru/#organization"
-                }
+                "publisher": { "@id": "https://atelie1513.ru/#organization" }
             },
             {
                 "@type": "BreadcrumbList",
                 "@id": "https://atelie1513.ru/blog/#breadcrumb",
                 "itemListElement": [
-                    {
-                        "@type": "ListItem",
-                        "position": 1,
-                        "name": "Главная",
-                        "item": "https://atelie1513.ru/"
-                    },
-                    {
-                        "@type": "ListItem",
-                        "position": 2,
-                        "name": "Блог",
-                        "item": "https://atelie1513.ru/blog"
-                    }
+                    { "@type": "ListItem", "position": 1, "name": "Главная", "item": "https://atelie1513.ru/" },
+                    { "@type": "ListItem", "position": 2, "name": "Блог", "item": "https://atelie1513.ru/blog" }
                 ]
             }
         ]
@@ -323,208 +321,235 @@
             m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
             m[i].l = 1 * new Date();
             for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k)
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
         })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=109384423', 'ym');
-
         ym(109384423, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
     </script>
-    <noscript><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="Yandex.Metrika counter" title="Yandex.Metrika" /></noscript>
+    <noscript><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="" /></noscript>
     <!-- /Yandex.Metrika counter -->
 </head>
-
 <body class="bg-background text-foreground">
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="/" class="flex items-center gap-2">
-                    <span class="font-serif text-xl font-semibold">Ателье 15/13</span>
-                </a>
-                <div class="hidden md:flex items-center gap-6">
-                    <a href="/consultant" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Консультант</a>
-                    <a href="/services" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Услуги</a>
-                    <a href="/pricing" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Прайс</a>
-                    <a href="/process" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Процесс</a>
-                    <a href="/blog" class="text-xs tracking-widest uppercase text-foreground font-medium">Блог</a>
-                    <a href="/about" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">О нас</a>
-                    <a href="/location" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Локация</a>
-                    <a href="/contacts" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Контакты</a>
-                    <a href="tel:+79153715041" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-4 py-2">+7 (915) 371-50-41</a>
-                    <a href="/contacts" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-9 px-4 py-2">Записаться</a>
-                </div>
-                <button id="mobile-menu-btn" class="md:hidden p-2 text-muted-foreground hover:text-foreground">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-background border-t border-border">
-            <div class="px-4 py-4 space-y-3">
-                <a href="/consultant" class="block text-sm text-muted-foreground hover:text-foreground">Консультант</a>
-                <a href="/services" class="block text-sm text-muted-foreground hover:text-foreground">Услуги</a>
-                <a href="/pricing" class="block text-sm text-muted-foreground hover:text-foreground">Прайс</a>
-                <a href="/process" class="block text-sm text-muted-foreground hover:text-foreground">Процесс</a>
-                <a href="/blog" class="block text-sm text-foreground font-medium">Блог</a>
-                <a href="/about" class="block text-sm text-muted-foreground hover:text-foreground">О нас</a>
-                <a href="/location" class="block text-sm text-muted-foreground hover:text-foreground">Локация</a>
-                <a href="/contacts" class="block text-sm text-muted-foreground hover:text-foreground">Контакты</a>
-                <div class="pt-4 border-t border-border">
-                    <a href="/contacts" class="block w-full text-center rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-10 leading-10">Записаться</a>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main class="min-h-screen pt-16">
-        <section class="py-12 sm:py-16 bg-muted/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Блог</p>
-                    <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Статьи и советы</h1>
-                    <p class="text-muted-foreground leading-relaxed">Полезные рекомендации по выбору тканей, пошиву одежды и уходу за изделиями от мастеров ателье.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="py-8 sm:py-12">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex flex-wrap gap-2 mb-8">
-                    <button data-filter="all" class="filter-btn active">Все статьи</button>
-                    <button data-filter="Советы" class="filter-btn">Советы</button>
-                    <button data-filter="Тренды" class="filter-btn">Тренды</button>
-                    <button data-filter="Уход за одеждой" class="filter-btn">Уход за одеждой</button>
-                    <button data-filter="Мужской пошив" class="filter-btn">Мужской пошив</button>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div class="lg:col-span-8 space-y-4" id="articles-container">
-                        <!-- Articles will be loaded here by JavaScript -->
-                        <div class="text-center py-8 text-muted-foreground">Загрузка статей...</div>
+    <div id="header"></div>
+    <div id="root">
+        <main class="min-h-screen pt-16">
+            <section class="py-16 sm:py-20">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-2xl">
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Блог</p>
+                        <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-4">Статьи и советы</h1>
+                        <p class="text-muted-foreground leading-relaxed">Полезные рекомендации по выбору тканей, пошиву одежды и уходу за изделиями от мастеров ателье.</p>
                     </div>
+                </div>
+            </section>
 
-                    <aside class="lg:col-span-4 lg:sticky lg:top-24 space-y-5 h-fit">
-                        <nav class="sidebar-card">
-                            <div class="sidebar-card-header">Популярные материалы</div>
-                            <div class="sidebar-card-body" id="popular-container">
-                                <!-- Popular articles will be loaded here -->
+            <section class="pb-16">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <div class="lg:col-span-8">
+                            <div id="featured-article"></div>
+
+                            <div class="mt-4">
+                                <div id="filters" class="flex flex-wrap gap-2 mb-6"></div>
                             </div>
-                        </nav>
 
-                        <div class="sidebar-card">
-                            <div class="sidebar-card-header">Наши услуги</div>
-                            <div class="sidebar-card-body">
-                                <div class="space-y-3">
-                                    <a href="/services" class="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-                                        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                            <div id="articles-container" class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                                <div class="sm:col-span-2 text-center py-16 text-muted-foreground">Загрузка статей...</div>
+                            </div>
+
+                            <div id="pagination" class="flex justify-center gap-2 mt-10"></div>
+                        </div>
+
+                        <aside class="lg:col-span-4 lg:sticky lg:top-24 space-y-6 h-fit">
+                            <div class="sidebar-card">
+                                <div class="sidebar-card-header">Популярное</div>
+                                <div class="sidebar-card-body" id="popular-container"></div>
+                            </div>
+
+                            <div class="sidebar-card">
+                                <div class="sidebar-card-header">Наши услуги</div>
+                                <div class="sidebar-card-body space-y-1">
+                                    <a href="/services" class="services-item">
+                                        <div class="services-item-icon">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
                                         </div>
                                         <div>
-                                            <div class="font-medium text-sm">Индивидуальный пошив</div>
-                                            <div class="text-xs text-muted-foreground mt-0.5">Платья, костюмы, пальто на заказ</div>
+                                            <div class="services-item-title">Индивидуальный пошив</div>
+                                            <div class="services-item-desc">Платья, костюмы, пальто на заказ</div>
                                         </div>
                                     </a>
-                                    <a href="/services" class="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-                                        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+                                    <a href="/services" class="services-item">
+                                        <div class="services-item-icon">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg>
                                         </div>
                                         <div>
-                                            <div class="font-medium text-sm">Подгонка и ремонт</div>
-                                            <div class="text-xs text-muted-foreground mt-0.5">Адаптация и восстановление изделий</div>
+                                            <div class="services-item-title">Подгонка и ремонт</div>
+                                            <div class="services-item-desc">Адаптация и восстановление изделий</div>
                                         </div>
                                     </a>
-                                    <a href="/services" class="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors">
-                                        <div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    <a href="/contacts" class="services-item">
+                                        <div class="services-item-icon">
+                                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                         </div>
                                         <div>
-                                            <div class="font-medium text-sm">Консультация</div>
-                                            <div class="text-xs text-muted-foreground mt-0.5">Бесплатная первичная консультация</div>
+                                            <div class="services-item-title">Консультация</div>
+                                            <div class="services-item-desc">Бесплатная первичная консультация</div>
                                         </div>
                                     </a>
                                 </div>
                             </div>
-                        </div>
-                    </aside>
+                        </aside>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="py-16 bg-muted/30 border-t border-border/50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h3 class="font-serif text-2xl sm:text-3xl font-light mb-4">Нужна консультация?</h3>
-                <p class="text-muted-foreground mb-8">Запишитесь на бесплатную консультацию, чтобы обсудить ваш заказ.</p>
-                <a href="/contacts" class="inline-flex items-center h-12 px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-                    Записаться
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <footer class="border-t border-border/50 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="text-sm text-muted-foreground">© 2026 Ателье 15/13. Все права защищены.</div>
-                <div class="flex items-center gap-4 text-sm text-muted-foreground">
-                    <a href="/privacy-policy" class="hover:text-foreground transition-colors">Политика конфиденциальности</a>
-                    <a href="/contacts" class="hover:text-foreground transition-colors">Контакты</a>
+            <section class="py-16 bg-muted/30 border-t border-border/50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h3 class="font-serif text-2xl sm:text-3xl font-light mb-4">Нужна консультация?</h3>
+                    <p class="text-muted-foreground mb-8">Запишитесь на бесплатную консультацию, чтобы обсудить ваш заказ.</p>
+                    <a href="/contacts" class="inline-flex items-center h-12 px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
+                        Записаться
+                    </a>
                 </div>
-            </div>
-        </div>
-    </footer>
+            </section>
+        </main>
+    </div>
+    <div id="footer"></div>
 
+    <script src="/assets/header-footer.js"></script>
     <script>
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+        var allArticles = [];
+        var currentFilter = 'all';
+        var currentPage = 1;
+        var perPage = 6;
 
         document.addEventListener('DOMContentLoaded', function () {
             fetch('/api/blog/articles')
-                .then(function(response) { return response.json(); })
+                .then(function(r) { return r.json(); })
                 .then(function(data) {
-                    renderArticles(data);
-                    renderPopular(data.slice(0, 3));
-                    setupFilters(data);
+                    allArticles = data;
+                    renderAll();
                 })
-                .catch(function(err) {
-                    document.getElementById('articles-container').innerHTML = '<div class="text-center py-8 text-muted-foreground">Ошибка загрузки статей</div>';
+                .catch(function() {
+                    document.getElementById('articles-container').innerHTML =
+                        '<div class="sm:col-span-2 text-center py-16 text-muted-foreground">Не удалось загрузить статьи. Попробуйте позже.</div>';
                 });
         });
 
-        function renderArticles(articles) {
+        function renderAll() {
+            renderFilters();
+            renderFeatured();
+            renderArticles();
+            renderPopular();
+        }
+
+        function renderFilters() {
+            var categories = {};
+            allArticles.forEach(function(a) {
+                categories[a.category] = true;
+            });
+            var cats = Object.keys(categories);
+            var html = '<button data-filter="all" class="filter-btn active">Все статьи</button>';
+            cats.forEach(function(c) {
+                html += '<button data-filter="' + c + '" class="filter-btn">' + c + '</button>';
+            });
+            document.getElementById('filters').innerHTML = html;
+            document.querySelectorAll('#filters .filter-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('#filters .filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                    this.classList.add('active');
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    renderArticles();
+                });
+            });
+        }
+
+        function renderFeatured() {
+            var featured = allArticles[0];
+            if (!featured) return;
+            var container = document.getElementById('featured-article');
+            container.innerHTML =
+                '<a href="/blog/' + featured.id + '" class="featured-card flex flex-col sm:flex-row">' +
+                '<div class="sm:w-2/5">' +
+                '<img class="w-full h-56 sm:h-full object-cover" src="' + (featured.image || '') + '" alt="' + featured.title + '" loading="eager">' +
+                '</div>' +
+                '<div class="sm:w-3/5 p-6 sm:p-8 flex flex-col justify-center">' +
+                '<span class="inline-block px-3 py-1 rounded text-xs font-semibold bg-primary/10 text-primary w-fit mb-3">' + (featured.category || '') + '</span>' +
+                '<h2 class="font-serif text-xl sm:text-2xl font-semibold leading-snug mb-3">' + featured.title + '</h2>' +
+                '<p class="text-sm text-muted-foreground leading-relaxed">' + featured.content.substring(0, 120) + '...</p>' +
+                '<div class="flex items-center gap-3 mt-4 text-xs text-muted-foreground/50">' +
+                '<span>' + formatDate(featured.created_at) + '</span>' +
+                '<span>·</span>' +
+                '<span>' + featured.author + '</span>' +
+                '</div>' +
+                '</div>' +
+                '</a>';
+        }
+
+        function renderArticles() {
             var container = document.getElementById('articles-container');
-            if (!articles || articles.length === 0) {
-                container.innerHTML = '<div class="text-center py-8 text-muted-foreground">Пока нет статей. Вернитесь позже!</div>';
+            var filtered = currentFilter === 'all'
+                ? allArticles.slice(1)
+                : allArticles.filter(function(a) { return a.category === currentFilter && a.id !== allArticles[0].id; });
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="sm:col-span-2 text-center py-16 text-muted-foreground">Нет статей в этой категории</div>';
+                return;
+            }
+
+            var totalPages = Math.ceil(filtered.length / perPage);
+            var start = (currentPage - 1) * perPage;
+            var pageArticles = filtered.slice(start, start + perPage);
+
+            var html = '';
+            pageArticles.forEach(function(article) {
+                html +=
+                    '<a href="/blog/' + article.id + '" class="blog-card flex flex-col">' +
+                    '<img class="blog-card-img" src="' + (article.image || '') + '" alt="' + article.title + '" loading="lazy">' +
+                    '<div class="blog-card-body">' +
+                    '<span class="blog-card-category">' + (article.category || '') + '</span>' +
+                    '<h3 class="blog-card-title">' + article.title + '</h3>' +
+                    '<p class="blog-card-text">' + article.content.substring(0, 100) + '...</p>' +
+                    '<div class="blog-card-meta">' +
+                    '<span>' + formatDate(article.created_at) + '</span>' +
+                    '<span class="blog-card-link">Читать →</span>' +
+                    '</div>' +
+                    '</div>' +
+                    '</a>';
+            });
+            container.innerHTML = html;
+
+            renderPagination(filtered.length);
+        }
+
+        function renderPagination(total) {
+            var container = document.getElementById('pagination');
+            var totalPages = Math.ceil(total / perPage);
+            if (totalPages <= 1) {
+                container.innerHTML = '';
                 return;
             }
             var html = '';
-            articles.forEach(function(article) {
-                html += '<article class="blog-card" data-category="' + article.category + '">' +
-                    '<div class="blog-card-grid">' +
-                    '<div class="blog-card-img-wrap">' +
-                    '<div class="blog-card-bg" style="background-image: url(\'' + (article.image || 'https://images.unsplash.com/photo-1558171813-4c088753af8f?auto=format&fit=crop&w=700&q=60') + '\');"></div>' +
-                    (article.category ? '<span class="blog-card-category">' + article.category + '</span>' : '') +
-                    '</div>' +
-                    '<div class="blog-card-body">' +
-                    '<h2 class="blog-card-title">' + article.title + '</h2>' +
-                    '<p class="blog-card-text">' + article.content.substring(0, 150) + '...</p>' +
-                    '<div class="blog-card-meta">' +
-                    '<span>' + formatDate(article.created_at) + '</span>' +
-                    '<a href="/blog/' + article.id + '" class="blog-btn-more">Читать далее <i class="fa-solid fa-arrow-right"></i></a>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</article>';
-            });
+            for (var i = 1; i <= totalPages; i++) {
+                html += '<button class="pagination-btn' + (i === currentPage ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
+            }
             container.innerHTML = html;
+            container.querySelectorAll('.pagination-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    currentPage = parseInt(this.dataset.page);
+                    renderArticles();
+                });
+            });
         }
 
-        function renderPopular(articles) {
+        function renderPopular() {
             var container = document.getElementById('popular-container');
+            var popular = allArticles.slice(0, 4);
             var html = '';
-            articles.forEach(function(article, index) {
-                html += '<a class="popular-item" href="/blog/' + article.id + '">' +
-                    '<span class="popular-item-num">' + (index + 1) + '</span>' +
-                    '<img class="popular-item-img" alt="' + article.title + '" src="' + (article.image || '') + '">' +
+            popular.forEach(function(article) {
+                html +=
+                    '<a class="popular-item" href="/blog/' + article.id + '">' +
+                    '<img class="popular-item-img" src="' + (article.image || '') + '" alt="' + article.title + '" loading="lazy">' +
                     '<div class="popular-item-body">' +
                     '<div class="popular-item-title">' + article.title + '</div>' +
                     '<div class="popular-item-meta">' + formatDate(article.created_at) + '</div>' +
@@ -532,19 +557,6 @@
                     '</a>';
             });
             container.innerHTML = html;
-        }
-
-        function setupFilters(allArticles) {
-            document.querySelectorAll('[data-filter]').forEach(function(btn) {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    var filter = this.dataset.filter;
-                    document.querySelectorAll('[data-filter]').forEach(function(b) { b.classList.remove('active'); });
-                    this.classList.add('active');
-                    var filtered = filter === 'all' ? allArticles : allArticles.filter(function(a) { return a.category === filter; });
-                    renderArticles(filtered);
-                });
-            });
         }
 
         function formatDate(dateStr) {
@@ -557,5 +569,4 @@
         }
     </script>
 </body>
-
 </html>

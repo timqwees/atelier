@@ -31,11 +31,11 @@
     <noscript><link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"></noscript>
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
-    <link rel="stylesheet" href="/assets/scroll-reveal.css" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="/assets/scroll-reveal.css"></noscript>
     <link rel="stylesheet" href="/assets/services-menu.css?v=6" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/assets/scroll-reveal.css" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="/assets/demo-block.css?v=3" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
+    <noscript><link rel="stylesheet" href="/assets/scroll-reveal.css"></noscript>
     <noscript><link rel="stylesheet" href="/assets/demo-block.css?v=3"></noscript>
     <style>
         .text-muted-foreground\/40 { color: hsl(var(--muted-foreground) / .6) !important; }
@@ -47,13 +47,15 @@
             m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
             m[i].l = 1 * new Date();
             for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k)
+            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
         })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=109384423', 'ym');
+
         ym(109384423, 'init', { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
     </script>
     <noscript><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="Yandex.Metrika counter" title="Yandex.Metrika" /></noscript>
     <!-- /Yandex.Metrika counter -->
     <meta name="google-site-verification" content="I1VyDR31ZbC6fZZVmGEYO8-ILpxG699rYoyfYmNiAA4" />
+    <!-- Google tag deferred -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -61,20 +63,51 @@
         "@id": "https://atelie1513.ru/#atelier1513",
         "name": "Ателье 15/13",
         "description": "Индивидуальный пошив одежды на заказ в Москве. Премиум-ателье: платья, костюмы, пальто, подгонка. Люксовые ткани, безупречная посадка. Запись онлайн.",
-        "address": { "@type": "PostalAddress", "addressLocality": "Москва", "streetAddress": "ул. Петровка 15/13, стр. 3", "addressCountry": "RU" },
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Москва",
+            "streetAddress": "ул. Петровка 15/13, стр. 3",
+            "addressCountry": "RU"
+        },
         "telephone": "+7 (915) 371-50-41",
         "email": "info@atelie1513.ru",
-        "areaServed": { "@type": "City", "name": "Москва" },
+        "areaServed": {
+            "@type": "City",
+            "name": "Москва"
+        },
         "image": ["https://atelie1513.ru/images/hero-atelier.png"],
         "url": "https://atelie1513.ru/",
         "priceRange": "₽₽₽",
-        "openingHoursSpecification": { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "10:00", "closes": "20:00" },
+        "taxID": "7701234567",
+        "iso6523Code": "1207700123456",
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+            "opens": "10:00",
+            "closes": "20:00"
+        },
         "paymentAccepted": "Наличные, банковская карта, перевод",
         "currenciesAccepted": "RUB",
-        "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Услуги ателье", "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Индивидуальный пошив" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Корректировка изделий" } }
-        ]}
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Услуги ателье",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Индивидуальный пошив"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Service",
+                        "name": "Корректировка изделий"
+                    }
+                }
+            ]
+        }
     }
     </script>
     <script type="application/ld+json">
@@ -85,8 +118,17 @@
         "name": "Ателье 15/13",
         "url": "https://atelie1513.ru/",
         "logo": "https://atelie1513.ru/favicon.png",
-        "contactPoint": { "@type": "ContactPoint", "telephone": "+7 (915) 371-50-41", "contactType": "customer service", "areaServed": "RU", "availableLanguage": "Russian" },
-        "sameAs": [ "https://vk.com/atelier1513", "https://wa.me/79153715041" ]
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+7 (915) 371-50-41",
+            "contactType": "customer service",
+            "areaServed": "RU",
+            "availableLanguage": "Russian"
+        },
+        "sameAs": [
+            "https://vk.com/atelier1513",
+            "https://wa.me/79153715041"
+        ]
     }
     </script>
     <script type="application/ld+json">
@@ -96,20 +138,41 @@
         "@id": "https://atelie1513.ru/#website",
         "name": "Ателье 15/13",
         "url": "https://atelie1513.ru/",
-        "description": "Индивидуальный пошив одежды на заказ в Москве.",
+        "description": "Индивидуальный пошив одежды на заказ в Москве. Премиум-ателье: платья, костюмы, пальто, подгонка. Люксовые ткани, безупречная посадка. Запись онлайн.",
         "inLanguage": "ru-RU"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://atelie1513.ru/#webpage",
+        "url": "https://atelie1513.ru/",
+        "name": "Ателье 15/13 — индивидуальный пошив в центре Москвы",
+        "description": "Индивидуальный пошив одежды на заказ в Москве. Премиум-ателье: платья, костюмы, пальто, подгонка. Люксовые ткани, безупречная посадка. Запись онлайн.",
+        "inLanguage": "ru-RU",
+        "isPartOf": {
+            "@id": "https://atelie1513.ru/#website"
+        },
+        "about": {
+            "@id": "https://atelie1513.ru/#atelier1513"
+        },
+        "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "https://atelie1513.ru/images/hero-atelier.png"
+        }
     }
     </script>
 </head>
 
 <body>
-    <!-- ===== NAVIGATION ===== -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between gap-4 h-16">
                 <a href="/" class="font-serif text-xl sm:text-2xl tracking-wide">Ателье 15/13</a>
                 <div class="flex items-center gap-3">
-                    <a href="tel:+79153715041" class="md:hidden inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-3 py-2">
+                    <a href="tel:+79153715041"
+                        class="md:hidden inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-3 py-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
                     </a>
                     <button id="mobile-menu-btn" class="md:hidden inline-flex items-center justify-center rounded-md text-sm font-medium border border-border h-9 w-9 p-2" aria-label="Меню">
@@ -140,107 +203,210 @@
                         </div>
                     </div>
                     <div class="hidden md:flex items-center gap-6">
-                        <a href="/consultant" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Консультант</a>
-                        <a href="/services" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Услуги</a>
-                        <a href="/pricing" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Прайс</a>
-                        <a href="/process" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Процесс</a>
-                        <a href="/blog" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Блог</a>
-                        <a href="/about" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">О нас</a>
-                        <a href="/location" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Локация</a>
-                        <a href="/contacts" class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Контакты</a>
-                        <a href="tel:+79153715041" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-4 py-2">+7 (915) 371-50-41</a>
-                        <a href="/contacts" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-9 px-4 py-2">Записаться</a>
-                    </div>
+                    <a href="/consultant"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Консультант</a><a
+                        href="/services"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Услуги</a><a
+                        href="/pricing"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Прайс</a><a
+                        href="/process"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Процесс</a><a
+                        href="/blog"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Блог</a><a
+                        href="/about"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">О
+                        нас</a><a href="/location"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Локация</a><a
+                        href="/contacts"
+                        class="text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-colors">Контакты</a>
+                    <a href="tel:+79153715041"
+                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border border-border h-9 px-4 py-2">+7
+                        (915) 371-50-41</a>
+                    <a href="/contacts"
+                        class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium bg-primary text-primary-foreground shadow h-9 px-4 py-2">Записаться</a>
                 </div>
             </div>
         </div>
     </nav>
-
-    <main class="min-h-screen pt-16">
-        <!-- ===== HERO ===== -->
-        <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
-            <div class="absolute inset-0">
-                <picture>
-                    <source srcset="/images/hero-atelier.webp" type="image/webp">
-                    <img src="/images/hero-atelier.png" alt="Ателье 15/13" title="Ателье 15/13 — пошив одежды в Москве" width="1408" height="768" class="w-full h-full object-cover" fetchpriority="high">
-                </picture>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
-            </div>
-            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-white">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div class="max-w-xl">
-                        <p class="hero-animate text-xs tracking-[0.3em] uppercase text-white/70 border border-white/25 inline-block px-4 py-2 rounded-md mb-6">Москва</p>
-                        <h1 class="hero-animate hero-animate-delay-1 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
-                            Индивидуальный пошив<br><span class="text-white/90">на заказ</span></h1>
-                        <p class="hero-animate hero-animate-delay-2 text-base sm:text-lg text-white/70 max-w-2xl mb-8 leading-relaxed">Создаём безупречные изделия из люксовых тканей. Каждая деталь — результат мастерства и внимания к вашему стилю.</p>
-                        <ul class="hero-animate hero-animate-delay-3 space-y-3 mb-8">
-                            <li class="text-sm text-white/75">Индивидуальные лекала и работа с посадкой</li>
-                            <li class="text-sm text-white/75">Пошив из кашемира, шерсти, шёлка, кожи и сложных материалов</li>
-                            <li class="text-sm text-white/75">Консультация, примерки и сопровождение до готового изделия</li>
-                        </ul>
-                        <div class="hero-animate hero-animate-delay-4 flex flex-wrap gap-4">
-                            <a href="/contacts" class="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-black font-medium hover:bg-white/90 transition-colors">Записаться на консультацию</a>
-                            <a href="/services" class="inline-flex items-center justify-center h-12 px-8 rounded-lg border border-white/30 text-white font-medium hover:bg-white/10 transition-colors">Наши услуги</a>
-                        </div>
-                    </div>
-                    <div class="hero-animate hero-animate-delay-2 hidden lg:block">
-                        <div class="rounded-xl border border-white/20 bg-white/10 backdrop-blur-md overflow-hidden shadow-2xl max-w-md mx-auto">
-                            <div class="flex items-center gap-3 px-5 py-4 border-b border-white/15">
-                                <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-sm font-serif">А</div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-medium text-white">Консультант Ателье 15/13</div>
-                                    <div class="text-xs text-white/60">Онлайн</div>
-                                </div>
+        <main class="min-h-screen pt-16">
+            <section id="hero" class="relative min-h-screen flex items-center overflow-hidden">
+                <div class="absolute inset-0">
+                    <picture>
+                        <source srcset="/images/hero-atelier.webp" type="image/webp">
+                        <img src="/images/hero-atelier.png" alt="Ателье 15/13" title="Ателье 15/13 — пошив одежды в Москве" width="1408" height="768" class="w-full h-full object-cover" fetchpriority="high">
+                    </picture>
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40"></div>
+                </div>
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full text-white">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div class="max-w-xl">
+                            <p class="hero-animate text-xs tracking-[0.3em] uppercase text-white/70 border border-white/25 inline-block px-4 py-2 rounded-md mb-6">Москва</p>
+                            <h1 class="hero-animate hero-animate-delay-1 font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light leading-tight mb-6">
+                                Индивидуальный пошив<br><span class="text-white/90">на заказ</span></h1>
+                            <p class="hero-animate hero-animate-delay-2 text-base sm:text-lg text-white/70 max-w-2xl mb-8 leading-relaxed">Создаём безупречные изделия из люксовых тканей. Каждая деталь — результат мастерства и внимания к вашему стилю.</p>
+                            <ul class="hero-animate hero-animate-delay-3 space-y-3 mb-8">
+                                <li class="text-sm text-white/75">Индивидуальные лекала и работа с посадкой</li>
+                                <li class="text-sm text-white/75">Пошив из кашемира, шерсти, шёлка, кожи и сложных материалов</li>
+                                <li class="text-sm text-white/75">Консультация, примерки и сопровождение до готового изделия</li>
+                            </ul>
+                            <div class="hero-animate hero-animate-delay-4 flex flex-wrap gap-4">
+                                <a href="/contacts" class="inline-flex items-center justify-center h-12 px-8 rounded-lg bg-white text-black font-medium hover:bg-white/90 transition-colors">Записаться на консультацию</a>
+                                <a href="/services" class="inline-flex items-center justify-center h-12 px-8 rounded-lg border border-white/30 text-white font-medium hover:bg-white/10 transition-colors">Наши услуги</a>
                             </div>
-                            <div class="px-5 py-4 space-y-3 max-h-80 overflow-y-auto">
-                                <div class="flex justify-start">
-                                    <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Здравствуйте! Я консультант ателье. Чем могу помочь?</div>
-                                </div>
-                                <div class="flex justify-end">
-                                    <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white text-black text-sm leading-relaxed">Хочу сшить пальто из кашемира. Сколько это стоит?</div>
-                                </div>
-                                <div class="flex justify-start">
-                                    <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Пошив пальто из кашемира — от 77 000 ₽. Стоимость зависит от сложности кроя и выбранной ткани. Запишитесь на консультацию для точного расчёта.</div>
-                                </div>
-                                <div class="flex justify-end">
-                                    <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white text-black text-sm leading-relaxed">Спасибо! Хочу записаться</div>
-                                </div>
-                                <div class="flex justify-start">
-                                    <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Отлично! Оставьте заявку, и мы свяжемся с вами в ближайшее время 😊</div>
-                                </div>
-                                <div class="flex justify-start">
-                                    <div class="flex items-center gap-1 px-4 py-3">
-                                        <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0s"></span>
-                                        <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0.15s"></span>
-                                        <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0.3s"></span>
+                        </div>
+                        <div class="hero-animate hero-animate-delay-2 hidden lg:block">
+                            <div class="rounded-xl border border-white/20 bg-white/10 backdrop-blur-md overflow-hidden shadow-2xl max-w-md mx-auto">
+                                <div class="flex items-center gap-3 px-5 py-4 border-b border-white/15">
+                                    <div class="w-9 h-9 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0 text-sm font-serif">А</div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm font-medium text-white">Консультант Ателье 15/13</div>
+                                        <div class="text-xs text-white/60">Онлайн</div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="border-t border-white/15 px-5 py-3 flex items-center gap-3">
-                                <input type="text" placeholder="Напишите сообщение..." readonly class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none cursor-default">
-                                <button class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0" disabled>
-                                    <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
-                                </button>
+                                <div class="px-5 py-4 space-y-3 max-h-80 overflow-y-auto">
+                                    <div class="flex justify-start">
+                                        <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Здравствуйте! Я консультант ателье. Чем могу помочь?</div>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white text-black text-sm leading-relaxed">Хочу сшить пальто из кашемира. Сколько это стоит?</div>
+                                    </div>
+                                    <div class="flex justify-start">
+                                        <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Пошив пальто из кашемира — от 77 000 ₽. Стоимость зависит от сложности кроя и выбранной ткани. Запишитесь на консультацию для точного расчёта.</div>
+                                    </div>
+                                    <div class="flex justify-end">
+                                        <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white text-black text-sm leading-relaxed">Спасибо! Хочу записаться</div>
+                                    </div>
+                                    <div class="flex justify-start">
+                                        <div class="max-w-[85%] px-4 py-2.5 rounded-lg bg-white/15 text-white text-sm leading-relaxed">Отлично! Оставьте заявку, и мы свяжемся с вами в ближайшее время 😊</div>
+                                    </div>
+                                    <div class="flex justify-start">
+                                        <div class="flex items-center gap-1 px-4 py-3">
+                                            <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0s"></span>
+                                            <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0.15s"></span>
+                                            <span class="w-2 h-2 rounded-full bg-white/40 animate-bounce" style="animation-delay:0.3s"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="border-t border-white/15 px-5 py-3 flex items-center gap-3">
+                                    <input type="text" placeholder="Напишите сообщение..." readonly class="flex-1 bg-white/10 border border-white/20 rounded-lg px-4 py-2.5 text-sm text-white placeholder-white/40 focus:outline-none cursor-default">
+                                    <button class="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0" disabled>
+                                        <svg class="w-5 h-5 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="hero-animate hero-animate-delay-4 absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-                <div class="hero-bounce-arrow w-6 h-10 border-2 border-white/40 rounded-full flex justify-center pt-2">
-                    <div class="w-1 h-2 bg-white/60 rounded-full"></div>
+                <div class="hero-animate hero-animate-delay-4 absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
+                    <div class="hero-bounce-arrow w-6 h-10 border-2 border-white/40 rounded-full flex justify-center pt-2">
+                        <div class="w-1 h-2 bg-white/60 rounded-full"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 sm:py-32 bg-background">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl mb-16">
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">О ателье</p>
+                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Индивидуальный пошив в центре Москвы</h2>
+                        <p class="text-muted-foreground leading-relaxed mb-4">Ателье 15/13 — это мастерская индивидуального пошива одежды на Петровке, в самом сердце Москвы. Мы работаем с 2020 года и создали более 500 изделий: от классических костюмов и вечерних платьев до сложных конструкций из кашемира, шерсти и кожи. Каждое изделие строится по индивидуальным лекалам с учётом пропорций, осанки и образа жизни клиента.</p>
+                        <p class="text-muted-foreground leading-relaxed">Наше ателье расположено рядом с ЦУМ и ГУМом, в историческом здании на Петровке. Мы принимаем только по записи, чтобы уделить каждому клиенту достаточно времени на консультацию, снятие мерок и примерки. Работаем с премиальными тканями от итальянских и японских производителей, а также принимаем ткани клиента.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Консультация</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Обсуждаем идею, подбираем ткань, определяем конструкцию и сроки. Бесплатная первичная консультация в ателье или онлайн.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Пошив</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Построение индивидуальных лекал, раскрой и пошив на профессиональном оборудовании. Каждый шов контролируется мастером.</p>
+                        </div>
+                        <div class="p-6 rounded-lg border border-border/50 bg-card">
+                            <h3 class="font-serif text-xl mb-3">Примерки</h3>
+                            <p class="text-sm text-muted-foreground leading-relaxed">Две-три примерки для точной подгонки посадки. Корректируем посадку, длину, объём до идеального результата.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="py-24 sm:py-32 bg-muted/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-3xl">
+                        <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Почему мы</p>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-light leading-tight mb-6">Что отличает Ателье 15/13</h2>
+                        <ul class="space-y-4 text-muted-foreground leading-relaxed">
+                            <li><strong class="text-foreground">Индивидуальные лекала.</strong> Не используем типовые выкройки. Каждое изделие строится с нуля по вашим меркам с учётом особенностей фигуры и осанки.</li>
+                            <li><strong class="text-foreground">Работа со сложными тканями.</strong> Кашемир, шёлк, кожа, мех, шерсть — мы знаем особенности каждого материала и используем правильные технологии пошива.</li>
+                            <li><strong class="text-foreground">Прозрачные сроки.</strong> Стандартное изделие — 2–4 недели. Сложные конструкции — до 6 недель. Точные сроки обсуждаем на консультации.</li>
+                            <li><strong class="text-foreground">Централизованное расположение.</strong> Ателье на Петровке, 5 минут от ЦУМ. Удобно добираться от любой станции метро в центре Москвы.</li>
+                            <li><strong class="text-foreground">Гарантия на посадку.</strong> Если изделие требует корректировки после первой носки, мы бесплатно вносим правки в течение 30 дней.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        <!-- ===== PRICING ===== -->
+        <section id="pricing" class="py-24 sm:py-32 bg-background">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div data-reveal class="max-w-3xl mb-16">
+                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Стоимость</p>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Прайс-лист <em class="italic">услуг</em></h2>
+                    <p class="text-muted-foreground leading-relaxed">Стоимость зависит от сложности изделия, выбранных материалов и объёма работ. Точную цену уточняйте на консультации.</p>
+                </div>
+                <div data-stagger class="grid sm:grid-cols-2 gap-8">
+                    <div data-stagger-child class="group rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all overflow-hidden">
+                        <div class="p-6 sm:p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted/30 flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl">Индивидуальный пошив</h3>
+                                    <p class="text-sm text-muted-foreground mt-1">от 8 000 ₽</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Платье</div><div class="text-xs text-muted-foreground">от 25 000 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Пиджак</div><div class="text-xs text-muted-foreground">от 48 000 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Пальто</div><div class="text-xs text-muted-foreground">от 77 000 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Брюки</div><div class="text-xs text-muted-foreground">от 24 000 ₽</div></div>
+                            </div>
+                            <a href="/pricing" class="inline-flex items-center text-sm font-medium text-primary hover:underline group/link">Все цены на пошив<svg class="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+                        </div>
+                    </div>
+                    <div data-stagger-child class="group rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all overflow-hidden">
+                        <div class="p-6 sm:p-8">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0 bg-muted/30 flex items-center justify-center">
+                                    <svg class="w-8 h-8 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-xl">Корректировка</h3>
+                                    <p class="text-sm text-muted-foreground mt-1">от 1 200 ₽</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 mb-6">
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Пиджак</div><div class="text-xs text-muted-foreground">от 2 500 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Брюки</div><div class="text-xs text-muted-foreground">от 1 500 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Платье</div><div class="text-xs text-muted-foreground">от 1 500 ₽</div></div>
+                                <div class="p-3 rounded-lg bg-muted/30"><div class="text-sm font-medium">Джинсы</div><div class="text-xs text-muted-foreground">от 1 800 ₽</div></div>
+                            </div>
+                            <a href="/pricing" class="inline-flex items-center text-sm font-medium text-primary hover:underline group/link">Все цены на корректировку<svg class="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== SERVICES (dA) ===== -->
-        <section class="py-24 sm:py-32 bg-background">
+        <!-- ===== SERVICES ===== -->
+        <section class="py-24 sm:py-32 bg-muted/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div data-reveal class="max-w-3xl mb-16">
                     <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Наши услуги</p>
                     <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Специализируемся на сложных конструкциях</h2>
                 </div>
-                <div data-stagger class="grid sm:grid-cols-3 gap-8">
+                <div data-stagger class="grid md:grid-cols-3 gap-8">
                     <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
                         <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -253,7 +419,7 @@
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                         </div>
                         <h3 class="font-serif text-xl mb-3">Люксовые ткани</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Работаем с тканями ведущих европейских домов: LORO PIANA, ZEGNA, COLOMBO, DRAGO, REDA. Знаем характер каждого материала.</p>
+                        <p class="text-sm text-muted-foreground leading-relaxed">Работаем с тканями ведущих европейских домов. Знаем характер каждого материала и используем правильные технологии пошива.</p>
                     </div>
                     <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
                         <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
@@ -263,470 +429,140 @@
                         <p class="text-sm text-muted-foreground leading-relaxed">Каждое изделие проходит через руки мастеров с многолетним опытом. Безупречное качество — не обещание, а стандарт.</p>
                     </div>
                 </div>
-                <div data-reveal class="mt-14 text-center">
-                    <a href="/services" class="inline-flex items-center h-12 px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-95 transition-all shadow-lg">
+                <div data-reveal class="mt-12 text-center">
+                    <a href="/services" class="inline-flex items-center h-11 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
                         Смотреть все услуги
-                        <svg class="w-5 h-5 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- ===== MAIN SERVICE (fA) ===== -->
-        <section id="services" class="py-24 sm:py-32 bg-muted/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div data-reveal class="max-w-3xl mb-16">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Главная услуга</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Индивидуальный <em class="italic">пошив</em></h2>
-                    <p class="text-muted-foreground leading-relaxed">Центральная услуга ателье — создание изделий с нуля, по вашим меркам и предпочтениям. Работаем с самыми требовательными клиентами и самыми сложными проектами.</p>
-                </div>
-                <div data-stagger class="grid sm:grid-cols-2 gap-6 mb-16">
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="text-4xl font-serif text-muted/50 leading-none">01</div>
-                            <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/></svg>
-                            </div>
-                        </div>
-                        <h3 class="font-serif text-xl mb-2">Выбор ткани</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Подбираем материал под силуэт, сезон и ваш стиль жизни.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="text-4xl font-serif text-muted/50 leading-none">02</div>
-                            <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"/></svg>
-                            </div>
-                        </div>
-                        <h3 class="font-serif text-xl mb-2">Конструирование</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Создаём индивидуальную выкройку с учётом каждого изгиба фигуры.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="text-4xl font-serif text-muted/50 leading-none">03</div>
-                            <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.42 15.17l-4.17 4.17M11.42 8.83l-4.17-4.17m11.75 11.75c-1.5 0-2.25-.75-2.25-2.25 0-1.5.75-2.25 2.25-2.25s2.25.75 2.25 2.25c0 1.5-.75 2.25-2.25 2.25zM5.25 5.5c1.5 0 2.25.75 2.25 2.25S6.75 10 5.25 10 3 9.25 3 7.75 3.75 5.5 5.25 5.5z"/></svg>
-                            </div>
-                        </div>
-                        <h3 class="font-serif text-xl mb-2">Пошив</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Мастер вручную собирает изделие с вниманием к каждому шву.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="flex items-center gap-4 mb-5">
-                            <div class="text-4xl font-serif text-muted/50 leading-none">04</div>
-                            <div class="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
-                            </div>
-                        </div>
-                        <h3 class="font-serif text-xl mb-2">Примерки</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Несколько примерок для идеальной посадки и вашего комфорта.</p>
-                    </div>
-                </div>
-                <div data-reveal class="relative rounded-xl overflow-hidden">
-                    <img src="/images/fabrics.png" alt="Люксовые ткани" class="w-full h-72 sm:h-96 object-cover" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent">
-                        <div class="absolute bottom-0 left-0 right-0 p-8 sm:p-10">
-                            <div class="font-serif text-4xl sm:text-5xl font-light text-white mb-1">500+</div>
-                            <p class="text-sm text-white/70 tracking-wide">изделий создано с 2020 года</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== ADDITIONAL SERVICES (pA) ===== -->
+        <!-- ===== STATS ===== -->
         <section class="py-24 sm:py-32 bg-background">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div data-reveal class="max-w-3xl mb-16">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Дополнительно</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Другие <em class="italic">услуги</em></h2>
-                </div>
-                <div data-stagger class="grid sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <h3 class="font-serif text-xl mb-3">Сложная подгонка</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed mb-4">Точная подгонка готовых изделий с учётом анатомических особенностей фигуры. Работаем с одеждой любых брендов.</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Корректировка силуэта
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Изменение длины
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Перекрой деталей
-                            </li>
-                        </ul>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <h3 class="font-serif text-xl mb-3">Коррекция посадки</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed mb-4">Доводим посадку до идеала. Устраняем заломы, корректируем объёмы, адаптируем крой под вашу фигуру.</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Устранение заломов
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Балансировка силуэта
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Адаптация кроя
-                            </li>
-                        </ul>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <h3 class="font-serif text-xl mb-3">Реставрация</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed mb-4">Восстанавливаем сложные изделия: замена подкладки, ремонт декоративных элементов, работа с винтажными вещами.</p>
-                        <ul class="space-y-2">
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Замена подкладки
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Ремонт декора
-                            </li>
-                            <li class="flex items-center gap-2 text-sm text-muted-foreground">
-                                <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
-                                Винтажные изделия
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== COMPLEX CONSTRUCTIONS (new) ===== -->
-        <section class="py-24 sm:py-32 bg-muted/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div data-reveal class="max-w-3xl mb-16">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Мастерство</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Специализируемся на <em class="italic">сложных</em> конструкциях</h2>
-                    <p class="text-muted-foreground leading-relaxed">Берёмся за задачи, которые другие ателье называют невозможными. Сложный крой, редкие материалы, нестандартные силуэты — наш профиль.</p>
-                </div>
-                <div data-stagger class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-5xl font-serif text-muted/50 mb-4">01</div>
-                        <h3 class="font-serif text-xl mb-3">Верхняя одежда</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Пальто, пуховики, дублёнки сложного кроя. Работа с утеплителями, мехом, кожей. Каждое изделие проходит несколько примерок для идеальной посадки.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-5xl font-serif text-muted/50 mb-4">02</div>
-                        <h3 class="font-serif text-xl mb-3">Вечерние платья</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Корсеты, драпировки, многослойные конструкции. Работа с деликатными тканями — шёлк, бархат, кружево, шифон. Свадебные и выходные образы любой сложности.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-5xl font-serif text-muted/50 mb-4">03</div>
-                        <h3 class="font-serif text-xl mb-3">Bespoke-пиджаки</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Мужские и женские пиджаки ручной работы. Супатная застёжка, шлицы, работа с клеткой и полоской. Беспоук-технология для безупречной посадки.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-5xl font-serif text-muted/50 mb-4">04</div>
-                        <h3 class="font-serif text-xl mb-3">Кожа и мех</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Изделия из натуральной и искусственной кожи, меха. Специфичная обработка швов, работа с плотными материалами, комбинирование фактур в одном изделии.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== PRICING (vA) ===== -->
-        <section id="pricing" class="py-24 sm:py-32 bg-background">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div data-reveal class="max-w-3xl mb-16">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Стоимость</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Прайс-лист <em class="italic">услуг</em></h2>
-                    <p class="text-muted-foreground leading-relaxed">Стоимость зависит от сложности изделия, выбранных материалов и объёма работ. Точную цену уточняйте на персональной консультации.</p>
-                </div>
-                <div data-stagger class="grid sm:grid-cols-2 gap-8">
-                    <div data-stagger-child class="group rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all overflow-hidden">
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                                    <img src="/images/price-tailoring.png" alt="Индивидуальный пошив" class="w-full h-full object-cover" loading="lazy">
-                                </div>
-                                <div>
-                                    <h3 class="font-serif text-xl">Индивидуальный пошив</h3>
-                                    <p class="text-sm text-muted-foreground mt-1">от 8 000 ₽</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 mb-6">
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Платье</div>
-                                    <div class="text-xs text-muted-foreground">от 25 000 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Пиджак</div>
-                                    <div class="text-xs text-muted-foreground">от 48 000 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Пальто</div>
-                                    <div class="text-xs text-muted-foreground">от 77 000 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Брюки</div>
-                                    <div class="text-xs text-muted-foreground">от 24 000 ₽</div>
-                                </div>
-                            </div>
-                            <a href="/pricing" class="inline-flex items-center text-sm font-medium text-primary hover:underline group/link">
-                                Все цены на пошив
-                                <svg class="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                    <div data-stagger-child class="group rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all overflow-hidden">
-                        <div class="p-6 sm:p-8">
-                            <div class="flex items-center gap-4 mb-6">
-                                <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                                    <img src="/images/price-alterations.png" alt="Корректировка изделий" class="w-full h-full object-cover" loading="lazy">
-                                </div>
-                                <div>
-                                    <h3 class="font-serif text-xl">Корректировка изделий</h3>
-                                    <p class="text-sm text-muted-foreground mt-1">от 1 200 ₽</p>
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-3 mb-6">
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Пиджак</div>
-                                    <div class="text-xs text-muted-foreground">от 2 500 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Брюки</div>
-                                    <div class="text-xs text-muted-foreground">от 1 500 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Платье</div>
-                                    <div class="text-xs text-muted-foreground">от 1 500 ₽</div>
-                                </div>
-                                <div class="p-3 rounded-lg bg-muted/30">
-                                    <div class="text-sm font-medium">Джинсы</div>
-                                    <div class="text-xs text-muted-foreground">от 1 800 ₽</div>
-                                </div>
-                            </div>
-                            <a href="/pricing" class="inline-flex items-center text-sm font-medium text-primary hover:underline group/link">
-                                Все цены на корректировку
-                                <svg class="w-4 h-4 ml-1 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== TRUST (yA) ===== -->
-        <section id="trust" class="py-24 sm:py-32 bg-background">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div data-reveal class="max-w-3xl mb-16">
                     <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Доверие</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Цифры, которые <em class="italic">говорят</em> за нас</h2>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Цифры, которые говорят за нас</h2>
                 </div>
-                <div data-stagger class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div data-stagger-child class="text-center p-8 rounded-xl border border-border/50 bg-card">
-                        <div class="font-serif text-6xl sm:text-7xl font-light text-foreground mb-3 leading-none">2020</div>
-                        <p class="text-sm text-muted-foreground tracking-wide">Год основания</p>
+                <div data-stagger class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div data-stagger-child class="text-center p-6">
+                        <div class="font-serif text-4xl sm:text-5xl font-light text-foreground mb-2">2020</div>
+                        <p class="text-sm text-muted-foreground">Год основания</p>
                     </div>
-                    <div data-stagger-child class="text-center p-8 rounded-xl border border-border/50 bg-card">
-                        <div class="font-serif text-6xl sm:text-7xl font-light text-foreground mb-3 leading-none">500+</div>
-                        <p class="text-sm text-muted-foreground tracking-wide">Изделий создано</p>
+                    <div data-stagger-child class="text-center p-6">
+                        <div class="font-serif text-4xl sm:text-5xl font-light text-foreground mb-2">500+</div>
+                        <p class="text-sm text-muted-foreground">Изделий создано</p>
                     </div>
-                    <div data-stagger-child class="text-center p-8 rounded-xl border border-border/50 bg-card">
-                        <div class="font-serif text-6xl sm:text-7xl font-light text-foreground mb-3 leading-none">50+</div>
-                        <p class="text-sm text-muted-foreground tracking-wide">Видов премиальных тканей</p>
+                    <div data-stagger-child class="text-center p-6">
+                        <div class="font-serif text-4xl sm:text-5xl font-light text-foreground mb-2">30+</div>
+                        <p class="text-sm text-muted-foreground">Видов премиальных тканей</p>
                     </div>
-                    <div data-stagger-child class="text-center p-8 rounded-xl border border-border/50 bg-card">
-                        <div class="font-serif text-6xl sm:text-7xl font-light text-foreground mb-3 leading-none">5</div>
-                        <p class="text-sm text-muted-foreground tracking-wide">Минут от ЦУМ</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== PROCESS (xA) ===== -->
-        <section id="process" class="py-24 sm:py-32 bg-muted/30">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div data-reveal class="max-w-3xl mb-16">
-                    <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Процесс</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Как мы <em class="italic">работаем</em></h2>
-                    <p class="text-muted-foreground leading-relaxed">Каждый этап — это внимание к вам и вашему будущему изделию. Прозрачный процесс, предсказуемый результат.</p>
-                </div>
-                <div data-stagger class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-7xl font-serif text-muted/40 mb-5 leading-none">01</div>
-                        <h3 class="font-serif text-xl mb-3">Консультация</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Обсуждаем ваши пожелания, подбираем стиль, определяем задачи. Вы получаете чёткое понимание процесса и сроков.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-7xl font-serif text-muted/40 mb-5 leading-none">02</div>
-                        <h3 class="font-serif text-xl mb-3">Точные мерки</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Снимаем более 30 мерок с учётом анатомических особенностей. Это основа идеальной посадки будущего изделия.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-7xl font-serif text-muted/40 mb-5 leading-none">03</div>
-                        <h3 class="font-serif text-xl mb-3">Работа мастера</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Опытный мастер создаёт изделие вручную, контролируя качество каждого этапа — от раскроя до финальных швов.</p>
-                    </div>
-                    <div data-stagger-child class="group p-8 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                        <div class="text-7xl font-serif text-muted/40 mb-5 leading-none">04</div>
-                        <h3 class="font-serif text-xl mb-3">Финальная примерка</h3>
-                        <p class="text-sm text-muted-foreground leading-relaxed">Вы примеряете готовое изделие. При необходимости вносим последние корректировки для абсолютного совершенства.</p>
+                    <div data-stagger-child class="text-center p-6">
+                        <div class="font-serif text-4xl sm:text-5xl font-light text-foreground mb-2">5</div>
+                        <p class="text-sm text-muted-foreground">Минут от ЦУМ</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== PORTFOLIO (wA) ===== -->
-        <section class="py-24 sm:py-32 bg-background">
+        <!-- ===== PORTFOLIO ===== -->
+        <section class="py-24 sm:py-32 bg-muted/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div data-reveal class="max-w-3xl mb-16">
                     <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Портфолио</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Наши <em class="italic">работы</em></h2>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight">Наши работы</h2>
                 </div>
                 <div data-stagger class="grid md:grid-cols-3 gap-8">
-                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all duration-300">
+                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all">
                         <div class="aspect-[4/3] overflow-hidden">
-                            <img src="/images/vest.PNG" alt="Жилет пуховой" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <picture>
+                                <source srcset="/images/cashmere-suit2.webp" type="image/webp">
+                                <img src="/images/cashmere-suit2.PNG" alt="Кашемировый костюм" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            </picture>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-lg mb-2">Жилет пуховой</h3>
-                            <p class="text-sm text-muted-foreground leading-relaxed">Пуховой жилет из итальянского кашемира с утеплителем. Стёганая конструкция, карманы на молнии. Стоимость пошива — 50 000 ₽</p>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg mb-1">Кашемировый костюм</h3>
+                            <p class="text-sm text-muted-foreground">Комплект из кашемира: худи с капюшоном и брюки. Мягкий силуэт, премиальное качество.</p>
                         </div>
                     </div>
-                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all duration-300">
+                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all">
                         <div class="aspect-[4/3] overflow-hidden">
-                            <img src="/images/shearling.PNG" alt="Дублёнка из кожи" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <picture>
+                                <source srcset="/images/cashmere-suit3.webp" type="image/webp">
+                                <img src="/images/cashmere-suit3.PNG" alt="Пуховой жилет" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            </picture>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-lg mb-2">Дублёнка из кожи</h3>
-                            <p class="text-sm text-muted-foreground leading-relaxed">Дублёнка из натуральной кожи с меховой подкладкой. Ручная работа, безупречная посадка. Стоимость пошива — 100 000 ₽</p>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg mb-1">Пуховой жилет</h3>
+                            <p class="text-sm text-muted-foreground">Пуховой жилет из итальянского кашемира с утеплителем. Стёганая конструкция, карманы на молнии.</p>
                         </div>
                     </div>
-                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all duration-300">
+                    <div data-stagger-child class="group rounded-xl overflow-hidden border border-border/50 bg-card hover:shadow-lg transition-all">
                         <div class="aspect-[4/3] overflow-hidden">
-                            <img src="/images/cashmere-suit3.PNG" alt="Кашемировый костюм" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            <picture>
+                                <source srcset="/images/cashmere-suit.webp" type="image/webp">
+                                <img src="/images/cashmere-suit.PNG" alt="Дублёнка из кожи" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                            </picture>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-serif text-lg mb-2">Кашемировый костюм</h3>
-                            <p class="text-sm text-muted-foreground leading-relaxed">Кашемировый комплект из мягкого итальянского трикотажа. Худи с капюшоном и брюки свободного силуэта. Премиальное качество, безупречная посадка. Стоимость пошива — 45 000 ₽</p>
+                        <div class="p-5">
+                            <h3 class="font-serif text-lg mb-1">Дублёнка из кожи</h3>
+                            <p class="text-sm text-muted-foreground">Дублёнка из натуральной кожи с меховой подкладкой. Ручная работа, безупречная посадка.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== LOCATION (SA) ===== -->
-        <section id="location" class="py-24 sm:py-32 bg-muted/30">
+        <!-- ===== LOCATION ===== -->
+        <section id="location" class="py-24 sm:py-32 bg-background">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div data-reveal class="max-w-3xl mb-16">
                     <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Локация</p>
-                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">В самом <em class="italic">сердце</em> Москвы</h2>
-                    <p class="text-muted-foreground leading-relaxed">Ателье расположено в историческом центре города, в нескольких минутах от ЦУМ. Удобная транспортная доступность и комфортная атмосфера для ваших визитов.</p>
+                    <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">В самом сердце Москвы</h2>
+                    <p class="text-muted-foreground leading-relaxed">Ателье расположено в историческом центре города, в нескольких минутах от ЦУМ. Удобная транспортная доступность и комфортная атмосфера.</p>
                 </div>
-                <div data-reveal class="grid lg:grid-cols-2 gap-12 items-center">
-                    <div data-stagger class="space-y-6">
-                        <div data-stagger-child class="flex items-start gap-4 p-5 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-foreground mb-0.5">Адрес</h3>
-                                <p class="text-sm text-muted-foreground">Москва, ул. Петровка 15/13, стр. 3</p>
-                            </div>
-                        </div>
-                        <div data-stagger-child class="flex items-start gap-4 p-5 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-foreground mb-0.5">Часы работы</h3>
-                                <p class="text-sm text-muted-foreground">Пн–Сб: 10:00–20:00</p>
-                            </div>
-                        </div>
-                        <div data-stagger-child class="flex items-start gap-4 p-5 rounded-xl border border-border/50 bg-card hover:shadow-lg transition-all">
-                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
-                            </div>
-                            <div>
-                                <h3 class="text-sm font-medium text-foreground mb-0.5">Телефон</h3>
-                                <a href="tel:+79153715041" class="text-sm text-muted-foreground hover:text-foreground transition-colors">+7 (915) 371-50-41</a>
-                            </div>
-                        </div>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div data-reveal class="space-y-8">
+                        <div><h3 class="font-medium text-sm mb-2">Адрес</h3><p class="text-muted-foreground">Москва, ул. Петровка 15/13, стр. 3</p></div>
+                        <div><h3 class="font-medium text-sm mb-2">Форма посещения</h3><p class="text-muted-foreground">Только по записи</p></div>
+                        <div><h3 class="font-medium text-sm mb-2">Телефон</h3><a href="tel:+79153715041" class="text-muted-foreground hover:text-foreground transition-colors">+7 (915) 371-50-41</a></div>
+                        <div><h3 class="font-medium text-sm mb-2">Расписание</h3><p class="text-muted-foreground">Пн–Сб: 10:00–20:00</p></div>
+                        <a href="https://yandex.ru/maps/?text=Ателье+15/13+Петровка+15/13" target="_blank" rel="noopener" class="inline-flex items-center h-11 px-6 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
+                            Построить маршрут
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                        </a>
                     </div>
-                    <div data-reveal class="rounded-xl overflow-hidden border border-border/50 shadow-lg">
-                        <img src="/images/location.png" alt="Расположение ателье в центре Москвы" class="w-full h-80 sm:h-96 object-cover" loading="lazy">
+                    <div data-reveal class="rounded-xl overflow-hidden border border-border/50 min-h-[400px]">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2245.0!2d37.611!3d55.762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTXCsDQ1JzQzLjIiTiAzN8KwMzYnMzkuNiJF!5e0!3m2!1sru!2sru!4v1700000000000!5m2!1sru!2sru" width="100%" height="100%" style="border:0; min-height:400px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ателье 15/13 на карте"></iframe>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== CONTACT (CA) ===== -->
-        <section class="py-24 sm:py-32 bg-background" itemscope itemtype="https://schema.org/LocalBusiness">
-            <meta itemprop="name" content="Ателье 15/13">
-            <meta itemprop="telephone" content="+7 (915) 371-50-41">
-            <meta itemprop="address" content="Москва, ул. Петровка 15/13, стр. 3">
-            <meta itemprop="priceRange" content="₽₽₽">
+        <!-- ===== CONTACT FORM ===== -->
+        <section id="contacts" class="py-24 sm:py-32 bg-muted/30">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-2 gap-16">
                     <div data-reveal>
                         <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4">Запись</p>
-                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Начните с <em class="italic">консультации</em></h2>
-                        <p class="text-muted-foreground leading-relaxed mb-8">Оставьте заявку на индивидуальный пошив в ателье Москвы, и мы свяжемся с вами для записи на персональную консультацию у метро Кузнецкий Мост. Обсудим ваши пожелания, подберём ткань и рассчитаем стоимость пошива.</p>
-                        <ul class="space-y-3" aria-label="Преимущества">
-                            <li class="flex items-center gap-3 text-sm text-muted-foreground">
-                                <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                </span>
-                                Персональный подход к каждому клиенту
-                            </li>
-                            <li class="flex items-center gap-3 text-sm text-muted-foreground">
-                                <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                </span>
-                                Бесплатная первичная консультация по пошиву
-                            </li>
-                            <li class="flex items-center gap-3 text-sm text-muted-foreground">
-                                <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                </span>
-                                Удобное расположение в центре Москвы, рядом с ЦУМ
-                            </li>
-                            <li class="flex items-center gap-3 text-sm text-muted-foreground">
-                                <span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0" aria-hidden="true">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                </span>
-                                Работаем с премиальными тканями Loro Piana, Zegna, Colombo
-                            </li>
+                        <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6">Начните с консультации</h2>
+                        <p class="text-muted-foreground leading-relaxed mb-8">Оставьте заявку, и мы свяжемся с вами для записи на персональную консультацию. Обсудим ваши пожелания и подберём оптимальное решение.</p>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-sm text-muted-foreground"><span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>Персональный подход к каждому клиенту</li>
+                            <li class="flex items-center gap-3 text-sm text-muted-foreground"><span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>Бесплатная первичная консультация</li>
+                            <li class="flex items-center gap-3 text-sm text-muted-foreground"><span class="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center flex-shrink-0"><svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg></span>Удобное расположение в центре Москвы</li>
                         </ul>
                     </div>
                     <div data-reveal>
-                        <form id="contact-form" class="p-8 rounded-xl border border-border/50 bg-card space-y-5" aria-label="Форма записи на консультацию">
-                            <div>
-                                <label for="cf-name" class="block text-sm font-medium mb-1.5">Ваше имя</label>
-                                <input id="cf-name" name="name" type="text" required autocomplete="name" class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Иван">
-                            </div>
-                            <div>
-                                <label for="cf-phone" class="block text-sm font-medium mb-1.5">Номер телефона</label>
-                                <input id="cf-phone" name="phone" type="tel" required autocomplete="tel" class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="+7 (999) 123-45-67">
-                            </div>
-                            <div>
-                                <label for="cf-email" class="block text-sm font-medium mb-1.5">Электронная почта</label>
-                                <input id="cf-email" name="email" type="email" autocomplete="email" class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="email@example.com">
-                            </div>
-                            <div>
-                                <label for="cf-message" class="block text-sm font-medium mb-1.5">Опишите ваш проект</label>
-                                <textarea id="cf-message" name="message" rows="4" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none" placeholder="Хочу сшить пальто из кашемира..."></textarea>
-                            </div>
-                            <label class="flex items-start gap-2 text-xs text-muted-foreground cursor-pointer">
-                                <input type="checkbox" required class="mt-0.5 rounded border-border" aria-required="true">
-                                <span>Я даю согласие на обработку моих персональных данных в соответствии с <a href="/privacy-policy" class="underline hover:text-foreground">политикой конфиденциальности</a></span>
-                            </label>
-                            <button type="submit" class="w-full h-12 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-95 transition-all shadow-lg">Записаться на консультацию</button>
-                            <div id="form-success" class="hidden text-center text-sm text-green-600 py-4" role="status">
-                                <svg class="w-8 h-8 mx-auto mb-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                Заявка отправлена! Мы свяжемся с вами в ближайшее время.
-                            </div>
+                        <form id="contact-form" class="p-8 rounded-xl border border-border/50 bg-card space-y-5">
+                            <div><label for="cf-name" class="block text-sm font-medium mb-1.5">Ваше имя</label><input id="cf-name" name="name" type="text" required class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Имя"></div>
+                            <div><label for="cf-email" class="block text-sm font-medium mb-1.5">Электронная почта</label><input id="cf-email" name="email" type="email" class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="email@example.com"></div>
+                            <div><label for="cf-phone" class="block text-sm font-medium mb-1.5">Телефон</label><input id="cf-phone" name="phone" type="tel" required class="w-full h-10 px-3 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring" placeholder="+7 (___) ___-__-__"></div>
+                            <div><label for="cf-message" class="block text-sm font-medium mb-1.5">Сообщение</label><textarea id="cf-message" name="message" rows="4" class="w-full px-3 py-2 rounded-md border border-border bg-background text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none" placeholder="Расскажите о вашем проекте..."></textarea></div>
+                            <label class="flex items-start gap-2 text-xs text-muted-foreground cursor-pointer"><input type="checkbox" required class="mt-0.5 rounded border-border"><span>Я даю согласие на обработку персональных данных в соответствии с <a href="/privacy-policy" class="underline hover:text-foreground">политикой конфиденциальности</a></span></label>
+                            <button type="submit" class="w-full h-11 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">Записаться на консультацию</button>
+                            <div id="form-success" class="hidden text-center text-sm text-green-600 py-4"><svg class="w-8 h-8 mx-auto mb-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>Заявка отправлена! Мы свяжемся с вами в ближайшее время.</div>
                         </form>
                     </div>
                 </div>
@@ -778,90 +614,92 @@
         </div>
     </footer>
 
-    <!-- ===== SCRIPTS ===== -->
-    <script defer src="/assets/services-menu.js?v=6"></script>
-    <script defer src="/assets/demo-block.js?v=3"></script>
-    <script defer src="/assets/voice-input.js"></script>
-    <script defer src="/assets/lightbox.js"></script>
-    <script defer src="/assets/scroll-reveal.js"></script>
-    <script>
-        function loadChatwoot() {
-            if (window.chatwootSDK) return;
-            window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
-            var d = document, t = 'script';
-            var BASE_URL = "https://app.chatwoot.com";
-            var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-            g.src = BASE_URL + "/packs/js/sdk.js";
-            g.async = true;
-            s.parentNode.insertBefore(g, s);
-            g.onload = function () {
-                window.chatwootSDK.run({ websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H', baseUrl: BASE_URL })
+        <script defer src="/assets/services-menu.js?v=6"></script>
+        <script defer src="/assets/scroll-reveal.js"></script>
+        <script defer src="/assets/demo-block.js?v=3"></script>
+        <script defer src="/assets/voice-input.js"></script>
+        <script defer src="/assets/lightbox.js"></script>
+        <script>
+            function loadChatwoot() {
+                if (window.chatwootSDK) return;
+                window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
+                var d = document, t = 'script';
+                var BASE_URL = "https://app.chatwoot.com";
+                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = BASE_URL + "/packs/js/sdk.js";
+                g.async = true;
+                s.parentNode.insertBefore(g, s);
+                g.onload = function () {
+                    window.chatwootSDK.run({
+                        websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H',
+                        baseUrl: BASE_URL
+                    })
+                }
             }
-        }
-        window.addEventListener('scroll', loadChatwoot, { once: true });
-        window.addEventListener('mousemove', loadChatwoot, { once: true });
-        window.addEventListener('touchstart', loadChatwoot, { once: true });
-        setTimeout(loadChatwoot, 8000);
-    </script>
-    <script>
-        function loadGTM() {
-            if (window.gtmLoaded) return;
-            window.gtmLoaded = true;
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-ZD2W4QMRLF');
-            var s = document.createElement('script');
-            s.async = true;
-            s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZD2W4QMRLF';
-            document.head.appendChild(s);
-        }
-        window.addEventListener('scroll', loadGTM, { once: true });
-        window.addEventListener('mousemove', loadGTM, { once: true });
-        setTimeout(loadGTM, 5000);
-    </script>
-    <script>
-        document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
-            document.getElementById('mobile-menu-overlay').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        });
-        document.getElementById('mobile-menu-close')?.addEventListener('click', function () {
-            document.getElementById('mobile-menu-overlay').classList.add('hidden');
-            document.body.style.overflow = '';
-        });
-        document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function () {
-            document.getElementById('mobile-menu-overlay').classList.add('hidden');
-            document.body.style.overflow = '';
-        });
-    </script>
-    <script>
-        document.getElementById('contact-form')?.addEventListener('submit', function(e) {
-            e.preventDefault();
-            var form = e.target;
-            var btn = form.querySelector('button[type="submit"]');
-            var success = document.getElementById('form-success');
-            btn.textContent = 'Отправка...';
-            btn.disabled = true;
-            var data = new FormData(form);
-            fetch('/api/crm-request', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: data.get('name'),
-                    email: data.get('email'),
-                    phone: data.get('phone'),
-                    message: data.get('message')
-                })
-            }).then(function(r) { return r.json(); }).then(function() {
-                form.style.display = 'none';
-                success.classList.remove('hidden');
-            }).catch(function() {
-                btn.textContent = 'Записаться на консультацию';
-                btn.disabled = false;
-                alert('Произошла ошибка. Попробуйте ещё раз или позвоните нам.');
+            window.addEventListener('scroll', loadChatwoot, { once: true });
+            window.addEventListener('mousemove', loadChatwoot, { once: true });
+            window.addEventListener('touchstart', loadChatwoot, { once: true });
+            setTimeout(loadChatwoot, 8000);
+        </script>
+        <script>
+            function loadGTM() {
+                if (window.gtmLoaded) return;
+                window.gtmLoaded = true;
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                gtag('config', 'G-ZD2W4QMRLF');
+                var s = document.createElement('script');
+                s.async = true;
+                s.src = 'https://www.googletagmanager.com/gtag/js?id=G-ZD2W4QMRLF';
+                document.head.appendChild(s);
+            }
+            window.addEventListener('scroll', loadGTM, { once: true });
+            window.addEventListener('mousemove', loadGTM, { once: true });
+            setTimeout(loadGTM, 5000);
+        </script>
+        <script>
+            document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
             });
-        });
-    </script>
+            document.getElementById('mobile-menu-close')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+            document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function () {
+                document.getElementById('mobile-menu-overlay').classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        </script>
+        <script>
+            document.getElementById('contact-form')?.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var form = e.target;
+                var btn = form.querySelector('button[type="submit"]');
+                var success = document.getElementById('form-success');
+                btn.textContent = 'Отправка...';
+                btn.disabled = true;
+                var data = new FormData(form);
+                fetch('/api/crm-request', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: data.get('name'),
+                        email: data.get('email'),
+                        phone: data.get('phone'),
+                        message: data.get('message')
+                    })
+                }).then(function(r) { return r.json(); }).then(function() {
+                    form.style.display = 'none';
+                    success.classList.remove('hidden');
+                }).catch(function() {
+                    btn.textContent = 'Записаться на консультацию';
+                    btn.disabled = false;
+                    alert('Произошла ошибка. Попробуйте ещё раз или позвоните нам.');
+                });
+            });
+        </script>
 </body>
 
 </html>

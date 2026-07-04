@@ -166,7 +166,10 @@
 </head>
 
 <body>
-    <!-- nav removed for custom setup -->
+    <div id="header"></div>
+    
+    
+    
     <div id="root">
         <main class="min-h-screen pt-16">
             <section class="relative min-h-screen flex items-center overflow-hidden">
@@ -287,22 +290,16 @@
             window.addEventListener('mousemove', loadGTM, { once: true });
             setTimeout(loadGTM, 5000);
         </script>
-        <script>
-            document.getElementById('mobile-menu-btn')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            });
-            document.getElementById('mobile-menu-close')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.add('hidden');
-                document.body.style.overflow = '';
-            });
-            document.getElementById('mobile-menu-backdrop')?.addEventListener('click', function () {
-                document.getElementById('mobile-menu-overlay').classList.add('hidden');
-                document.body.style.overflow = '';
-            });
-        </script>
+        
 
     </div>
+    
+    
+
+    
+    
+    <div id="footer"></div>
+    <script src="/assets/header-footer.js"></script>
 </body>
 
 </html>

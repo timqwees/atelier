@@ -34,7 +34,6 @@ const STANDARD_HTML_PAGE_FILES = [
   'location.html',
   'contacts.html',
   'privacy-policy.html',
-  'user-agreement.html',
 ];
 const STANDARD_HTML_PAGES = loadStandardHtmlPages();
 const STANDARD_HTML_ROUTES = STANDARD_HTML_PAGES.map((page) => page.route);
@@ -83,6 +82,8 @@ const LEGACY_ROUTES = {
   '/assistant': '/consultant',
   '/assistant.html': '/consultant',
   '/consultant.html': '/consultant',
+  '/user-agreement': '/privacy-policy',
+  '/user-agreement.html': '/privacy-policy',
 };
 
 function escapeHtml(value) {

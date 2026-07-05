@@ -1110,28 +1110,361 @@ function loadBlogArticles() {
 
 loadBlogArticles();
 
+function blogMarkdownToHtml(md) {
+  if (!md) return '';
+  var html = md
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>')
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+  var lines = html.split('\n');
+  var inList = false;
+  var result = [];
+  for (var i = 0; i < lines.length; i++) {
+    var line = lines[i];
+    var liMatch = line.match(/^- (.+)/);
+    if (liMatch) {
+      if (!inList) { result.push('<ul>'); inList = 'ul'; }
+      result.push('<li>' + liMatch[1] + '</li>');
+    } else if (inList) {
+      result.push('</' + inList + '>');
+      inList = false;
+      result.push(line);
+    } else {
+      result.push(line);
+    }
+  }
+  if (inList) result.push('</' + inList + '>');
+  html = result.join('\n');
+
+  html = html.replace(/\n\n/g, '</p><p>');
+  html = html.replace(/\n/g, '<br>');
+  html = '<p>' + html + '</p>';
+  html = html.replace(/<p>\s*<(h[1-3]|ul|ol|li|blockquote)/g, '<$1');
+  html = html.replace(/<\/(h[1-3]|ul|ol|li|blockquote)>\s*<\/p>/g, '</$1>');
+  html = html.replace(/<p>\s*<\/p>/g, '');
+  html = html.replace(/<\/ul><br>/g, '</ul>');
+  html = html.replace(/<br><\/ul>/g, '</ul>');
+  html = html.replace(/<\/ul>\n<br>/g, '</ul>');
+  return html;
+}
+
+function blogFormatDate(dateStr) {
+  if (!dateStr) return '';
+  var d = new Date(dateStr);
+  var day = String(d.getDate()).padStart(2, '0');
+  var month = String(d.getMonth() + 1).padStart(2, '0');
+  var year = d.getFullYear();
+  return day + '.' + month + '.' + year;
+}
+
+function escapeHtmlAttr(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function renderBlogCard(article) {
+  var imgSrc = (article.image || '').replace('/blog/images/', '/images/blog/');
+  var excerpt = article.content.replace(/<[^>]*>/g, '').substring(0, 100);
+  return '<a href="/blog/' + article.id + '" class="article-card">' +
+    '<img class="article-card__img" src="' + escapeHtmlAttr(imgSrc) + '" alt="' + escapeHtmlAttr(article.title) + '" loading="lazy">' +
+    '<div class="article-card__body">' +
+    '<span class="article-card__cat">' + escapeHtml(article.category || '') + '</span>' +
+    '<h3 class="article-card__title">' + escapeHtml(article.title) + '</h3>' +
+    '<p class="article-card__excerpt">' + escapeHtml(excerpt) + '...</p>' +
+    '<div class="article-card__meta">' +
+    '<span>' + blogFormatDate(article.created_at) + '</span>' +
+    '<span class="article-card__link">Читать →</span>' +
+    '</div></div></a>';
+}
+
+function renderRelatedCard(article) {
+  var imgSrc = (article.image || '').replace('/blog/images/', '/images/blog/');
+  return '<a href="/blog/' + article.id + '" class="related-card">' +
+    '<img class="related-card__img" src="' + escapeHtmlAttr(imgSrc) + '" alt="' + escapeHtmlAttr(article.title) + '" loading="lazy">' +
+    '<div class="related-card__body">' +
+    '<div class="related-card__title">' + escapeHtml(article.title) + '</div>' +
+    '<div class="related-card__meta">' + blogFormatDate(article.created_at) + '</div></div></a>';
+}
+
 // Blog API
 app.get('/api/blog/articles', (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=300');
   res.json(blogArticles);
 });
 
-// Blog listing page
+// Blog listing page (SSR)
 app.get('/blog', (req, res) => {
-  res.sendFile(join(PUBLIC_DIR, 'blog', 'index.html'));
+  var template = readFileSync(join(PUBLIC_DIR, 'blog', 'index.html'), 'utf-8');
+
+  if (blogArticles.length > 0) {
+    var featured = blogArticles[0];
+    var imgSrc = (featured.image || '').replace('/blog/images/', '/images/blog/');
+    var featuredHtml = '<a href="/blog/' + featured.id + '" class="featured-card">' +
+      '<img class="featured-card__img" src="' + escapeHtmlAttr(imgSrc) + '" alt="' + escapeHtmlAttr(featured.title) + '" loading="eager">' +
+      '<div class="featured-card__body">' +
+      '<span class="featured-card__cat">' + escapeHtml(featured.category || '') + '</span>' +
+      '<h2 class="featured-card__title">' + escapeHtml(featured.title) + '</h2>' +
+      '<p class="featured-card__excerpt">' + escapeHtml(featured.content.replace(/<[^>]*>/g, '').substring(0, 140)) + '...</p>' +
+      '<div class="featured-card__meta">' +
+      '<span>' + blogFormatDate(featured.created_at) + '</span>' +
+      '<span>·</span>' +
+      '<span>' + escapeHtml(featured.author || '') + '</span>' +
+      '</div></div></a>';
+    template = template.replace('<!-- SSR_FEATURED -->', featuredHtml);
+
+    var gridArticles = blogArticles.slice(1, 7);
+    var articlesHtml = gridArticles.map(renderBlogCard).join('');
+    template = template.replace('<!-- SSR_ARTICLES -->', articlesHtml);
+
+    var popular = blogArticles.slice(0, 4);
+    var popularHtml = popular.map(function(a) {
+      var pImgSrc = (a.image || '').replace('/blog/images/', '/images/blog/');
+      return '<a class="popular-item" href="/blog/' + a.id + '">' +
+        '<img class="popular-item__img" src="' + escapeHtmlAttr(pImgSrc) + '" alt="' + escapeHtmlAttr(a.title) + '" loading="lazy">' +
+        '<div><div class="popular-item__title">' + escapeHtml(a.title) + '</div>' +
+        '<div class="popular-item__meta">' + blogFormatDate(a.created_at) + '</div></div></a>';
+    }).join('');
+    template = template.replace('<!-- SSR_POPULAR -->', popularHtml);
+
+    var jsonLdArticles = blogArticles.map(function(a) {
+      var url = 'https://atelie1513.ru/blog/' + a.id;
+      var aImg = (a.image || '').replace('/blog/images/', '/images/blog/');
+      return {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": a.title,
+        "url": url,
+        "image": aImg ? 'https://atelie1513.ru' + aImg : 'https://atelie1513.ru/images/hero-atelier.png',
+        "datePublished": a.created_at,
+        "author": { "@type": "Organization", "name": a.author || "Ателье 15/13" }
+      };
+    });
+    var jsonLdHtml = '<script type="application/ld+json">' +
+      JSON.stringify(jsonLdArticles).replace(/</g, '\\u003c') + '</script>';
+    template = template.replace('</head>', jsonLdHtml + '\n</head>');
+  }
+
+  var dataScript = '<script>window.__BLOG_ARTICLES__ = ' +
+    JSON.stringify(blogArticles).replace(/</g, '\\u003c') + ';</script>';
+  template = template.replace('<script>window.__BLOG_ARTICLES__ = [];</script>', dataScript);
+
+  res.setHeader('Cache-Control', 'public, max-age=300');
+  res.send(template);
 });
 
 // Blog images (must be before /blog/:id to avoid route conflict)
 app.use('/blog/images', express.static(join(PUBLIC_DIR, 'blog', 'images')));
 
-// Blog article page
+// RSS feed for blog
+app.get('/blog/rss.xml', (req, res) => {
+  var siteUrl = 'https://atelie1513.ru';
+  var rssDate = function(dateStr) {
+    if (!dateStr) return new Date().toUTCString();
+    var d = new Date(dateStr);
+    return d.toUTCString();
+  };
+  var stripMd = function(text) {
+    return text.replace(/<[^>]*>/g, '').replace(/[#*\[\]()>]/g, '').replace(/\n+/g, ' ').trim();
+  };
+  var escapeXml = function(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+  };
+
+  var items = blogArticles.map(function(a) {
+    var url = siteUrl + '/blog/' + a.id;
+    var imgSrc = (a.image || '').replace('/blog/images/', '/images/blog/');
+    var desc = stripMd(a.content).substring(0, 500);
+    return '    <item>\n' +
+      '      <title>' + escapeXml(a.title) + '</title>\n' +
+      '      <link>' + escapeXml(url) + '</link>\n' +
+      '      <guid isPermaLink="true">' + escapeXml(url) + '</guid>\n' +
+      '      <description>' + escapeXml(desc) + '</description>\n' +
+      '      <category>' + escapeXml(a.category || '') + '</category>\n' +
+      '      <author>' + escapeXml(a.author || 'Ателье 15/13') + '</author>\n' +
+      '      <pubDate>' + rssDate(a.created_at) + '</pubDate>\n' +
+      '      <enclosure url="' + escapeXml(siteUrl + imgSrc) + '" type="image/jpeg" />\n' +
+      '    </item>';
+  }).join('\n');
+
+  var xml = '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n' +
+    '  <channel>\n' +
+    '    <title>Блог — Ателье 15/13</title>\n' +
+    '    <link>' + escapeXml(siteUrl) + '/blog</link>\n' +
+    '    <description>Полезные статьи о пошиве одежды, выборе тканей, уходе за изделиями и трендах моды</description>\n' +
+    '    <language>ru</language>\n' +
+    '    <lastBuildDate>' + rssDate(blogArticles[0] && blogArticles[0].created_at) + '</lastBuildDate>\n' +
+    '    <atom:link href="' + escapeXml(siteUrl) + '/blog/rss.xml" rel="self" type="application/rss+xml" />\n' +
+    '    <image>\n' +
+    '      <url>' + escapeXml(siteUrl) + '/favicon.png</url>\n' +
+    '      <title>Блог — Ателье 15/13</title>\n' +
+    '      <link>' + escapeXml(siteUrl) + '/blog</link>\n' +
+    '    </image>\n' +
+    items + '\n' +
+    '  </channel>\n' +
+    '</rss>';
+
+  res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.send(xml);
+});
+
+// Blog article page (SSR)
 app.get('/blog/:id', (req, res) => {
-  const id = parseInt(req.params.id, 10);
+  var id = parseInt(req.params.id, 10);
   if (isNaN(id)) {
     res.sendFile(join(PUBLIC_DIR, 'blog', 'article.html'));
     return;
   }
-  res.sendFile(join(PUBLIC_DIR, 'blog', 'article.html'));
+
+  var article = blogArticles.find(function(a) { return a.id === id; });
+  if (!article) {
+    res.sendFile(join(PUBLIC_DIR, 'blog', 'article.html'));
+    return;
+  }
+
+  var template = readFileSync(join(PUBLIC_DIR, 'blog', 'article.html'), 'utf-8');
+  var baseUrl = 'https://atelie1513.ru';
+  var articleUrl = baseUrl + '/blog/' + article.id;
+  var plainText = article.content.replace(/<[^>]*>/g, '').replace(/[#*\[\]()]/g, '');
+  var desc = plainText.substring(0, 160).replace(/\n/g, ' ').trim();
+  var imgSrc = (article.image || '').replace('/blog/images/', '/images/blog/');
+  var fullImgUrl = article.image ? baseUrl + imgSrc : baseUrl + '/images/hero-atelier.png';
+
+  template = template.replace(
+    '<title id="page-title">Статья — Ателье 15/13</title>',
+    '<title id="page-title">' + escapeHtml(article.title) + ' — Ателье 15/13</title>'
+  );
+  template = template.replace(
+    '<meta name="description" id="page-description" content="" />',
+    '<meta name="description" id="page-description" content="' + escapeHtmlAttr(desc) + '" />'
+  );
+  template = template.replace(
+    '<link rel="canonical" id="page-canonical" href="" />',
+    '<link rel="canonical" id="page-canonical" href="' + escapeHtmlAttr(articleUrl) + '" />'
+  );
+  template = template.replace(
+    '<meta property="og:title" id="og-title" content="" />',
+    '<meta property="og:title" id="og-title" content="' + escapeHtmlAttr(article.title + ' — Ателье 15/13') + '" />'
+  );
+  template = template.replace(
+    '<meta property="og:description" id="og-description" content="" />',
+    '<meta property="og:description" id="og-description" content="' + escapeHtmlAttr(desc) + '" />'
+  );
+  template = template.replace(
+    '<meta property="og:url" id="og-url" content="" />',
+    '<meta property="og:url" id="og-url" content="' + escapeHtmlAttr(articleUrl) + '" />'
+  );
+  template = template.replace(
+    '<meta property="og:image" id="og-image" content="https://atelie1513.ru/images/hero-atelier.png" />',
+    '<meta property="og:image" id="og-image" content="' + escapeHtmlAttr(fullImgUrl) + '" />'
+  );
+  template = template.replace(
+    '<meta name="twitter:title" id="tw-title" content="" />',
+    '<meta name="twitter:title" id="tw-title" content="' + escapeHtmlAttr(article.title + ' — Ателье 15/13') + '" />'
+  );
+  template = template.replace(
+    '<meta name="twitter:description" id="tw-description" content="" />',
+    '<meta name="twitter:description" id="tw-description" content="' + escapeHtmlAttr(desc) + '" />'
+  );
+  template = template.replace(
+    '<meta name="twitter:image" id="tw-image" content="https://atelie1513.ru/images/hero-atelier.png" />',
+    '<meta name="twitter:image" id="tw-image" content="' + escapeHtmlAttr(fullImgUrl) + '" />'
+  );
+
+  var jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "description": desc,
+    "image": fullImgUrl,
+    "author": { "@type": "Organization", "name": article.author || "Ателье 15/13" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ателье 15/13",
+      "logo": { "@type": "ImageObject", "url": baseUrl + "/favicon.png" }
+    },
+    "datePublished": article.created_at,
+    "dateModified": article.updated_at || article.created_at,
+    "url": articleUrl
+  };
+  var jsonLdStr = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
+  template = template.replace(
+    /<script type="application\/ld\+json" id="json-ld">[\s\S]*?<\/script>/,
+    '<script type="application/ld+json" id="json-ld">' + jsonLdStr + '</script>'
+  );
+
+  template = template.replace(
+    '<span id="article-category" class="article-header__cat"></span>',
+    '<span id="article-category" class="article-header__cat">' + escapeHtml(article.category || '') + '</span>'
+  );
+  template = template.replace(
+    '<h1 id="article-title" class="article-header__title"></h1>',
+    '<h1 id="article-title" class="article-header__title">' + escapeHtml(article.title) + '</h1>'
+  );
+  template = template.replace(
+    '<span id="article-date" class="article-header__date"></span>',
+    '<span id="article-date" class="article-header__date">' + blogFormatDate(article.created_at) + '</span>'
+  );
+
+  var authorInitial = article.author ? article.author.charAt(0) : 'A';
+  template = template.replace(
+    '<span class="article-header__avatar" id="article-avatar">A</span>',
+    '<span class="article-header__avatar" id="article-avatar">' + escapeHtml(authorInitial) + '</span>'
+  );
+  template = template.replace(
+    '<span id="article-author-name"></span>',
+    '<span id="article-author-name">' + escapeHtml(article.author || 'Ателье 15/13') + '</span>'
+  );
+
+  if (article.tags) {
+    var tags = article.tags.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t; });
+    var tagsHtml = tags.map(function(t) {
+      return '<span class="article-header__tag">#' + escapeHtml(t) + '</span>';
+    }).join('');
+    template = template.replace(
+      '<div id="article-tags" class="article-header__tags"></div>',
+      '<div id="article-tags" class="article-header__tags">' + tagsHtml + '</div>'
+    );
+  }
+
+  if (article.image) {
+    template = template.replace(
+      '<div id="article-hero" class="article-hero hidden">',
+      '<div id="article-hero" class="article-hero">'
+    );
+    template = template.replace(
+      '<img id="article-hero-img" class="article-hero__img" alt="" />',
+      '<img id="article-hero-img" class="article-hero__img" alt="' + escapeHtmlAttr(article.title) + '" src="' + escapeHtmlAttr(imgSrc) + '" />'
+    );
+  }
+
+  var bodyHtml = '';
+  try { bodyHtml = blogMarkdownToHtml(article.content); } catch(e) { console.error('blogMarkdownToHtml error:', e.message); }
+  template = template.replace('<!-- SSR_ARTICLE_BODY -->', bodyHtml);
+
+  var related = blogArticles.filter(function(a) { return a.id !== article.id; }).slice(0, 3);
+  var relatedHtml = related.map(renderRelatedCard).join('');
+  template = template.replace('<!-- SSR_RELATED -->', relatedHtml);
+
+  var articleData = JSON.stringify(blogArticles).replace(/</g, '\\u003c');
+  template = template.replace(
+    '<script>window.__BLOG_ARTICLES__ = [];</script>',
+    '<script>window.__BLOG_ARTICLES__ = ' + articleData + ';</script>'
+  );
+
+  res.setHeader('Cache-Control', 'public, max-age=300');
+  res.send(template);
 });
 
 app.use(express.static(join(__dirname, 'public')));

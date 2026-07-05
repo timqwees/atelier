@@ -7,6 +7,7 @@
     <title id="page-title">Статья — Ателье 15/13</title>
     <meta name="description" id="page-description" content="" />
     <link rel="canonical" id="page-canonical" href="" />
+    <link rel="alternate" type="application/rss+xml" title="Блог — Ателье 15/13" href="https://atelie1513.ru/blog/rss.xml" />
     <meta property="og:title" id="og-title" content="" />
     <meta property="og:description" id="og-description" content="" />
     <meta property="og:type" content="article" />
@@ -29,364 +30,422 @@
     <noscript><link rel="stylesheet" href="/assets/services-menu.css?v=6"></noscript>
     <link rel="stylesheet" crossorigin href="/assets/index-B-os_Paw.css">
     <style>
-        :root {
-            --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-            --font-heading: 'Cormorant Garamond', 'Georgia', serif;
-            --font-serif: 'Cormorant Garamond', 'Georgia', serif;
-            --background: 0 0% 100%;
-            --foreground: 240 10% 3.9%;
-            --card: 0 0% 100%;
-            --card-foreground: 240 10% 3.9%;
-            --primary: 346 77% 50%;
-            --primary-foreground: 0 0% 100%;
-            --muted: 240 4.8% 95.9%;
-            --muted-foreground: 240 3.8% 46.1%;
-            --border: 240 5.9% 90%;
-            --ring: 346 77% 50%;
-        }
-
-        *, *::before, *::after {
-            box-sizing: border-box;
-        }
-
+        *, *::before, *::after { box-sizing: border-box; }
         body {
             margin: 0;
-            font-family: var(--font-sans);
-            background: hsl(var(--background));
-            color: hsl(var(--foreground));
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: #fff;
+            color: #111;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+        }
+        img { max-width: 100%; display: block; }
+        a { color: inherit; text-decoration: none; }
+
+        .blog-layout {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
-        img {
-            max-width: 100%;
-            display: block;
+        .article-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #9ca3af;
+            transition: color .2s;
+            margin-bottom: 24px;
         }
+        .article-back:hover { color: #111; }
+        .article-back__icon { width: 14px; height: 14px; }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        .article-header {
+            padding: 48px 0 0;
         }
-
-        .hidden { display: none !important; }
-
-        .min-h-screen { min-height: 100vh; }
-        .pt-16 { padding-top: 4rem; }
-
-        .max-w-4xl { max-width: 56rem; }
-        .max-w-5xl { max-width: 64rem; }
-        .max-w-7xl { max-width: 80rem; }
-
-        .mx-auto { margin-left: auto; margin-right: auto; }
-
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-
-        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
-        .py-32 { padding-top: 8rem; padding-bottom: 8rem; }
-
-        .text-center { text-align: center; }
-
-        .font-serif { font-family: var(--font-serif); }
-        .font-light { font-weight: 300; }
-        .font-medium { font-weight: 500; }
-        .font-semibold { font-weight: 600; }
-
-        .text-xs { font-size: 0.75rem; }
-        .text-sm { font-size: 0.875rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .text-3xl { font-size: 1.875rem; }
-
-        .leading-tight { line-height: 1.25; }
-
-        .text-muted-foreground { color: hsl(var(--muted-foreground)); }
-        .text-primary { color: hsl(var(--primary)); }
-
-        .inline-flex { display: inline-flex; }
-        .items-center { align-items: center; }
-        .gap-2 { gap: 0.5rem; }
-        .gap-3 { gap: 0.75rem; }
-        .gap-5 { gap: 1.25rem; }
-        .gap-8 { gap: 2rem; }
-
-        .mb-4 { margin-bottom: 1rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        .mb-10 { margin-bottom: 2.5rem; }
-
-        .w-4 { width: 1rem; }
-        .h-4 { height: 1rem; }
-        .w-8 { width: 2rem; }
-        .h-8 { height: 2rem; }
-        .w-full { width: 100%; }
-        .h-auto { height: auto; }
-        .h-12 { height: 3rem; }
-
-        .px-8 { padding-left: 2rem; padding-right: 2rem; }
-
-        .rounded { border-radius: 0.375rem; }
-        .rounded-lg { border-radius: 0.75rem; }
-        .rounded-xl { border-radius: 1rem; }
-        .rounded-full { border-radius: 9999px; }
-
-        .border { border: 1px solid hsl(var(--border)); }
-        .border-t { border-top: 1px solid hsl(var(--border)); }
-
-        .bg-muted { background: hsl(var(--muted)); }
-        .bg-primary { background: hsl(var(--primary)); }
-        .bg-background { background: hsl(var(--background)); }
-
-        .text-primary-foreground { color: hsl(var(--primary-foreground)); }
-
-        .object-cover { object-fit: cover; }
-
-        .transition-opacity { transition: opacity .2s ease; }
-        .transition-colors { transition: color .2s ease; }
-
-        .hover\:opacity-80:hover { opacity: 0.8; }
-        .hover\:opacity-90:hover { opacity: 0.9; }
-        .hover\:text-foreground:hover { color: hsl(var(--foreground)); }
-
-        .space-y-1 > * + * { margin-top: 0.25rem; }
-        .space-y-6 > * + * { margin-top: 1.5rem; }
-
-        .grid { display: grid; }
-        .grid-cols-1 { grid-template-columns: repeat(1, 1fr); }
-
-        .flex { display: flex; }
-        .justify-center { justify-content: center; }
-
-        .relative { position: relative; }
-        .top-24 { top: 6rem; }
-
+        .article-header__meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .article-header__cat {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+        .article-header__date {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+        .article-header__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.2;
+            color: #111;
+            margin: 0 0 16px;
+        }
         @media (min-width: 640px) {
-            .sm\:px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
-            .sm\:py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-            .sm\:grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-            .sm\:text-4xl { font-size: 2.25rem; }
-            .sm\:text-3xl { font-size: 1.875rem; }
+            .article-header__title { font-size: 36px; }
+        }
+        .article-header__author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+        .article-header__avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .article-header__tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 32px;
+        }
+        .article-header__tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 6px;
+            background: #f3f4f6;
+            color: #6b7280;
+            font-size: 11px;
+            font-weight: 500;
         }
 
+        .article-hero {
+            margin-bottom: 40px;
+        }
+        .article-hero__img {
+            width: 100%;
+            max-height: 340px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #f3f4f6;
+        }
+        @media (min-width: 640px) {
+            .article-hero__img { max-height: 400px; }
+        }
+
+        .article-body-wrap {
+            padding-bottom: 48px;
+        }
+        .article-body__grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
         @media (min-width: 1024px) {
-            .lg\:px-8 { padding-left: 2rem; padding-right: 2rem; }
-            .lg\:grid-cols-12 { grid-template-columns: repeat(12, 1fr); }
-            .lg\:grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-            .lg\:col-span-8 { grid-column: span 8 / span 8; }
-            .lg\:col-span-4 { grid-column: span 4 / span 4; }
-            .lg\:block { display: block !important; }
-            .lg\:sticky { position: sticky; }
-            .lg\:top-24 { top: 6rem; }
+            .article-body__grid {
+                grid-template-columns: 1fr 280px;
+            }
         }
 
         .article-content {
-            font-size: 18px;
-            line-height: 1.8;
-            color: hsl(var(--foreground));
+            font-size: 16px;
+            line-height: 1.75;
+            color: #1a1a1a;
         }
-
         .article-content h2 {
-            font-family: var(--font-heading);
-            font-size: 28px;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 24px;
             font-weight: 500;
-            margin-top: 2.5em;
-            margin-bottom: 0.6em;
-            color: hsl(var(--foreground));
-            letter-spacing: -0.01em;
-        }
-
-        .article-content h3 {
-            font-family: var(--font-heading);
-            font-size: 22px;
-            font-weight: 500;
-            margin-top: 1.75em;
+            margin-top: 2em;
             margin-bottom: 0.5em;
-            color: hsl(var(--foreground));
+            color: #111;
+            padding-bottom: 0.3em;
+            border-bottom: 1px solid #e5e7eb;
         }
-
+        .article-content h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 19px;
+            font-weight: 500;
+            margin-top: 1.5em;
+            margin-bottom: 0.4em;
+            color: #111;
+        }
         .article-content p {
-            margin-bottom: 1.25em;
+            margin-bottom: 1.1em;
         }
-
         .article-content ul, .article-content ol {
             margin-bottom: 1.25em;
-            padding-left: 1.5em;
+            padding-left: 1.2em;
         }
-
         .article-content li {
-            margin-bottom: 0.4em;
+            margin-bottom: 0.35em;
+            line-height: 1.6;
         }
-
-        .article-content strong {
-            font-weight: 600;
-        }
-
+        .article-content strong { font-weight: 600; color: #000; }
         .article-content blockquote {
-            border-left: none;
-            padding: 1.5em 2em;
-            margin: 2em 0;
-            background: hsl(var(--muted) / .4);
-            border-radius: 16px;
-            font-style: italic;
-            font-size: 1.05em;
-            color: hsl(var(--foreground) / .8);
-            position: relative;
+            padding: 1.25em 1.5em;
+            margin: 1.5em 0;
+            background: #f8f8f8;
+            border-radius: 10px;
+            font-size: 0.95em;
+            color: #333;
+            border-left: 3px solid #d1d5db;
         }
-
-        .article-content blockquote::before {
-            content: '\201C';
-            font-family: var(--font-serif);
-            font-size: 4em;
-            line-height: 1;
-            position: absolute;
-            top: 0.15em;
-            left: 0.25em;
-            color: hsl(var(--primary) / .15);
-            pointer-events: none;
-        }
-
+        .article-content blockquote p { margin-bottom: 0; }
         .article-content img {
             width: 100%;
-            border-radius: 16px;
-            margin: 2em 0;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+            border-radius: 10px;
+            margin: 1.5em 0;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.04);
         }
-
         .article-content a {
-            color: hsl(var(--primary));
+            color: #111;
             text-decoration: underline;
-            text-decoration-color: hsl(var(--primary) / .3);
+            text-decoration-color: #d1d5db;
             text-underline-offset: 3px;
             transition: text-decoration-color .2s;
         }
+        .article-content a:hover { text-decoration-color: #111; }
 
-        .article-content a:hover {
-            text-decoration-color: hsl(var(--primary));
+        .article-content .tip-box {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 1.25em 1.5em;
+            margin: 1.5em 0;
+            border-left: 3px solid #9ca3af;
+        }
+        .article-content .tip-box strong:first-child {
+            display: block;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #6b7280;
+            margin-bottom: 0.25em;
+        }
+        .article-content .info-box {
+            background: #f8f8f8;
+            border-radius: 10px;
+            padding: 1.25em 1.5em;
+            margin: 1.5em 0;
+        }
+
+        .article-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        @media (min-width: 1024px) {
+            .article-sidebar {
+                position: sticky;
+                top: 96px;
+                height: fit-content;
+            }
+        }
+
+        .sidebar-widget {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .sidebar-widget__header {
+            padding: 14px 16px 8px;
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #111;
+        }
+        .sidebar-widget__body {
+            padding: 2px 16px 14px;
         }
 
         .toc-link {
             display: block;
-            padding: 8px 12px;
-            font-size: 14px;
-            color: hsl(var(--muted-foreground));
-            text-decoration: none;
-            transition: all .2s ease;
-            border-radius: 8px;
-            margin-bottom: 2px;
+            padding: 6px 10px;
+            font-size: 13px;
+            color: #6b7280;
+            border-radius: 6px;
+            transition: all .2s;
+            margin-bottom: 1px;
         }
-
-        .toc-link:last-child {
-            border-bottom: none;
-        }
-
         .toc-link:hover {
-            color: hsl(var(--primary));
-            background: hsl(var(--primary) / .05);
-        }
-
-        .related-card {
-            border-radius: 16px;
-            background: hsl(var(--card));
-            border: 1px solid hsl(var(--border));
-            overflow: hidden;
-            transition: all .3s ease;
-        }
-
-        .related-card:hover {
-            box-shadow: 0 12px 32px rgba(0,0,0,0.07);
-            transform: translateY(-3px);
-        }
-
-        .related-card-img {
-            width: 100%;
-            height: 160px;
-            object-fit: cover;
-            background: hsl(var(--muted));
-        }
-
-        .related-card-body {
-            padding: 18px;
-        }
-
-        .related-card-title {
-            font-family: var(--font-heading);
-            font-size: 16px;
-            font-weight: 500;
-            color: hsl(var(--foreground));
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .related-card-meta {
-            font-size: 12px;
-            color: hsl(var(--muted-foreground) / .5);
-            margin-top: 8px;
-        }
-
-        .sidebar-card {
-            border-radius: 16px;
-            background: hsl(var(--card));
-            border: 1px solid hsl(var(--border));
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.03);
-        }
-
-        .sidebar-card-header {
-            padding: 18px 20px 12px;
-            font-family: var(--font-heading);
-            font-size: 17px;
-            font-weight: 500;
-            color: hsl(var(--foreground));
-        }
-
-        .sidebar-card-body {
-            padding: 4px 20px 18px;
+            color: #111;
+            background: #f9fafb;
         }
 
         .sidebar-services-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px;
-            border-radius: 10px;
+            gap: 10px;
+            padding: 8px;
+            border-radius: 8px;
             text-decoration: none;
-            transition: background .2s ease;
+            transition: background .2s;
         }
-
-        .sidebar-services-item:hover {
-            background: hsl(var(--muted) / .4);
-        }
-
+        .sidebar-services-item:hover { background: #f9fafb; }
         .sidebar-services-icon {
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            border-radius: 10px;
-            background: hsl(var(--primary) / .08);
-            color: hsl(var(--primary));
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+            border-radius: 8px;
+            background: #f3f4f6;
+            color: #6b7280;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
-        .sidebar-services-icon svg {
-            width: 18px;
-            height: 18px;
-        }
-
+        .sidebar-services-icon svg { width: 17px; height: 17px; }
         .sidebar-services-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 500;
-            color: hsl(var(--foreground));
+            color: #111;
         }
-
         .sidebar-services-desc {
             font-size: 11px;
-            color: hsl(var(--muted-foreground));
+            color: #6b7280;
             margin-top: 1px;
         }
+
+        .related-section {
+            padding: 40px 0 48px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .related-section__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: #111;
+            margin: 0 0 20px;
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+        @media (min-width: 640px) {
+            .related-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (min-width: 1024px) {
+            .related-grid { grid-template-columns: 1fr 1fr 1fr; }
+        }
+
+        .related-card {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color .25s;
+        }
+        .related-card:hover { border-color: #9ca3af; }
+        .related-card__img {
+            width: 100%;
+            height: 130px;
+            object-fit: cover;
+            background: #f3f4f6;
+        }
+        .related-card__body {
+            padding: 14px;
+        }
+        .related-card__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #111;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .related-card__meta {
+            font-size: 11px;
+            color: #9ca3af;
+            margin-top: 6px;
+        }
+
+        .cta-section {
+            padding: 40px 0 48px;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+        }
+        .cta-section__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 20px;
+            font-weight: 500;
+            color: #111;
+            margin: 0 0 8px;
+        }
+        .cta-section__desc {
+            font-size: 13px;
+            color: #6b7280;
+            margin: 0 0 24px;
+        }
+        .cta-section__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            height: 42px;
+            padding: 0 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: opacity .2s;
+        }
+        .cta-btn--primary { background: #111; color: #fff; }
+        .cta-btn--primary:hover { opacity: .85; }
+        .cta-btn--outline {
+            border: 1px solid #e5e7eb;
+            color: #111;
+            background: #fff;
+        }
+        .cta-btn--outline:hover { background: #f9fafb; }
+
+        .article-loading {
+            text-align: center;
+            padding: 96px 0;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+        .article-not-found {
+            text-align: center;
+            padding: 96px 0;
+        }
+        .article-not-found__title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 24px;
+            font-weight: 500;
+            color: #111;
+            margin: 0 0 8px;
+        }
+        .article-not-found__desc {
+            font-size: 14px;
+            color: #6b7280;
+            margin: 0 0 24px;
+        }
+        .article-not-found__link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #111;
+        }
+        .article-not-found__link:hover { opacity: .6; }
+
+        .hidden { display: none !important; }
     </style>
     <script type="application/ld+json" id="json-ld">
     {
@@ -418,166 +477,195 @@
     <noscript><img src="https://mc.yandex.ru/watch/109384423" style="position:absolute; left:-9999px;" alt="" /></noscript>
     <!-- /Yandex.Metrika counter -->
 </head>
-<body class="bg-background text-foreground">
+<body>
     <div id="header"></div>
     <div id="root">
-        <main class="min-h-screen pt-16">
-            <div id="article-loading" class="py-32 text-center text-muted-foreground">Загрузка статьи...</div>
-            <div id="article-not-found" class="hidden py-32 text-center">
-                <h1 class="font-serif text-3xl mb-4">Статья не найдена</h1>
-                <p class="text-muted-foreground mb-8">Запрошенная статья не существует или была удалена.</p>
-                <a href="/blog" class="inline-flex items-center gap-2 text-sm text-primary hover:opacity-80 transition-opacity">← Вернуться в блог</a>
-            </div>
+        <main>
+            <div class="blog-layout">
+                <div id="article-loading" class="article-loading">Загрузка статьи...</div>
 
-            <article id="article-content" class="hidden">
-                <section class="py-8 sm:py-12">
-                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <a href="/blog" class="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <div id="article-not-found" class="article-not-found hidden">
+                    <div class="article-not-found__title">Статья не найдена</div>
+                    <p class="article-not-found__desc">Запрошенная статья не существует или была удалена.</p>
+                    <a href="/blog" class="article-not-found__link">
+                        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        Вернуться в блог
+                    </a>
+                </div>
+
+                <article id="article-content">
+                    <div class="article-header">
+                        <a href="/blog" class="article-back">
+                            <svg class="article-back__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                             Все статьи
                         </a>
 
-                        <div class="flex items-center gap-3 mb-4">
-                            <span id="article-category" class="inline-block px-3 py-1 rounded text-xs font-semibold bg-primary/10 text-primary"></span>
-                            <span id="article-date" class="text-xs text-muted-foreground/50"></span>
+                        <div class="article-header__meta">
+                            <span id="article-category" class="article-header__cat"></span>
+                            <span id="article-date" class="article-header__date"></span>
                         </div>
 
-                        <h1 id="article-title" class="font-serif text-3xl sm:text-4xl md:text-5xl font-light leading-tight mb-6"></h1>
+                        <h1 id="article-title" class="article-header__title"></h1>
 
-                        <div id="article-author" class="flex items-center gap-3 text-sm text-muted-foreground mb-8"></div>
+                        <div id="article-author" class="article-header__author">
+                            <span class="article-header__avatar" id="article-avatar">A</span>
+                            <span id="article-author-name"></span>
+                        </div>
+
+                        <div id="article-tags" class="article-header__tags"></div>
                     </div>
-                </section>
 
-                <div id="article-hero" class="hidden mb-10">
-                    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <img id="article-hero-img" class="w-full h-auto rounded-xl object-cover max-h-96" alt="" />
+                    <div id="article-hero" class="article-hero hidden">
+                        <img id="article-hero-img" class="article-hero__img" alt="" />
                     </div>
-                </div>
 
-                <section class="pb-16">
-                    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                            <div class="lg:col-span-8">
-                                <div id="article-body" class="article-content"></div>
+                    <div class="article-body-wrap">
+                        <div class="article-body__grid">
+                            <div>
+                                <div id="article-body" class="article-content"><!-- SSR_ARTICLE_BODY --></div>
                             </div>
-                            <aside class="lg:col-span-4 hidden lg:block">
-                                <div class="lg:sticky lg:top-24 space-y-6">
-                                    <div id="toc-container" class="sidebar-card hidden">
-                                        <div class="sidebar-card-header">Содержание</div>
-                                        <div class="sidebar-card-body" id="toc-body"></div>
-                                    </div>
-                                    <div class="sidebar-card">
-                                        <div class="sidebar-card-header">Наши услуги</div>
-                                        <div class="sidebar-card-body space-y-1">
-                                            <a href="/services" class="sidebar-services-item">
-                                                <div class="sidebar-services-icon">
-                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-                                                </div>
-                                                <div>
-                                                    <div class="sidebar-services-title">Индивидуальный пошив</div>
-                                                    <div class="sidebar-services-desc">Платья, костюмы, пальто на заказ</div>
-                                                </div>
-                                            </a>
-                                            <a href="/contacts" class="sidebar-services-item">
-                                                <div class="sidebar-services-icon">
-                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                                                </div>
-                                                <div>
-                                                    <div class="sidebar-services-title">Консультация</div>
-                                                    <div class="sidebar-services-desc">Бесплатная первичная консультация</div>
-                                                </div>
-                                            </a>
-                                        </div>
+                            <aside class="article-sidebar" id="article-sidebar">
+                                <div id="toc-container" class="sidebar-widget hidden">
+                                    <div class="sidebar-widget__header">Содержание</div>
+                                    <div class="sidebar-widget__body" id="toc-body"></div>
+                                </div>
+                                <div class="sidebar-widget">
+                                    <div class="sidebar-widget__header">Наши услуги</div>
+                                    <div class="sidebar-widget__body">
+                                        <a href="/services" class="sidebar-services-item">
+                                            <div class="sidebar-services-icon">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+                                            </div>
+                                            <div>
+                                                <div class="sidebar-services-title">Индивидуальный пошив</div>
+                                                <div class="sidebar-services-desc">Платья, костюмы, пальто на заказ</div>
+                                            </div>
+                                        </a>
+                                        <a href="/contacts" class="sidebar-services-item">
+                                            <div class="sidebar-services-icon">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                            </div>
+                                            <div>
+                                                <div class="sidebar-services-title">Консультация</div>
+                                                <div class="sidebar-services-desc">Бесплатная первичная консультация</div>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </aside>
                         </div>
                     </div>
-                </section>
+                </article>
 
-                <section class="py-12 bg-muted/30 border-t border-border/50">
-                    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <h3 class="font-serif text-2xl font-light mb-6">Читайте также</h3>
-                        <div id="related-articles" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+                <section class="related-section">
+                    <h3 class="related-section__title">Читайте также</h3>
+                    <div id="related-articles" class="related-grid"><!-- SSR_RELATED --></div>
+                </section>
+            </div>
+
+            <div class="cta-section">
+                <div class="blog-layout">
+                    <div class="cta-section__title">Нужна консультация?</div>
+                    <p class="cta-section__desc">Запишитесь на бесплатную консультацию, чтобы обсудить ваш заказ.</p>
+                    <div class="cta-section__actions">
+                        <a href="/contacts" class="cta-btn cta-btn--primary">Записаться</a>
+                        <a href="/services" class="cta-btn cta-btn--outline">Наши услуги</a>
                     </div>
-                </section>
-            </article>
-
-            <section class="py-16 bg-muted/30 border-t border-border/50">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h3 class="font-serif text-2xl sm:text-3xl font-light mb-4">Нужна консультация?</h3>
-                    <p class="text-muted-foreground mb-8">Запишитесь на бесплатную консультацию, чтобы обсудить ваш заказ.</p>
-                    <a href="/contacts" class="inline-flex items-center h-12 px-8 rounded-lg bg-primary text-primary-foreground font-medium hover:opacity-90 transition-opacity">
-                        Записаться
-                    </a>
                 </div>
-            </section>
+            </div>
         </main>
     </div>
     <div id="footer"></div>
 
+    <script>window.__BLOG_ARTICLES__ = [];</script>
     <script src="/assets/header-footer.js"></script>
     <script>
         (function() {
             var pathParts = window.location.pathname.split('/');
             var articleId = pathParts[pathParts.length - 1];
+
             if (!articleId || isNaN(articleId)) {
+                document.getElementById('article-content') && (document.getElementById('article-content').style.display = 'none');
                 showNotFound();
                 return;
             }
 
-            fetch('/api/blog/articles')
-                .then(function(r) { return r.json(); })
-                .then(function(articles) {
-                    var article = articles.find(function(a) { return a.id === parseInt(articleId); });
-                    if (!article) {
-                        showNotFound();
-                        return;
-                    }
-                    renderArticle(article, articles);
-                })
-                .catch(function() {
+            var articles = window.__BLOG_ARTICLES__ || [];
+
+            if (articles.length === 0) {
+                fetch('/api/blog/articles')
+                    .then(function(r) { return r.json(); })
+                    .then(function(data) {
+                        articles = data;
+                        var article = articles.find(function(a) { return a.id === parseInt(articleId); });
+                        if (!article) { showNotFound(); return; }
+                        renderArticle(article, articles);
+                    })
+                    .catch(function() { showNotFound(); });
+            } else {
+                var article = articles.find(function(a) { return a.id === parseInt(articleId); });
+                if (!article) {
                     showNotFound();
-                });
+                    return;
+                }
+                if (document.getElementById('article-body').children.length === 0 ||
+                    document.getElementById('article-body').innerHTML.trim() === '<!-- SSR_ARTICLE_BODY -->') {
+                    renderArticle(article, articles);
+                } else {
+                    document.getElementById('article-loading').classList.add('hidden');
+                    buildToc(document.getElementById('article-body').innerHTML);
+                }
+            }
         })();
 
         function showNotFound() {
-            document.getElementById('article-loading').classList.add('hidden');
-            document.getElementById('article-not-found').classList.remove('hidden');
+            var el = document.getElementById('article-loading');
+            if (el) el.classList.add('hidden');
+            var nf = document.getElementById('article-not-found');
+            if (nf) nf.classList.remove('hidden');
         }
 
         function renderArticle(article, allArticles) {
             document.getElementById('article-loading').classList.add('hidden');
-            document.getElementById('article-content').classList.remove('hidden');
 
             var baseUrl = 'https://atelie1513.ru';
             var articleUrl = baseUrl + '/blog/' + article.id;
             var plainText = article.content.replace(/<[^>]*>/g, '').replace(/[#*\[\]()]/g, '');
             var desc = plainText.substring(0, 160).replace(/\n/g, ' ');
 
-            document.getElementById('page-title').textContent = article.title + ' — Ателье 15/13';
-            document.getElementById('page-description').content = desc;
-            document.getElementById('page-canonical').href = articleUrl;
-            document.getElementById('og-title').content = article.title + ' — Ателье 15/13';
-            document.getElementById('og-description').content = desc;
-            document.getElementById('og-url').content = articleUrl;
-            if (article.image) {
-                document.getElementById('og-image').content = baseUrl + article.image.replace('/blog/images/', '/images/blog/');
-                document.getElementById('tw-image').content = baseUrl + article.image.replace('/blog/images/', '/images/blog/');
+            if (!document.getElementById('page-title').textContent.includes(article.title)) {
+                document.getElementById('page-title').textContent = article.title + ' — Ателье 15/13';
             }
-            document.getElementById('tw-title').content = article.title + ' — Ателье 15/13';
-            document.getElementById('tw-description').content = desc;
+            if (!document.getElementById('page-description').content) {
+                document.getElementById('page-description').content = desc;
+                document.getElementById('page-canonical').href = articleUrl;
+                document.getElementById('og-title').content = article.title + ' — Ателье 15/13';
+                document.getElementById('og-description').content = desc;
+                document.getElementById('og-url').content = articleUrl;
+                if (article.image) {
+                    document.getElementById('og-image').content = baseUrl + article.image.replace('/blog/images/', '/images/blog/');
+                    document.getElementById('tw-image').content = baseUrl + article.image.replace('/blog/images/', '/images/blog/');
+                }
+                document.getElementById('tw-title').content = article.title + ' — Ателье 15/13';
+                document.getElementById('tw-description').content = desc;
+            }
 
-            if (article.category) {
-                document.getElementById('article-category').textContent = article.category;
-            }
+            document.getElementById('article-category').textContent = article.category || '';
             document.getElementById('article-title').textContent = article.title;
+            document.getElementById('article-date').textContent = formatDate(article.created_at);
 
-            var dateStr = formatDate(article.created_at);
-            document.getElementById('article-date').textContent = dateStr;
-            document.getElementById('article-author').innerHTML =
-                '<span class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-semibold">A</span>' +
-                '<span>' + (article.author || 'Ателье 15/13') + '</span>';
+            var authorName = article.author || 'Ателье 15/13';
+            document.getElementById('article-avatar').textContent = authorName.charAt(0);
+            document.getElementById('article-author-name').textContent = authorName;
+
+            if (article.tags) {
+                var tags = article.tags.split(',').map(function(t) { return t.trim(); }).filter(function(t) { return t; });
+                var tagsHtml = '';
+                tags.forEach(function(tag) {
+                    tagsHtml += '<span class="article-header__tag">#' + tag + '</span>';
+                });
+                document.getElementById('article-tags').innerHTML = tagsHtml;
+            }
 
             if (article.image) {
                 document.getElementById('article-hero').classList.remove('hidden');
@@ -587,7 +675,6 @@
 
             var bodyHtml = markdownToHtml(article.content);
             document.getElementById('article-body').innerHTML = bodyHtml;
-
             buildToc(bodyHtml);
 
             var jsonLd = {
@@ -613,11 +700,10 @@
             related.forEach(function(r) {
                 relatedHtml +=
                     '<a href="/blog/' + r.id + '" class="related-card">' +
-                    '<img class="related-card-img" src="' + (r.image ? r.image.replace('/blog/images/', '/images/blog/') : '') + '" alt="' + r.title + '" loading="lazy">' +
-                    '<div class="related-card-body">' +
-                    '<div class="related-card-title">' + r.title + '</div>' +
-                    '<div class="related-card-meta">' + formatDate(r.created_at) + '</div>' +
-                    '</div></a>';
+                    '<img class="related-card__img" src="' + (r.image ? r.image.replace('/blog/images/', '/images/blog/') : '') + '" alt="' + r.title + '" loading="lazy">' +
+                    '<div class="related-card__body">' +
+                    '<div class="related-card__title">' + r.title + '</div>' +
+                    '<div class="related-card__meta">' + formatDate(r.created_at) + '</div></div></a>';
             });
             document.getElementById('related-articles').innerHTML = relatedHtml;
         }
@@ -628,23 +714,19 @@
             var h2Regex = /<h2>(.+?)<\/h2>/g;
             var match;
             var items = [];
-            var idCounter = 0;
             while ((match = h2Regex.exec(html)) !== null) {
                 var text = match[1].replace(/<[^>]*>/g, '');
                 if (text.trim()) {
                     items.push({ text: text });
                 }
             }
-            if (items.length < 2) {
-                return;
-            }
+            if (items.length < 2) return;
             tocContainer.classList.remove('hidden');
             var tocHtml = '';
             items.forEach(function(item, i) {
                 tocHtml += '<a href="#toc-' + i + '" class="toc-link">' + item.text + '</a>';
             });
             tocBody.innerHTML = tocHtml;
-
             tocBody.querySelectorAll('.toc-link').forEach(function(link, i) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -663,6 +745,8 @@
             html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
             html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
             html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+            html = html.replace(/^> (.+)$/gm, '<blockquote><p>$1</p></blockquote>');
+            html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
             html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
 
@@ -685,7 +769,6 @@
             }
             if (inList) result.push('</' + inList + '>');
             html = result.join('\n');
-
             html = html.replace(/\n\n/g, '</p><p>');
             html = html.replace(/\n/g, '<br>');
             html = '<p>' + html + '</p>';
@@ -695,17 +778,13 @@
             html = html.replace(/<\/ul><br>/g, '</ul>');
             html = html.replace(/<br><\/ul>/g, '</ul>');
             html = html.replace(/<\/ul>\n<br>/g, '</ul>');
-
             return html;
         }
 
         function formatDate(dateStr) {
             if (!dateStr) return '';
             var d = new Date(dateStr);
-            var day = String(d.getDate()).padStart(2, '0');
-            var month = String(d.getMonth() + 1).padStart(2, '0');
-            var year = d.getFullYear();
-            return day + '.' + month + '.' + year;
+            return String(d.getDate()).padStart(2, '0') + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + d.getFullYear();
         }
     </script>
 </body>

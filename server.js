@@ -791,6 +791,9 @@ function renderSitemap(req) {
     .filter(page => page.indexable === true)
     .forEach(page => addPage(page.path, new Date(), 'service'));
 
+  addPage('/blog', new Date(), 'standard');
+  blogArticles.forEach(article => addPage('/blog/' + article.id, article.created_at, 'blog'));
+
   const MAX_URLS = 50000;
   if (pages.length > MAX_URLS) {
     console.warn(`Sitemap exceeds maximum URL limit: ${pages.length} > ${MAX_URLS}`);
@@ -1017,6 +1020,26 @@ function renderHtmlSitemap(req) {
     </ul>
   </div>
   
+  <div class="sitemap-section">
+    <h2>Блог</h2>
+    <ul class="sitemap-list">
+      <li>
+        <a href="${origin}/blog">
+          <span>Все статьи</span>
+          <span class="lastmod">${formatDate(new Date())}</span>
+        </a>
+      </li>
+      ${blogArticles.map(article => `
+        <li>
+          <a href="${origin}/blog/${article.id}">
+            <span>${article.title}</span>
+            <span class="lastmod">${formatDate(article.created_at)}</span>
+          </a>
+        </li>
+      `).join('')}
+    </ul>
+  </div>
+  
 </body>
 </html>`;
 }
@@ -1030,7 +1053,8 @@ function getPageTitle(path) {
     '/about': 'О нас',
     '/location': 'Расположение',
     '/contacts': 'Контакты',
-    '/consultant': 'Консультант'
+    '/consultant': 'Консультант',
+    '/blog': 'Блог'
   };
   return titles[path] || path;
 }

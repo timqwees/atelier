@@ -56,7 +56,30 @@ if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
     port: SMTP_PORT,
     secure: SMTP_PORT === 465,
     auth: { user: SMTP_USER, pass: SMTP_PASS },
+    connectionTimeout: 6000,
+    greetingTimeout: 6000,
+    socketTimeout: 8000,
   });
+  mailTransporter.verify().then(() => {
+    console.log(`[Mail] SMTP connected — notifications go to ${NOTIFICATION_EMAIL}`);
+  }).catch(err => {
+    console.error('[Mail] SMTP connection FAILED:', err.message, '— set SMTP_USER/SMTP_PASS in .env');
+  });
+} else if (NOTIFICATION_EMAIL) {
+  console.warn('[Mail] SMTP not configured — set SMTP_HOST, SMTP_USER, SMTP_PASS in .env');
+}
+
+async function sendNotificationEmail(subject, text, html) {
+  if (!mailTransporter || !NOTIFICATION_EMAIL) return;
+  try {
+    await Promise.race([
+      mailTransporter.sendMail({ from: SMTP_USER, to: NOTIFICATION_EMAIL, subject, text, html }),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000)),
+    ]);
+    console.log(`[Mail] Sent to ${NOTIFICATION_EMAIL}: ${subject}`);
+  } catch (err) {
+    console.error(`[Mail] Send failed for "${subject}": ${err.message}`);
+  }
 }
 
 const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL || '';
@@ -4990,23 +5013,13 @@ app.post('/api/contact', async (req, res) => {
       console.log(`[Contact Form] Request created in Atelier CRM, ID: ${crmData.request.id}`);
     }
 
-    if (mailTransporter && NOTIFICATION_EMAIL) {
-      try {
-        await Promise.race([
-          mailTransporter.sendMail({
-            from: SMTP_USER,
-            to: NOTIFICATION_EMAIL,
-            subject: `Заявка с сайта: ${name}`,
-            text: `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
-            html: `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`,
-          }),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Email timeout')), 10000)),
-        ]);
-        console.log(`[Contact Form] Email sent to ${NOTIFICATION_EMAIL}`);
-      } catch (mailErr) {
-        console.error('[Contact Form] Email send error:', mailErr.message);
-      }
-    }
+    sendNotificationEmail(
+      `Заявка с сайта: ${name}`,
+      `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
+      `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`
+    );
+
+    return res.json({ success: true });
 
     return res.json({ success: true });
   } catch (err) {

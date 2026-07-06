@@ -5,6 +5,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomUUID } from 'crypto';
+import nodemailer from 'nodemailer';
 import { DateTime } from 'luxon';
 import { serviceMenuData } from './seo/serviceMenuData.js';
 import {
@@ -41,6 +42,22 @@ const FINAL_SERVICE_PAGES = loadFinalServicePages();
 const FINAL_SERVICE_PAGE_ROUTES = FINAL_SERVICE_PAGES.map((page) => page.route);
 
 app.set('trust proxy', true);
+
+const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || '';
+const SMTP_HOST = process.env.SMTP_HOST || '';
+const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
+const SMTP_USER = process.env.SMTP_USER || '';
+const SMTP_PASS = process.env.SMTP_PASS || '';
+
+let mailTransporter = null;
+if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+  mailTransporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port: SMTP_PORT,
+    secure: SMTP_PORT === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  });
+}
 
 const BITRIX_WEBHOOK_URL = process.env.BITRIX_WEBHOOK_URL || '';
 const CRM_REQUEST_ENDPOINT =
@@ -4971,6 +4988,21 @@ app.post('/api/contact', async (req, res) => {
     });
     if (crmData?.request?.id) {
       console.log(`[Contact Form] Request created in Atelier CRM, ID: ${crmData.request.id}`);
+    }
+
+    if (mailTransporter && NOTIFICATION_EMAIL) {
+      try {
+        await mailTransporter.sendMail({
+          from: SMTP_USER,
+          to: NOTIFICATION_EMAIL,
+          subject: `Заявка с сайта: ${name}`,
+          text: `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
+          html: `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`,
+        });
+        console.log(`[Contact Form] Email sent to ${NOTIFICATION_EMAIL}`);
+      } catch (mailErr) {
+        console.error('[Contact Form] Email send error:', mailErr.message);
+      }
     }
 
     return res.json({ success: true });

@@ -4932,7 +4932,11 @@ function generateConfirmationCode() {
 
 // --- API Routes ---
 app.post('/api/contact', async (req, res) => {
-  const { name, phone, email, message, service } = req.body;
+  const { name, phone, email, message, service, website } = req.body;
+  if (website) {
+    console.log('[Contact Form] Honeypot triggered, silently ignored');
+    return res.json({ success: true });
+  }
   if (!name || !phone) {
     return res.status(400).json({ error: 'Name and phone are required' });
   }

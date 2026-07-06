@@ -263,8 +263,12 @@
                                 <input type="text" id="name" name="name" required class="contact-form__input" placeholder="Иван">
                             </div>
                             <div class="contact-form__group">
-                                <label for="phone" class="contact-form__label">Телефон</label>
-                                <input type="tel" id="phone" name="phone" class="contact-form__input" placeholder="+7 (999) 123-45-67">
+                                <label for="phone" class="contact-form__label">Телефон *</label>
+                                <input type="tel" id="phone" name="phone" required class="contact-form__input" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+                            </div>
+                            <div class="contact-form__group" style="position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;" aria-hidden="true">
+                                <label for="website">Оставьте это поле пустым</label>
+                                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
                             </div>
                             <div class="contact-form__group">
                                 <label for="email" class="contact-form__label">Email</label>
@@ -296,8 +300,29 @@
             </div>
 
             <script>
+                var phoneInput = document.getElementById('phone');
+                phoneInput.addEventListener('focus', function() {
+                    if (!this.value) this.value = '+7 ';
+                });
+                phoneInput.addEventListener('input', function() {
+                    var x = this.value.replace(/\D/g, '').substring(0, 11);
+                    if (x.length === 0) { this.value = ''; return; }
+                    var formatted = '+7 ';
+                    if (x.length > 1) formatted += '(' + x.substring(1, 4);
+                    if (x.length >= 4) formatted += ') ' + x.substring(4, 7);
+                    if (x.length >= 7) formatted += '-' + x.substring(7, 9);
+                    if (x.length >= 9) formatted += '-' + x.substring(9, 11);
+                    this.value = formatted;
+                });
+
                 document.getElementById('contact-form')?.addEventListener('submit', async function(e) {
                     e.preventDefault();
+                    var website = document.getElementById('website');
+                    if (website && website.value) return;
+
+                    var phoneRaw = document.getElementById('phone').value.replace(/\D/g, '');
+                    if (phoneRaw.length < 11) return;
+
                     const form = e.target;
                     const data = Object.fromEntries(new FormData(form));
                     try {

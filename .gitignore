@@ -9,3 +9,6 @@ node_modules/
 
 # системные файлы
 .DS_Store
+
+# клон внутри проекта
+atelier/

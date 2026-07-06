@@ -718,9 +718,12 @@ ${robotsMeta}    <meta property="og:title" content="${escapeHtml(page.seoTitle)}
     ${renderServiceSchemas(page, req)}
   </head>
   <body>
+    <div id="header"></div>
     <div id="root">${content}</div>
+    <div id="footer"></div>
     <script defer src="/assets/services-menu.js?v=6"></script>
     <script defer src="/assets/service-page.js?v=2"></script>
+    <script src="/assets/header-footer.js"></script>
   </body>
 </html>`;
 }

@@ -4992,13 +4992,16 @@ app.post('/api/contact', async (req, res) => {
 
     if (mailTransporter && NOTIFICATION_EMAIL) {
       try {
-        await mailTransporter.sendMail({
-          from: SMTP_USER,
-          to: NOTIFICATION_EMAIL,
-          subject: `Заявка с сайта: ${name}`,
-          text: `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
-          html: `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`,
-        });
+        await Promise.race([
+          mailTransporter.sendMail({
+            from: SMTP_USER,
+            to: NOTIFICATION_EMAIL,
+            subject: `Заявка с сайта: ${name}`,
+            text: `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
+            html: `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`,
+          }),
+          new Promise((_, reject) => setTimeout(() => reject(new Error('Email timeout')), 10000)),
+        ]);
         console.log(`[Contact Form] Email sent to ${NOTIFICATION_EMAIL}`);
       } catch (mailErr) {
         console.error('[Contact Form] Email send error:', mailErr.message);

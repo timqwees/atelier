@@ -51,6 +51,7 @@ const SMTP_PASS = process.env.SMTP_PASS || '';
 
 let mailTransporter = null;
 if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+  console.log(`[Mail] SMTP configured (${SMTP_HOST}:${SMTP_PORT}) — verifying...`);
   mailTransporter = nodemailer.createTransport({
     host: SMTP_HOST,
     port: SMTP_PORT,
@@ -59,18 +60,29 @@ if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
     connectionTimeout: 6000,
     greetingTimeout: 6000,
     socketTimeout: 8000,
+    tls: { rejectUnauthorized: false },
   });
   mailTransporter.verify().then(() => {
     console.log(`[Mail] SMTP connected — notifications go to ${NOTIFICATION_EMAIL}`);
   }).catch(err => {
-    console.error('[Mail] SMTP connection FAILED:', err.message, '— set SMTP_USER/SMTP_PASS in .env');
+    console.error('[Mail] SMTP connection FAILED:', err.message);
+    console.log('[Mail] Email notifications will be attempted on form submit');
   });
 } else if (NOTIFICATION_EMAIL) {
   console.warn('[Mail] SMTP not configured — set SMTP_HOST, SMTP_USER, SMTP_PASS in .env');
+} else {
+  console.log('[Mail] SMTP not configured — email notifications disabled');
 }
 
 async function sendNotificationEmail(subject, text, html) {
-  if (!mailTransporter || !NOTIFICATION_EMAIL) return;
+  if (!mailTransporter) {
+    console.log(`[Mail] Skipped "${subject}" — SMTP not configured`);
+    return;
+  }
+  if (!NOTIFICATION_EMAIL) {
+    console.log(`[Mail] Skipped "${subject}" — NOTIFICATION_EMAIL not set`);
+    return;
+  }
   try {
     await Promise.race([
       mailTransporter.sendMail({ from: SMTP_USER, to: NOTIFICATION_EMAIL, subject, text, html }),
@@ -4976,6 +4988,7 @@ function generateConfirmationCode() {
 // --- API Routes ---
 app.post('/api/contact', async (req, res) => {
   const { name, phone, email, message, service, website } = req.body;
+  console.log(`[Contact Form] Received from "${name}" (${phone})`);
   if (website) {
     console.log('[Contact Form] Honeypot triggered, silently ignored');
     return res.json({ success: true });
@@ -4985,6 +4998,12 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
+    await sendNotificationEmail(
+      `Заявка с сайта: ${name}`,
+      `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
+      `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`
+    );
+
     const fields = {
       TITLE: `Заявка с сайта: ${name}`,
       NAME: name,
@@ -4999,7 +5018,7 @@ app.post('/api/contact', async (req, res) => {
     const bitrixData = await bitrixRequest('crm.lead.add', { fields });
     if (bitrixData?.result) {
       console.log(`[Contact Form] Lead created in Bitrix24, ID: ${bitrixData.result}`);
-    } else {
+    } else if (bitrixData !== null) {
       console.error('[Contact Form] Bitrix24 error:', JSON.stringify(bitrixData));
     }
 
@@ -5016,17 +5035,9 @@ app.post('/api/contact', async (req, res) => {
       console.log(`[Contact Form] Request created in Atelier CRM, ID: ${crmData.request.id}`);
     }
 
-    sendNotificationEmail(
-      `Заявка с сайта: ${name}`,
-      `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
-      `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`
-    );
-
-    return res.json({ success: true });
-
     return res.json({ success: true });
   } catch (err) {
-    console.error('[Contact Form] Failed to create Bitrix24 lead:', err);
+    console.error('[Contact Form] Unexpected error:', err);
     return res.json({ success: true });
   }
 });

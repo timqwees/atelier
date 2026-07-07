@@ -5,7 +5,7 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { randomUUID } from 'crypto';
-import nodemailer from 'nodemailer';
+import { SMTPClient } from 'emailjs';
 import { DateTime } from 'luxon';
 import { serviceMenuData } from './seo/serviceMenuData.js';
 import {
@@ -49,24 +49,16 @@ const SMTP_PORT = parseInt(process.env.SMTP_PORT || '587', 10);
 const SMTP_USER = process.env.SMTP_USER || '';
 const SMTP_PASS = process.env.SMTP_PASS || '';
 
-let mailTransporter = null;
+let mailClient = null;
 if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
-  console.log(`[Mail] SMTP configured (${SMTP_HOST}:${SMTP_PORT}) — verifying...`);
-  mailTransporter = nodemailer.createTransport({
+  console.log(`[Mail] SMTP configured (${SMTP_HOST}:${SMTP_PORT})`);
+  mailClient = new SMTPClient({
     host: SMTP_HOST,
     port: SMTP_PORT,
-    secure: SMTP_PORT === 465,
-    auth: { user: SMTP_USER, pass: SMTP_PASS },
-    connectionTimeout: 6000,
-    greetingTimeout: 6000,
-    socketTimeout: 8000,
-    tls: { rejectUnauthorized: false },
-  });
-  mailTransporter.verify().then(() => {
-    console.log(`[Mail] SMTP connected — notifications go to ${NOTIFICATION_EMAIL}`);
-  }).catch(err => {
-    console.error('[Mail] SMTP connection FAILED:', err.message);
-    console.log('[Mail] Email notifications will be attempted on form submit');
+    ssl: SMTP_PORT === 465,
+    user: SMTP_USER,
+    password: SMTP_PASS,
+    timeout: 8000,
   });
 } else if (NOTIFICATION_EMAIL) {
   console.warn('[Mail] SMTP not configured — set SMTP_HOST, SMTP_USER, SMTP_PASS in .env');
@@ -75,7 +67,7 @@ if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
 }
 
 async function sendNotificationEmail(subject, text, html) {
-  if (!mailTransporter) {
+  if (!mailClient) {
     console.log(`[Mail] Skipped "${subject}" — SMTP not configured`);
     return;
   }
@@ -84,13 +76,16 @@ async function sendNotificationEmail(subject, text, html) {
     return;
   }
   try {
-    await Promise.race([
-      mailTransporter.sendMail({ from: SMTP_USER, to: NOTIFICATION_EMAIL, subject, text, html }),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 8000)),
-    ]);
+    const msg = await mailClient.sendAsync({
+      text,
+      from: SMTP_USER,
+      to: NOTIFICATION_EMAIL,
+      subject,
+      attachment: [{ data: html, alternative: true }],
+    });
     console.log(`[Mail] Sent to ${NOTIFICATION_EMAIL}: ${subject}`);
   } catch (err) {
-    console.error(`[Mail] Send failed for "${subject}": ${err.message}`);
+    console.error(`[Mail] Send failed for "${subject}": ${err.message || err}`);
   }
 }
 
@@ -4998,7 +4993,7 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    await sendNotificationEmail(
+    sendNotificationEmail(
       `Заявка с сайта: ${name}`,
       `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
       `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`

@@ -12,7 +12,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.4.1",
-    "emailjs": "^5.0.1",
     "express": "^4.21.0",
     "luxon": "^3.5.0",
     "nodemailer": "^6.9.16"

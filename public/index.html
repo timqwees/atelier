@@ -300,6 +300,24 @@
     
     <div id="footer"></div>
     <script src="/assets/header-footer.js"></script>
+    <script>
+        document.addEventListener('form:success', function () {
+            ym(109384423, 'reachGoal', 'FORM_SEND');
+        });
+    </script>
+    <script>
+        (function() {
+            var origFetch = window.fetch;
+            window.fetch = function(url, opts) {
+                return origFetch.apply(this, arguments).then(function(res) {
+                    if (res.ok && typeof url === 'string' && url === '/api/contact' && (!opts || opts.method === undefined || opts.method === 'POST')) {
+                        document.dispatchEvent(new CustomEvent('form:success'));
+                    }
+                    return res;
+                });
+            };
+        })();
+    </script>
 </body>
 
 </html>

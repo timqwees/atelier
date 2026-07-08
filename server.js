@@ -4993,7 +4993,7 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    sendNotificationEmail(
+    await sendNotificationEmail(
       `Заявка с сайта: ${name}`,
       `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
       `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`

@@ -118,7 +118,7 @@
         .pricing-image--lg { height: 260px; }
         @media (min-width: 640px) { .pricing-image--lg { height: 320px; } }
 
-        .search-bar { position: relative; margin-bottom: 12px; }
+        .search-bar { margin-bottom: 12px; }
 
         .search-bar__notif {
             display: flex; align-items: center; gap: 8px;
@@ -137,28 +137,30 @@
         }
         .search-bar__notif-count { font-weight: 600; color: #d1d5db; }
 
+        .search-bar__input-wrap { position: relative; }
+
         .search-bar__icon {
             position: absolute; top: 50%; left: 14px; transform: translateY(-50%);
-            width: 16px; height: 16px; color: #555; pointer-events: none;
+            width: 16px; height: 16px; color: #9ca3af; pointer-events: none;
         }
         .search-bar__input {
             width: 100%; height: 46px; padding: 0 44px 0 40px;
-            border: 1px solid #2a2a2a; border-radius: 8px;
-            font: inherit; font-size: 14px; color: #fff; background: #1a1a1a;
+            border: 1px solid #e5e7eb; border-radius: 8px;
+            font: inherit; font-size: 14px; color: #111; background: #fff;
             outline: none; transition: border-color .2s, box-shadow .2s;
         }
-        .search-bar__input::placeholder { color: #555; }
+        .search-bar__input::placeholder { color: #9ca3af; }
         .search-bar__input:focus {
-            border-color: #444;
-            box-shadow: 0 0 0 3px rgba(255,255,255,.04);
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 3px rgba(0,0,0,.04);
         }
         .search-bar__clear {
             position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
-            cursor: pointer; color: #555; font-size: 16px; line-height: 1;
+            cursor: pointer; color: #9ca3af; font-size: 16px; line-height: 1;
             padding: 6px; display: none; user-select: none; border: none; background: none;
             transition: color .15s;
         }
-        .search-bar__clear:hover { color: #fff; }
+        .search-bar__clear:hover { color: #111; }
         .search-bar__status {
             font-size: 12px; color: #6b7280; margin: 8px 0 0; text-align: center; display: none;
         }
@@ -327,9 +329,11 @@
                             <svg class="search-bar__notif-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L6.5 11.5L3 8"/></svg>
                             Найдено <span class="search-bar__notif-count" id="pricing-search-count">0</span> услуг. Цены представлены ниже.
                         </div>
-                        <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
-                        <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуг: пальто, кожа, шуба, брюки…" autocomplete="off">
-                        <button class="search-bar__clear" id="pricing-search-clear">✕</button>
+                        <div class="search-bar__input-wrap">
+                            <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
+                            <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуг: пальто, кожа, шуба, брюки…" autocomplete="off">
+                            <button class="search-bar__clear" id="pricing-search-clear">✕</button>
+                        </div>
                     </div>
                     <p class="search-bar__status" id="pricing-search-status"></p>
                 </div>

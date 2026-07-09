@@ -29319,8 +29319,11 @@ function SA() {
                             className: "text-sm font-medium mb-0.5",
                             children: "Адрес",
                           }),
-                          v.jsx("p", {
-                            className: "text-sm text-muted-foreground",
+                          v.jsx("a", {
+                            href: "https://yandex.ru/maps/-/CTu0iB9h",
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "text-sm text-muted-foreground hover:text-foreground transition-colors",
                             children: "Москва, ул. Петровка 15/13, стр. 3",
                           }),
                         ],

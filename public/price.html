@@ -144,6 +144,10 @@
         .search-bar__status {
             font-size: 12px; color: #6b7280; margin: 10px 0 0; text-align: center; display: none;
         }
+        .search-bar__found {
+            font-size: 11px; color: #9ca3af; margin: 10px 0 0; text-align: center; display: none;
+            letter-spacing: 0.02em;
+        }
         .pricing-search-hidden { display: none !important; }
 
         .table-wrap {
@@ -302,13 +306,14 @@
                 </div>
             </div>
 
-            <div class="pricing-layout--narrow">
+            <div class="pricing-layout--narrow" style="padding-top:32px;">
                 <div class="search-bar">
                     <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
                     <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуг: пальто, кожа, шуба, брюки…" autocomplete="off">
                     <button class="search-bar__clear" id="pricing-search-clear">✕</button>
                 </div>
                 <p class="search-bar__status" id="pricing-search-status"></p>
+                <p class="search-bar__found" id="pricing-search-found"></p>
             </div>
 
             <div style="background:#fafafa;padding-bottom:24px;">
@@ -678,7 +683,7 @@
             var input = document.getElementById('pricing-search');
             var clear = document.getElementById('pricing-search-clear');
             var status = document.getElementById('pricing-search-status');
-            var count = 0;
+            var found = document.getElementById('pricing-search-found');
 
             function normalize(s) { return s.toLowerCase().replace(/[ё]/g, 'е').replace(/[ъь]/g, '').trim(); }
 
@@ -723,6 +728,7 @@
                         acc.removeAttribute('open');
                     });
                     status.style.display = 'none';
+                    found.style.display = 'none';
                     return;
                 }
 
@@ -784,8 +790,11 @@
                 if (foundCount === 0 && accordionMatch === 0) {
                     status.textContent = 'Ничего не найдено. Попробуйте сократить или изменить запрос.';
                     status.style.display = 'block';
+                    found.style.display = 'none';
                 } else {
                     status.style.display = 'none';
+                    found.textContent = 'Найдено услуг: ' + foundCount + '. Цены представлены ниже.';
+                    found.style.display = 'block';
                 }
             }
 

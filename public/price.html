@@ -118,6 +118,26 @@
         .pricing-image--lg { height: 260px; }
         @media (min-width: 640px) { .pricing-image--lg { height: 320px; } }
 
+        .search-bar { position: relative; margin-bottom: 8px; }
+        .search-bar__input {
+            width: 100%; height: 46px; padding: 0 44px 0 16px;
+            border: 1px solid #e5e7eb; border-radius: 8px;
+            font: inherit; font-size: 14px; color: #111; background: #fff;
+            outline: none; transition: border-color .2s;
+        }
+        .search-bar__input::placeholder { color: #9ca3af; }
+        .search-bar__input:focus { border-color: #9ca3af; }
+        .search-bar__clear {
+            position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
+            cursor: pointer; color: #9ca3af; font-size: 16px; line-height: 1;
+            padding: 6px; display: none; user-select: none;
+        }
+        .search-bar__clear:hover { color: #111; }
+        .search-bar__status {
+            font-size: 12px; color: #9ca3af; margin: 0 0 16px; text-align: center; display: none;
+        }
+        .pricing-search-hidden { display: none !important; }
+
         .table-wrap {
             border: 1px solid #e5e7eb;
             border-radius: 10px;
@@ -272,6 +292,14 @@
                     <p class="page-header__desc">Стоимость зависит от сложности изделия, материалов и объёма работ. Точную цену уточняйте на консультации.</p>
                     <p class="page-header__note">Цены указаны без учёта ткани. Финальная стоимость определяется после консультации.</p>
                 </div>
+            </div>
+
+            <div class="pricing-layout--narrow">
+                <div class="search-bar">
+                    <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуги... «пальто», «кожа», «шуба»" autocomplete="off">
+                    <span class="search-bar__clear" id="pricing-search-clear">✕</span>
+                </div>
+                <p class="search-bar__status" id="pricing-search-status"></p>
             </div>
 
             <div style="background:#fafafa;padding-bottom:24px;">
@@ -634,6 +662,118 @@
     <script>
         document.addEventListener('form:success', function () {
             ym(109384423, 'reachGoal', 'FORM_SEND');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var input = document.getElementById('pricing-search');
+            var clear = document.getElementById('pricing-search-clear');
+            var status = document.getElementById('pricing-search-status');
+
+            function normalize(s) { return s.toLowerCase().replace(/[ё]/g, 'е').trim(); }
+
+            function fuzzyScore(query, text) {
+                var q = normalize(query);
+                var t = normalize(text);
+                if (!q || !t) return 0;
+                var qTerms = q.split(/\s+/).filter(function (w) { return w.length >= 2; });
+                var tTerms = t.split(/\s+/).filter(Boolean);
+                if (qTerms.length === 0) return 0;
+                var score = 0;
+                for (var i = 0; i < qTerms.length; i++) {
+                    var qt = qTerms[i];
+                    var found = false;
+                    for (var j = 0; j < tTerms.length; j++) {
+                        if (tTerms[j] === qt) { score += 10; found = true; break; }
+                    }
+                    if (found) continue;
+                    if (t.indexOf(qt) !== -1) { score += 5; continue; }
+                    for (var j = 0; j < tTerms.length; j++) {
+                        var tt = tTerms[j];
+                        var matches = 0;
+                        for (var k = 0; k < qt.length; k++) {
+                            if (tt.indexOf(qt[k]) !== -1) matches++;
+                        }
+                        if (matches >= qt.length * 0.6) { score += 3; break; }
+                    }
+                }
+                return score;
+            }
+
+            function search() {
+                var query = input.value.trim();
+                clear.style.display = query ? 'block' : 'none';
+
+                if (!query) {
+                    document.querySelectorAll('.pricing-search-hidden').forEach(function (el) {
+                        el.classList.remove('pricing-search-hidden');
+                    });
+                    status.style.display = 'none';
+                    return;
+                }
+
+                var tableWraps = document.querySelectorAll('.table-wrap');
+                tableWraps.forEach(function (wrap) {
+                    var rows = wrap.querySelectorAll('.pricing-table tbody tr');
+                    var hasVisible = false;
+                    rows.forEach(function (row) {
+                        var score = fuzzyScore(query, row.textContent);
+                        if (score > 0) {
+                            row.classList.remove('pricing-search-hidden');
+                            hasVisible = true;
+                        } else {
+                            row.classList.add('pricing-search-hidden');
+                        }
+                    });
+                    if (hasVisible) {
+                        wrap.classList.remove('pricing-search-hidden');
+                        var prev = wrap.previousElementSibling;
+                        if (prev && prev.tagName === 'P' && prev.className.indexOf('pricing-search-hidden') === -1) {
+                            prev.classList.remove('pricing-search-hidden');
+                        }
+                    } else {
+                        wrap.classList.add('pricing-search-hidden');
+                        var prev = wrap.previousElementSibling;
+                        if (prev && prev.tagName === 'P') {
+                            prev.classList.add('pricing-search-hidden');
+                        }
+                    }
+                });
+
+                var accordions = document.querySelectorAll('.accordion');
+                accordions.forEach(function (acc) {
+                    var summaryText = acc.querySelector('summary').textContent;
+                    var summaryScore = fuzzyScore(query, summaryText);
+                    var innerRows = acc.querySelectorAll('.pricing-table tbody tr');
+                    var hasVisibleInner = false;
+                    innerRows.forEach(function (row) {
+                        if (row.classList.contains('pricing-search-hidden')) return;
+                        if (fuzzyScore(query, row.textContent) > 0) hasVisibleInner = true;
+                    });
+                    if (summaryScore > 0 || hasVisibleInner) {
+                        acc.classList.remove('pricing-search-hidden');
+                    } else {
+                        acc.classList.add('pricing-search-hidden');
+                    }
+                });
+
+                var totalVisible = document.querySelectorAll(
+                    '.pricing-table tbody tr:not(.pricing-search-hidden), .accordion:not(.pricing-search-hidden)'
+                ).length;
+                if (totalVisible === 0) {
+                    status.textContent = 'Ничего не найдено. Попробуйте изменить запрос.';
+                    status.style.display = 'block';
+                } else {
+                    status.style.display = 'none';
+                }
+            }
+
+            input.addEventListener('input', search);
+            clear.addEventListener('click', function () {
+                input.value = '';
+                search();
+                input.focus();
+            });
         });
     </script>
 </body>

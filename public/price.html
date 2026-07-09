@@ -118,35 +118,49 @@
         .pricing-image--lg { height: 260px; }
         @media (min-width: 640px) { .pricing-image--lg { height: 320px; } }
 
-        .search-bar { position: relative; margin-bottom: 16px; }
+        .search-bar { position: relative; margin-bottom: 12px; }
+
+        .search-bar__notif {
+            display: flex; align-items: center; gap: 8px;
+            padding: 0 14px; margin-bottom: 0;
+            background: rgba(255,255,255,.06); border: 0 solid rgba(255,255,255,.08);
+            border-radius: 8px; color: #9ca3af; font-size: 12px; line-height: 1.4;
+            max-height: 0; opacity: 0; overflow: hidden;
+            transition: max-height .4s ease, opacity .4s ease, margin-bottom .4s ease, padding .4s ease, border-width .4s ease;
+        }
+        .search-bar__notif--visible {
+            max-height: 100px; opacity: 1; padding: 10px 14px;
+            margin-bottom: 12px; border-width: 1px;
+        }
+        .search-bar__notif-icon {
+            width: 14px; height: 14px; flex-shrink: 0; color: #6b7280;
+        }
+        .search-bar__notif-count { font-weight: 600; color: #d1d5db; }
+
         .search-bar__icon {
             position: absolute; top: 50%; left: 14px; transform: translateY(-50%);
-            width: 16px; height: 16px; color: #9ca3af; pointer-events: none;
+            width: 16px; height: 16px; color: #555; pointer-events: none;
         }
         .search-bar__input {
             width: 100%; height: 46px; padding: 0 44px 0 40px;
-            border: 1px solid #e5e7eb; border-radius: 8px;
-            font: inherit; font-size: 14px; color: #111; background: #fff;
+            border: 1px solid #2a2a2a; border-radius: 8px;
+            font: inherit; font-size: 14px; color: #fff; background: #1a1a1a;
             outline: none; transition: border-color .2s, box-shadow .2s;
         }
-        .search-bar__input::placeholder { color: #9ca3af; }
+        .search-bar__input::placeholder { color: #555; }
         .search-bar__input:focus {
-            border-color: #9ca3af;
-            box-shadow: 0 0 0 3px rgba(0,0,0,.04);
+            border-color: #444;
+            box-shadow: 0 0 0 3px rgba(255,255,255,.04);
         }
         .search-bar__clear {
             position: absolute; top: 50%; right: 10px; transform: translateY(-50%);
-            cursor: pointer; color: #9ca3af; font-size: 16px; line-height: 1;
+            cursor: pointer; color: #555; font-size: 16px; line-height: 1;
             padding: 6px; display: none; user-select: none; border: none; background: none;
             transition: color .15s;
         }
-        .search-bar__clear:hover { color: #111; }
+        .search-bar__clear:hover { color: #fff; }
         .search-bar__status {
-            font-size: 12px; color: #6b7280; margin: 10px 0 0; text-align: center; display: none;
-        }
-        .search-bar__found {
-            font-size: 11px; color: #9ca3af; margin: 10px 0 0; text-align: center; display: none;
-            letter-spacing: 0.02em;
+            font-size: 12px; color: #6b7280; margin: 8px 0 0; text-align: center; display: none;
         }
         .pricing-search-hidden { display: none !important; }
 
@@ -306,14 +320,19 @@
                 </div>
             </div>
 
-            <div class="pricing-layout--narrow" style="padding-top:32px;">
-                <div class="search-bar">
-                    <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
-                    <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуг: пальто, кожа, шуба, брюки…" autocomplete="off">
-                    <button class="search-bar__clear" id="pricing-search-clear">✕</button>
+            <div style="background:#111;padding:32px 0 28px;">
+                <div class="pricing-layout--narrow">
+                    <div class="search-bar">
+                        <div class="search-bar__notif" id="pricing-search-notif">
+                            <svg class="search-bar__notif-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L6.5 11.5L3 8"/></svg>
+                            Найдено <span class="search-bar__notif-count" id="pricing-search-count">0</span> услуг. Цены представлены ниже.
+                        </div>
+                        <svg class="search-bar__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="6.5" cy="6.5" r="5"/><path d="M10.5 10.5L14.5 14.5"/></svg>
+                        <input type="text" id="pricing-search" class="search-bar__input" placeholder="Поиск услуг: пальто, кожа, шуба, брюки…" autocomplete="off">
+                        <button class="search-bar__clear" id="pricing-search-clear">✕</button>
+                    </div>
+                    <p class="search-bar__status" id="pricing-search-status"></p>
                 </div>
-                <p class="search-bar__status" id="pricing-search-status"></p>
-                <p class="search-bar__found" id="pricing-search-found"></p>
             </div>
 
             <div style="background:#fafafa;padding-bottom:24px;">
@@ -683,7 +702,8 @@
             var input = document.getElementById('pricing-search');
             var clear = document.getElementById('pricing-search-clear');
             var status = document.getElementById('pricing-search-status');
-            var found = document.getElementById('pricing-search-found');
+            var notif = document.getElementById('pricing-search-notif');
+            var countEl = document.getElementById('pricing-search-count');
 
             function normalize(s) { return s.toLowerCase().replace(/[ё]/g, 'е').replace(/[ъь]/g, '').trim(); }
 
@@ -697,11 +717,11 @@
                 var score = 0;
                 for (var i = 0; i < qTerms.length; i++) {
                     var qt = qTerms[i];
-                    var found = false;
+                    var exact = false;
                     for (var j = 0; j < tTerms.length; j++) {
-                        if (tTerms[j] === qt) { score += 10; found = true; break; }
+                        if (tTerms[j] === qt) { score += 10; exact = true; break; }
                     }
-                    if (found) continue;
+                    if (exact) continue;
                     if (t.indexOf(qt) !== -1) { score += 5; continue; }
                     for (var j = 0; j < tTerms.length; j++) {
                         var tt = tTerms[j];
@@ -718,7 +738,6 @@
             function search() {
                 var query = input.value.trim();
                 clear.style.display = query ? 'block' : 'none';
-                count++;
 
                 if (!query) {
                     document.querySelectorAll('.pricing-search-hidden').forEach(function (el) {
@@ -728,7 +747,7 @@
                         acc.removeAttribute('open');
                     });
                     status.style.display = 'none';
-                    found.style.display = 'none';
+                    notif.classList.remove('search-bar__notif--visible');
                     return;
                 }
 
@@ -790,11 +809,11 @@
                 if (foundCount === 0 && accordionMatch === 0) {
                     status.textContent = 'Ничего не найдено. Попробуйте сократить или изменить запрос.';
                     status.style.display = 'block';
-                    found.style.display = 'none';
+                    notif.classList.remove('search-bar__notif--visible');
                 } else {
                     status.style.display = 'none';
-                    found.textContent = 'Найдено услуг: ' + foundCount + '. Цены представлены ниже.';
-                    found.style.display = 'block';
+                    countEl.textContent = foundCount;
+                    notif.classList.add('search-bar__notif--visible');
                 }
             }
 

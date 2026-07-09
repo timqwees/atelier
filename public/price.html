@@ -5,7 +5,7 @@
     <meta name="Cache-control" content="no-cache, no-store, must-revalidate">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
     <title>Прайс на пошив одежды — Ателье 15/13</title>
-    <meta name="description" content="Прайс-лист Ателье 15/13: стоимость индивидуального пошива одежды в Москве. Цены на пошив, корректировку, реставрацию. Зависит от ткани и сложности." />
+    <meta name="description" content="Прайс-лист Ателье 15/13: стоимость индивидуального пошива одежды в Москве. Цены на платье, пальто, пиджак, брюки, юбку, блузу. Корректировка и реставрация. Зависит от ткани и сложности." />
     <link rel="canonical" href="/pricing" />
     <meta property="og:title" content="Прайс на пошив одежды — Ателье 15/13" />
     <meta property="og:description" content="Прайс-лист Ателье 15/13: стоимость индивидуального пошива одежды в Москве. Цены на пошив, корректировку, реставрацию. Зависит от ткани и сложности." />
@@ -296,7 +296,7 @@
         }
     </style>
     <script type="application/ld+json">
-    { "@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://atelie1513.ru/#+atelier1513", "name": "Ателье 15/13", "description": "Прайс-лист Ателье 15/13: стоимость индивидуального пошива одежды в Москве. Цены на пошив, корректировку, реставрацию.", "address": { "@type": "PostalAddress", "addressLocality": "Москва", "streetAddress": "ул. Петровка 15/13, стр. 3", "addressCountry": "RU" }, "telephone": "+7 (915) 371-50-41", "areaServed": { "@type": "City", "name": "Москва" }, "image": ["https://atelie1513.ru/images/price-tailoring.jpg"], "url": "https://atelie1513.ru/", "priceRange": "₽₽₽" }
+    { "@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://atelie1513.ru/#+atelier1513", "name": "Ателье 15/13", "description": "Прайс-лист Ателье 15/13: стоимость индивидуального пошива одежды в Москве. Цены на пошив, корректировку, реставрацию.", "address": { "@type": "PostalAddress", "addressLocality": "Москва", "streetAddress": "ул. Петровка 15/13, стр. 3", "addressCountry": "RU" }, "telephone": "+7 (915) 371-50-41", "areaServed": { "@type": "City", "name": "Москва" }, "image": ["https://atelie1513.ru/images/price-tailoring.jpg"], "url": "https://atelie1513.ru/", "priceRange": "₽₽₽", "hasOfferCatalog": { "@type": "OfferCatalog", "name": "Услуги ателье", "itemListElement": [ { "@type": "OfferCatalog", "name": "Индивидуальный пошив" }, { "@type": "OfferCatalog", "name": "Корректировка изделий" }, { "@type": "OfferCatalog", "name": "Реставрация" } ] } }
     </script>
     <script type="application/ld+json">
     { "@context": "https://schema.org", "@type": "WebSite", "@id": "https://atelie1513.ru/#website", "name": "Ателье 15/13", "url": "https://atelie1513.ru/", "inLanguage": "ru-RU" }
@@ -567,7 +567,7 @@
 
                 <img src="/images/price-tailoring.png" alt="Прайс на пошив" class="pricing-image" loading="lazy">
 
-                <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Основы изделий</p>
+                <h3 style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Основы изделий</h3>
                 <div class="table-wrap">
                     <table class="pricing-table">
                         <thead><tr><th>Изделие</th><th>Стоимость</th></tr></thead>
@@ -613,7 +613,7 @@
                     </table>
                 </div>
 
-                <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Усложняющие элементы</p>
+                <h3 style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Усложняющие элементы</h3>
                 <div class="table-wrap">
                     <table class="pricing-table">
                         <thead><tr><th>Элемент</th><th>Наценка</th></tr></thead>
@@ -655,7 +655,7 @@
                     </table>
                 </div>
 
-                <p style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Детский пошив</p>
+                <h3 style="font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#9ca3af;margin:0 0 16px;">Детский пошив</h3>
                 <div class="table-wrap">
                     <table class="pricing-table">
                         <thead><tr><th>Изделие</th><th>Стоимость</th></tr></thead>
@@ -774,13 +774,13 @@
                     if (hasVisible) {
                         wrap.classList.remove('pricing-search-hidden');
                         var prev = wrap.previousElementSibling;
-                        if (prev && prev.tagName === 'P' && !prev.classList.contains('pricing-search-hidden')) {
+                        if (prev && (prev.tagName === 'P' || prev.tagName === 'H3') && !prev.classList.contains('pricing-search-hidden')) {
                             prev.classList.remove('pricing-search-hidden');
                         }
                     } else {
                         wrap.classList.add('pricing-search-hidden');
                         var prev = wrap.previousElementSibling;
-                        if (prev && prev.tagName === 'P') {
+                        if (prev && (prev.tagName === 'P' || prev.tagName === 'H3')) {
                             prev.classList.add('pricing-search-hidden');
                         }
                     }

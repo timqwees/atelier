@@ -329,6 +329,34 @@ function readHtmlPage(page) {
   return readFileSync(page.index, 'utf8');
 }
 
+function injectRelatedIntoFinalPage(html, req) {
+  const page = findServicePageByPath(req.path);
+  if (!page) return html;
+  const related = getRelatedServicePage(page);
+  if (!related) return html;
+
+  const isTailoring = related.path.startsWith('/services/custom-tailoring');
+  const label = isTailoring ? 'Индивидуальный пошив' : 'Корректировка изделий';
+
+  const relatedHtml = `
+<section class="py-24 sm:py-32 bg-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mb-14">
+      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"><strong>Также в ателье</strong></p>
+      <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">Связанная услуга</h2>
+      <p class="text-muted-foreground leading-relaxed">Посмотрите смежное направление — оно может быть полезно для вашей задачи.</p>
+    </div>
+    <div class="rounded-md border border-border bg-card p-6">
+      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2"><strong>Связанная услуга</strong></p>
+      <a href="${escapeHtml(related.path)}" class="font-serif text-xl hover:underline">${escapeHtml(related.title)} — ${escapeHtml(label)}</a>
+      <p class="text-sm text-muted-foreground mt-2 leading-relaxed">${escapeHtml(related.seoDescription)}</p>
+    </div>
+  </div>
+</section>`;
+
+  return html.replace('</main>', relatedHtml + '\n</main>');
+}
+
 function serializeServiceMenuNode(node) {
   return {
     title: node.title,
@@ -521,10 +549,45 @@ function getServicePageContext(page) {
   };
 }
 
+function getRelatedServicePage(page) {
+  let relatedPath = null;
+
+  if (page.path === '/services/custom-tailoring') {
+    relatedPath = '/services/alterations';
+  } else if (page.path === '/services/alterations') {
+    relatedPath = '/services/custom-tailoring';
+  } else if (page.path.startsWith('/services/custom-tailoring/')) {
+    relatedPath = page.path.replace('/services/custom-tailoring/', '/services/alterations/');
+  } else if (page.path.startsWith('/services/alterations/')) {
+    relatedPath = page.path.replace('/services/alterations/', '/services/custom-tailoring/');
+  }
+
+  if (!relatedPath || relatedPath === page.path) return null;
+  const related = findServicePageByPath(relatedPath);
+  return related && related.indexable !== false ? related : null;
+}
+
+function renderRelatedPageLink(relatedPage) {
+  if (!relatedPage) return '';
+
+  const isTailoring = relatedPage.path.startsWith('/services/custom-tailoring');
+  const label = isTailoring ? 'Индивидуальный пошив' : 'Корректировка изделий';
+
+  return `
+    <div class="rounded-md border border-border bg-card p-6">
+      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2"><strong>Связанная услуга</strong></p>
+      <a href="${escapeHtml(relatedPage.path)}" class="font-serif text-xl hover:underline">${escapeHtml(relatedPage.title)} — ${label}</a>
+      <p class="text-sm text-muted-foreground mt-2 leading-relaxed">${escapeHtml(relatedPage.seoDescription)}</p>
+    </div>
+  `;
+}
+
 function renderServiceContent(page, req) {
   const breadcrumbs = getServiceBreadcrumbs(page.path);
   const priceLabel = page.priceFrom ? `от ${formatPrice(page.priceFrom)} ₽` : 'индивидуально';
   const context = getServicePageContext(page);
+  const relatedPage = getRelatedServicePage(page);
+  const relatedHtml = renderRelatedPageLink(relatedPage);
 
   return `
     <main class="min-h-screen pt-16 bg-background">
@@ -605,6 +668,18 @@ function renderServiceContent(page, req) {
         </div>
       </section>
 
+      ${relatedHtml ? `
+      <section class="py-24 sm:py-32 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="max-w-3xl mb-14">
+            <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"><strong>Также в ателье</strong></p>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">Связанная услуга</h2>
+            <p class="text-muted-foreground leading-relaxed">Посмотрите смежное направление — оно может быть полезно для вашей задачи.</p>
+          </div>
+          ${relatedHtml}
+        </div>
+      </section>
+      ` : ''}
       <section class="py-24 sm:py-32 bg-card">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           ${renderSectionIntro('FAQ', 'Частые вопросы')}
@@ -1131,7 +1206,9 @@ app.get(FINAL_SERVICE_PAGE_ROUTES, (req, res, next) => {
   }
 
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  res.send(renderStaticHtmlPage(page));
+  let html = renderStaticHtmlPage(page);
+  html = injectRelatedIntoFinalPage(html, req);
+  res.send(html);
 });
 
 app.get('/services/*', (req, res) => {

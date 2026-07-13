@@ -751,6 +751,21 @@
 
             function normalize(s) { return s.toLowerCase().replace(/[ё]/g, 'е').replace(/[ъь]/g, '').trim(); }
 
+            function stemWord(w) {
+                var s = w;
+                if (s.length <= 3) return s;
+                var suffixes = ['ами', 'ями', 'ая', 'яя', 'ое', 'ее', 'ые', 'ие', 'ого', 'его', 'ому', 'ему',
+                    'ых', 'их', 'ым', 'им', 'ой', 'ей', 'ую', 'юю', 'а', 'я', 'ы', 'и', 'у', 'ю',
+                    'о', 'е', 'ой', 'ей', 'ым', 'им', 'ом', 'ем', 'ых', 'их', 'ами', 'ями'];
+                for (var si = 0; si < suffixes.length; si++) {
+                    var suf = suffixes[si];
+                    if (s.length > suf.length + 1 && s.slice(-suf.length) === suf) {
+                        return s.slice(0, -suf.length);
+                    }
+                }
+                return s;
+            }
+
             function fuzzyScore(query, text) {
                 var q = normalize(query);
                 var t = normalize(text);
@@ -767,13 +782,26 @@
                     }
                     if (exact) continue;
                     if (t.indexOf(qt) !== -1) { score += 6; continue; }
+                    var qtStem = stemWord(qt);
                     for (var j = 0; j < tTerms.length; j++) {
                         var tt = tTerms[j];
+                        var ttStem = stemWord(tt);
+                        if (qtStem.length >= 3 && ttStem.length >= 3 && qtStem === ttStem) {
+                            score += 8; exact = true; break;
+                        }
+                        var minLen = Math.min(qt.length, tt.length);
+                        if (minLen >= 4) {
+                            var matchLen = 0;
+                            for (var k = 0; k < minLen; k++) {
+                                if (qt[k] === tt[k]) matchLen++; else break;
+                            }
+                            if (matchLen >= minLen - 1) { score += 6; exact = true; break; }
+                        }
                         var matches = 0;
                         for (var k = 0; k < qt.length; k++) {
                             if (tt.indexOf(qt[k]) !== -1) matches++;
                         }
-                        if (matches >= qt.length * 0.8) { score += 2; break; }
+                        if (matches >= qt.length * 0.7) { score += 3; }
                     }
                 }
                 return score;

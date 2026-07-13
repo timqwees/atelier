@@ -11,7 +11,7 @@
   load('footer', '/components/footer.html');
 
   var style = document.createElement('style');
-  style.textContent = '.mobile-sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:none;background:#111;border-top:1px solid #333}@media(max-width:767px){.mobile-sticky-cta{display:flex}}.mobile-sticky-cta__item{flex:1;text-align:center;padding:12px 6px;font-size:12px;font-weight:500;color:#fff;text-decoration:none;letter-spacing:.02em}.mobile-sticky-cta__item--primary{background:#333;font-weight:600}.woot-widget-bubble{bottom:50px!important}@media(max-width:767px){.woot-widget-bubble{bottom:90px!important}}';
+  style.textContent = '.mobile-sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:9999;display:none;background:#111;border-top:1px solid #333}@media(max-width:767px){.mobile-sticky-cta{display:flex}}.mobile-sticky-cta__item{flex:1;text-align:center;padding:12px 6px;font-size:12px;font-weight:500;color:#fff;text-decoration:none;letter-spacing:.02em}.mobile-sticky-cta__item--primary{background:#333;font-weight:600}.woot-widget-bubble{bottom:50px!important}@media(max-width:767px){.woot-widget-bubble{bottom:90px!important}}.woot-widget-bubble.woot--close.woot--hide{display:none!important}';
   document.head.appendChild(style);
 
   var cta = document.createElement('div');

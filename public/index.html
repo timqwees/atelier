@@ -41,15 +41,19 @@
         .text-muted-foreground\/40 { color: hsl(var(--muted-foreground) / .6) !important; }
         .text-muted-foreground\/50 { color: hsl(var(--muted-foreground) / .7) !important; }
         .home-services { padding: 64px 0 48px; background: #fafafa; }
-        .home-services__inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+        .home-services__inner { max-width: 960px; margin: 0 auto; padding: 0 24px; }
         .home-services__label { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: #9ca3af; margin: 0 0 12px; }
-        .home-services__title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; font-weight: 400; color: #111; margin: 0 0 24px; }
-        .home-price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
-        .home-price-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; text-decoration: none; transition: border-color .2s, box-shadow .2s; }
-        .home-price-item:hover { border-color: #9ca3af; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
-        .home-price-item__name { font-size: 14px; color: #111; font-weight: 500; }
-        .home-price-item__value { font-size: 14px; color: #6b7280; white-space: nowrap; }
-        .home-price-cta-wrap { text-align: center; margin-top: 78px; }
+        .home-services__title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; font-weight: 400; color: #111; margin: 0 0 8px; }
+        .home-services__subtitle { font-size: 14px; color: #6b7280; margin: 0 0 36px; }
+        .home-price-list { border-top: 1px solid #e5e7eb; }
+        .home-price-item { display: flex; justify-content: space-between; align-items: center; padding: 18px 0; text-decoration: none; border-bottom: 1px solid #e5e7eb; transition: all .25s; position: relative; }
+        .home-price-item:hover { padding-left: 16px; padding-right: 16px; margin: 0 -16px; background: #f3f4f6; border-radius: 6px; border-color: transparent; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .home-price-item:last-child:hover { border-bottom-color: transparent; }
+        .home-price-item__name { font-size: 15px; color: #111; font-weight: 500; }
+        .home-price-item__value { font-size: 15px; color: #6b7280; }
+        .home-price-item__arrow { display: inline-block; margin-left: 12px; opacity: 0; transform: translateX(-8px); transition: opacity .2s, transform .2s; color: #9ca3af; }
+        .home-price-item:hover .home-price-item__arrow { opacity: 1; transform: translateX(0); }
+        .home-price-cta-wrap { text-align: center; margin-top: 40px; }
         .home-price-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: #111; color: #fff; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: opacity .2s; }
         .home-price-cta:hover { opacity: .8; }
         .home-price-cta__arrow { display: inline-block; transition: transform .2s; }
@@ -66,10 +70,9 @@
             .home-banner { padding: 64px 0; }
             .home-banner__title { font-size: 36px; }
 
-            .home-price-grid { grid-template-columns: 1fr 1fr; }
-
-        @media (max-width: 480px) {
-            .home-price-grid { grid-template-columns: 1fr; }
+        @media (max-width: 767px) {
+            .home-price-item:hover { padding-left: 12px; padding-right: 12px; margin: 0 -12px; }
+            .home-price-item__arrow { display: none; }
         }
         [data-testid="button-chat-toggle"] { display: none !important; }
         }
@@ -346,30 +349,31 @@
                     '<div class="home-services__inner">' +
                         '<p class="home-services__label">Прайс-лист</p>' +
                         '<h2 class="home-services__title">Цены на популярные услуги</h2>' +
-                        '<div class="home-price-grid">' +
+                        '<p class="home-services__subtitle">Ориентировочная стоимость — итоговая цена зависит от ткани и сложности</p>' +
+                        '<div class="home-price-list">' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Пальто</span>' +
-                                '<span class="home-price-item__value">от 4\u202F500 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 4\u202F500 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Костюм</span>' +
-                                '<span class="home-price-item__value">от 3\u202F500 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 3\u202F500 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Платье</span>' +
-                                '<span class="home-price-item__value">от 2\u202F500 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 2\u202F500 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Пуховик</span>' +
-                                '<span class="home-price-item__value">от 4\u202F000 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 4\u202F000 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Шуба</span>' +
-                                '<span class="home-price-item__value">от 3\u202F500 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 3\u202F500 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                             '<a href="/pricing" class="home-price-item">' +
                                 '<span class="home-price-item__name">Брюки</span>' +
-                                '<span class="home-price-item__value">от 1\u202F800 \u20BD</span>' +
+                                '<span><span class="home-price-item__value">от 1\u202F800 \u20BD</span><span class="home-price-item__arrow">\u2192</span></span>' +
                             '</a>' +
                         '</div>' +
                         '<div class="home-price-cta-wrap">' +

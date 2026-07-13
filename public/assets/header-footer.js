@@ -41,4 +41,25 @@
       document.body.style.overflow = '';
     });
   }
+
+  function loadChatwoot() {
+    if (window.chatwootSDK) return;
+    window.chatwootSettings = { "position": "right", "type": "standard", "launcherTitle": "" };
+    var d = document, t = 'script';
+    var BASE_URL = "https://app.chatwoot.com";
+    var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+    g.src = BASE_URL + "/packs/js/sdk.js";
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
+    g.onload = function () {
+      window.chatwootSDK.run({
+        websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H',
+        baseUrl: BASE_URL
+      })
+    }
+  }
+  window.addEventListener('scroll', loadChatwoot, { once: true });
+  window.addEventListener('mousemove', loadChatwoot, { once: true });
+  window.addEventListener('touchstart', loadChatwoot, { once: true });
+  setTimeout(loadChatwoot, 8000);
 })();

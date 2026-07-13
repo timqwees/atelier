@@ -43,30 +43,34 @@
         .home-services { padding: 64px 0 48px; background: #fafafa; }
         .home-services__inner { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
         .home-services__label { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: #9ca3af; margin: 0 0 12px; }
-        .home-services__title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; font-weight: 400; color: #111; margin: 0 0 8px; }
-        .home-services__desc { font-size: 14px; color: #6b7280; margin: 0 0 32px; max-width: 560px; }
-        .home-services__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-        .home-service-card { display: block; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; text-decoration: none; color: inherit; transition: border-color .2s; }
-        .home-service-card:hover { border-color: #9ca3af; }
-        .home-service-card__title { font-size: 15px; font-weight: 600; color: #111; margin: 0 0 6px; }
-        .home-service-card__desc { font-size: 13px; color: #6b7280; margin: 0; line-height: 1.5; }
-        .home-price-cta-wrap { text-align: center; margin-top: 32px; }
-        .home-price-cta { display: inline-block; padding: 14px 32px; background: #111; color: #fff; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: opacity .2s; }
+        .home-services__title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 36px; font-weight: 400; color: #111; margin: 0 0 24px; }
+        .home-price-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+        .home-price-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; text-decoration: none; transition: border-color .2s, box-shadow .2s; }
+        .home-price-item:hover { border-color: #9ca3af; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+        .home-price-item__name { font-size: 14px; color: #111; font-weight: 500; }
+        .home-price-item__value { font-size: 14px; color: #6b7280; white-space: nowrap; }
+        .home-price-cta-wrap { text-align: center; margin-top: 78px; }
+        .home-price-cta { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: #111; color: #fff; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: opacity .2s; }
         .home-price-cta:hover { opacity: .8; }
+        .home-price-cta__arrow { display: inline-block; transition: transform .2s; }
+        .home-price-cta:hover .home-price-cta__arrow { transform: translateX(4px); }
         .home-banner { background: #111; padding: 48px 0; color: #fff; text-align: center; }
         .home-banner__inner { max-width: 720px; margin: 0 auto; padding: 0 24px; }
         .home-banner__title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 28px; font-weight: 400; margin: 0 0 12px; }
         .home-banner__desc { font-size: 14px; color: #9ca3af; margin: 0 0 24px; line-height: 1.6; }
         .home-banner__btn { display: inline-block; padding: 14px 32px; background: #fff; color: #111; font-size: 14px; font-weight: 500; border-radius: 6px; text-decoration: none; transition: opacity .2s; }
         .home-banner__btn:hover { opacity: .8; }
-        @media (min-width: 640px) {
+
             .home-services { padding: 80px 0 64px; }
             .home-services__title { font-size: 44px; }
             .home-banner { padding: 64px 0; }
             .home-banner__title { font-size: 36px; }
-        }
+
+            .home-price-grid { grid-template-columns: 1fr 1fr; }
+
         @media (max-width: 480px) {
-            .home-services__grid { grid-template-columns: 1fr; }
+            .home-price-grid { grid-template-columns: 1fr; }
+        }
         }
     </style>
     <!-- Yandex.Metrika counter -->
@@ -302,37 +306,39 @@
 
     <div class="home-services">
         <div class="home-services__inner">
-            <p class="home-services__label">Услуги</p>
-            <h2 class="home-services__title">Что мы предлагаем</h2>
-            <p class="home-services__desc">Индивидуальный пошив, корректировка и ремонт одежды любых видов и сложности.</p>
-            <div class="home-services__grid">
-                <a href="/services/custom-tailoring/women/dresses" class="home-service-card">
-                    <p class="home-service-card__title">Платья</p>
-                    <p class="home-service-card__desc">Вечерние, свадебные, футляр, прямые — любой фасон по вашим меркам</p>
+            <p class="home-services__label">Прайс-лист</p>
+            <h2 class="home-services__title">Цены на популярные услуги</h2>
+            <div class="home-price-grid">
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Пальто</span>
+                    <span class="home-price-item__value">от 4 500 ₽</span>
                 </a>
-                <a href="/services/custom-tailoring/men/suits" class="home-service-card">
-                    <p class="home-service-card__title">Костюмы</p>
-                    <p class="home-service-card__desc">Классические и casual-костюмы, пиджаки, жилеты — индивидуальный пошив</p>
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Костюм</span>
+                    <span class="home-price-item__value">от 3 500 ₽</span>
                 </a>
-                <a href="/services/custom-tailoring/women/coats" class="home-service-card">
-                    <p class="home-service-card__title">Пальто</p>
-                    <p class="home-service-card__desc">Кашемир, драп, шерсть — премиальные пальто и тренчи любой сложности</p>
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Платье</span>
+                    <span class="home-price-item__value">от 2 500 ₽</span>
                 </a>
-                <a href="/services/custom-tailoring/women/dresses/evening" class="home-service-card">
-                    <p class="home-service-card__title">Вечерние платья</p>
-                    <p class="home-service-card__desc">Эксклюзивные вечерние и коктейльные платья для особых мероприятий</p>
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Пуховик</span>
+                    <span class="home-price-item__value">от 4 000 ₽</span>
                 </a>
-                <a href="/services/alterations" class="home-service-card">
-                    <p class="home-service-card__title">Корректировка</p>
-                    <p class="home-service-card__desc">Подгонка посадки, укорачивание, перешив — для идеальной посадки</p>
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Шуба</span>
+                    <span class="home-price-item__value">от 3 500 ₽</span>
                 </a>
-                <a href="/services/repairs" class="home-service-card">
-                    <p class="home-service-card__title">Ремонт</p>
-                    <p class="home-service-card__desc">Реставрация верхней одежды, кожаных изделий, головных уборов</p>
+                <a href="/pricing" class="home-price-item">
+                    <span class="home-price-item__name">Брюки</span>
+                    <span class="home-price-item__value">от 1 800 ₽</span>
                 </a>
             </div>
             <div class="home-price-cta-wrap">
-                <a href="/pricing" class="home-price-cta">Смотреть все цены →</a>
+                <a href="/pricing" class="home-price-cta">
+                    Полный прайс-лист
+                    <span class="home-price-cta__arrow">→</span>
+                </a>
             </div>
         </div>
     </div>

@@ -191,6 +191,26 @@
       input.disabled = value;
     }
 
+    function addChatwootFallback() {
+      var fb = document.querySelector('.chatwoot-fallback-btn');
+      if (fb) return;
+      var wrap = document.querySelector('.chat-messages');
+      if (!wrap) return;
+      var btn = document.createElement('button');
+      btn.className = 'chatwoot-fallback-btn';
+      btn.textContent = 'Задать вопрос оператору';
+      btn.onclick = function () {
+        if (window.$chatwoot && window.$chatwoot.toggle) { window.$chatwoot.toggle(); }
+        else if (window.chatwootSDK) {
+          window.chatwootSDK.run({ websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H', baseUrl: 'https://app.chatwoot.com' });
+          setTimeout(function () { if (window.$chatwoot && window.$chatwoot.toggle) window.$chatwoot.toggle(); }, 500);
+        } else {
+          window.open('https://t.me/atelie1513_bot', '_blank');
+        }
+      };
+      wrap.appendChild(btn);
+    }
+
     function send() {
       var text = input.value.trim();
       if ((!text && !photos.length) || sending) return;
@@ -224,6 +244,8 @@
         .then(function (data) {
           typing.remove();
           if (data.error) {
+            var errMsg = 'Не удалось получить ответ.';
+            if (data.chatwootFallback) { errMsg += ' Попробуйте задать этот же вопрос живому оператору в чате.'; addMessage('bot', errMsg); addChatwootFallback(); return; }
             addMessage('bot', data.error);
             return;
           }
@@ -234,6 +256,7 @@
         .catch(function () {
           typing.remove();
           addMessage('bot', 'Не удалось связаться с сервером. Попробуйте ещё раз.');
+          addChatwootFallback();
         })
         .finally(function () {
           setSending(false);

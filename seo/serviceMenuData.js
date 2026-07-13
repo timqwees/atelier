@@ -388,6 +388,8 @@ const womenCategories = [
   { title: 'Худи', slug: 'hoodies', type: 'garment-category' },
   { title: 'Свитшоты', slug: 'sweatshirts', type: 'garment-category' },
   { title: 'Футболки', slug: 't-shirts', type: 'garment-category' },
+  { title: 'Халаты', slug: 'robes', type: 'garment-category' },
+  { title: 'Военная форма', slug: 'military-uniform', type: 'garment-category' },
 ];
 
 const menCategories = [
@@ -408,6 +410,7 @@ const menCategories = [
   { title: 'Худи', slug: 'hoodies', type: 'garment-category' },
   { title: 'Свитшоты', slug: 'sweatshirts', type: 'garment-category' },
   { title: 'Футболки', slug: 't-shirts', type: 'garment-category' },
+  { title: 'Военная форма', slug: 'military-uniform', type: 'garment-category' },
 ];
 
 function createAlterationCategory({ title, slug, genitive, genderLabel }) {

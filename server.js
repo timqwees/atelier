@@ -5303,7 +5303,7 @@ app.post('/api/chat', async (req, res) => {
     }
 
     if (!provider) {
-      return res.status(500).json({ error: 'AI provider/API key not configured' });
+      return res.status(500).json({ error: 'AI provider/API key not configured', chatwootFallback: true });
     }
 
     // === ADDON-MODE: после расчёта клиент добавляет элементы ===
@@ -5484,12 +5484,12 @@ app.post('/api/chat', async (req, res) => {
       console.log('[Phase1] Raw response:', phase1Result.content?.substring(0, 500) || 'NO CONTENT', 'error:', phase1Result.error || 'none');
       if (phase1Result.error) {
         if (phase1Result.error === 429) {
-          return res.status(429).json({ error: 'Превышен лимит запросов. Пожалуйста, попробуйте позже.' });
+          return res.status(429).json({ error: 'Превышен лимит запросов. Пожалуйста, попробуйте позже.', chatwootFallback: true });
         }
         if (phase1Result.error === 401 || phase1Result.error === 403) {
-          return res.status(500).json({ error: 'Неверный API-ключ AI-провайдера.' });
+          return res.status(500).json({ error: 'Неверный API-ключ AI-провайдера.', chatwootFallback: true });
         }
-        return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте позже.' });
+        return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте задать этот же вопрос живому оператору в чате.', chatwootFallback: true });
       }
 
       // === ПЕРЕХВАТ ПИДЖАКА после Phase 1 (первое сообщение — только фото) ===
@@ -5664,13 +5664,13 @@ app.post('/api/chat', async (req, res) => {
     const phase2Result = await runPhase2(provider, model, base_name, base_price, category, currentSessionMessages, phase2HasPhoto);
 
     if (phase2Result.error) {
-      return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте позже.' });
+      return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте задать этот же вопрос живому оператору в чате.', chatwootFallback: true });
     }
 
     return res.json({ reply: phase2Result.content });
   } catch (error) {
     console.error('[Chat Error]', error?.message || error);
-    return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте позже.' });
+    return res.status(500).json({ error: 'Не удалось получить ответ. Попробуйте задать этот же вопрос живому оператору в чате.', chatwootFallback: true });
   }
 });
 

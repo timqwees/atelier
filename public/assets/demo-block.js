@@ -322,7 +322,14 @@
         .then(function (data) {
           typing.remove();
           if (data.error) {
-            addMsg('bot', 'Извините, произошла ошибка. Попробуйте ещё раз.');
+            var errMsg = 'Не удалось получить ответ.';
+            if (data.chatwootFallback) {
+              errMsg += ' Попробуйте задать этот же вопрос живому оператору в чате.';
+              addMsg('bot', errMsg);
+              addChatwootFallback();
+            } else {
+              addMsg('bot', data.error);
+            }
           } else {
             var reply = data.reply || '';
             conversation.push({ role: 'assistant', content: reply });
@@ -332,12 +339,34 @@
         .catch(function () {
           typing.remove();
           addMsg('bot', 'Не удалось связаться с сервером. Попробуйте позже.');
+          addChatwootFallback();
         })
         .finally(function () {
           sending = false;
           sendBtn.disabled = false;
           input.focus();
         });
+    }
+
+    function addChatwootFallback() {
+      var fallback = document.querySelector('.chatwoot-fallback-btn');
+      if (fallback) return;
+      var wrap = liveChat.querySelector('.demo-messages');
+      if (!wrap) return;
+      var btn = document.createElement('button');
+      btn.className = 'chatwoot-fallback-btn';
+      btn.textContent = 'Задать вопрос оператору';
+      btn.onclick = function () {
+        if (window.$chatwoot && window.$chatwoot.toggle) {
+          window.$chatwoot.toggle();
+        } else if (window.chatwootSDK) {
+          window.chatwootSDK.run({ websiteToken: 'ZFDyf4j1nG7yALnV2ECbPG5H', baseUrl: 'https://app.chatwoot.com' });
+          setTimeout(function () { if (window.$chatwoot && window.$chatwoot.toggle) window.$chatwoot.toggle(); }, 500);
+        } else {
+          window.open('https://t.me/atelie1513_bot', '_blank');
+        }
+      };
+      wrap.appendChild(btn);
     }
 
     photoBtn.addEventListener('click', function () { fileInput.click(); });

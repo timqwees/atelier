@@ -588,6 +588,22 @@
   font-weight: 400;
 }
 
+/* — Chatwoot fallback button — */
+.chatwoot-fallback-btn {
+  display: inline-block;
+  margin: 8px 12px 12px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+.chatwoot-fallback-btn:hover { opacity: .8; }
+
 /* — Responsive: smaller demo windows on mobile — */
 @media (max-width: 1023px) {
   .demo-messages {

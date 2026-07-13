@@ -625,6 +625,11 @@
                             <tr><td>Куртка без подкладки</td><td>от 35 000 ₽</td></tr>
                             <tr><td>Корсет</td><td>от 50 000 ₽</td></tr>
                             <tr><td>Косплей-костюм</td><td>от 35 000 ₽</td></tr>
+                            <tr><td>Халат шёлковый</td><td>от 25 000 ₽</td></tr>
+                            <tr><td>Халат банный / махровый</td><td>от 15 000 ₽</td></tr>
+                            <tr><td>Кимоно</td><td>от 25 000 ₽</td></tr>
+                            <tr><td>Сорочка ночная</td><td>от 12 000 ₽</td></tr>
+                            <tr><td>Форма военная</td><td>от 35 000 ₽</td></tr>
                             <tr><td>Пиджак мужской кэжуал</td><td>от 65 000 ₽</td></tr>
                             <tr><td>Пиджак мужской беспоук</td><td>от 120 000 ₽</td></tr>
                             <tr><td>Бейсболка</td><td>от 10 000 ₽</td></tr>
@@ -710,7 +715,10 @@
                     <div class="cta-section">
                         <p class="cta-section__title">Нужна точная оценка?</p>
                         <p class="cta-section__desc">Запишитесь на консультацию — мастер уточнит стоимость по вашей задаче.</p>
-                        <a href="/contacts" class="cta-section__btn">Записаться на консультацию</a>
+                        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+                            <a href="/contacts" class="cta-section__btn">Записаться на консультацию</a>
+                            <a href="https://t.me/atelie1513_bot" target="_blank" rel="noopener" class="cta-section__btn" style="background:transparent;color:#111;border:1px solid #e5e7eb;">Уточнить онлайн</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -758,17 +766,21 @@
                         if (tTerms[j] === qt) { score += 10; exact = true; break; }
                     }
                     if (exact) continue;
-                    if (t.indexOf(qt) !== -1) { score += 5; continue; }
+                    if (t.indexOf(qt) !== -1) { score += 6; continue; }
                     for (var j = 0; j < tTerms.length; j++) {
                         var tt = tTerms[j];
                         var matches = 0;
                         for (var k = 0; k < qt.length; k++) {
                             if (tt.indexOf(qt[k]) !== -1) matches++;
                         }
-                        if (matches >= qt.length * 0.6) { score += 3; break; }
+                        if (matches >= qt.length * 0.8) { score += 2; break; }
                     }
                 }
                 return score;
+            }
+
+            function matchesSearch(query, text) {
+                return fuzzyScore(query, text) >= 6;
             }
 
             function search() {
@@ -793,8 +805,10 @@
                 tableWraps.forEach(function (wrap) {
                     var rows = wrap.querySelectorAll('.pricing-table tbody tr');
                     var hasVisible = false;
+                    var sectionHeader = wrap.previousElementSibling;
+                    var headerMatch = sectionHeader && (sectionHeader.tagName === 'H3' || sectionHeader.tagName === 'P') && matchesSearch(query, sectionHeader.textContent);
                     rows.forEach(function (row) {
-                        if (fuzzyScore(query, row.textContent) > 0) {
+                        if (matchesSearch(query, row.textContent)) {
                             row.classList.remove('pricing-search-hidden');
                             hasVisible = true;
                             foundCount++;
@@ -802,17 +816,15 @@
                             row.classList.add('pricing-search-hidden');
                         }
                     });
-                    if (hasVisible) {
+                    if (hasVisible || headerMatch) {
                         wrap.classList.remove('pricing-search-hidden');
-                        var prev = wrap.previousElementSibling;
-                        if (prev && (prev.tagName === 'P' || prev.tagName === 'H3') && !prev.classList.contains('pricing-search-hidden')) {
-                            prev.classList.remove('pricing-search-hidden');
+                        if (sectionHeader && (sectionHeader.tagName === 'P' || sectionHeader.tagName === 'H3')) {
+                            sectionHeader.classList.remove('pricing-search-hidden');
                         }
                     } else {
                         wrap.classList.add('pricing-search-hidden');
-                        var prev = wrap.previousElementSibling;
-                        if (prev && (prev.tagName === 'P' || prev.tagName === 'H3')) {
-                            prev.classList.add('pricing-search-hidden');
+                        if (sectionHeader && (sectionHeader.tagName === 'P' || sectionHeader.tagName === 'H3')) {
+                            sectionHeader.classList.add('pricing-search-hidden');
                         }
                     }
                 });
@@ -824,7 +836,7 @@
                     var innerRows = acc.querySelectorAll('.pricing-table tbody tr');
                     var hasMatch = false;
                     innerRows.forEach(function (row) {
-                        if (fuzzyScore(query, row.textContent) > 0) {
+                        if (matchesSearch(query, row.textContent)) {
                             row.classList.remove('pricing-search-hidden');
                             hasMatch = true;
                             foundCount++;
@@ -832,7 +844,7 @@
                             row.classList.add('pricing-search-hidden');
                         }
                     });
-                    if (summaryScore > 0 || hasMatch) {
+                    if (summaryScore >= 6 || hasMatch) {
                         acc.classList.remove('pricing-search-hidden');
                         if (hasMatch) acc.setAttribute('open', '');
                     } else {

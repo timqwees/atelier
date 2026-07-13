@@ -305,45 +305,6 @@
         
     </div>
 
-    <div class="home-services">
-        <div class="home-services__inner">
-            <p class="home-services__label">Прайс-лист</p>
-            <h2 class="home-services__title">Цены на популярные услуги</h2>
-            <div class="home-price-grid">
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Пальто</span>
-                    <span class="home-price-item__value">от 4 500 ₽</span>
-                </a>
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Костюм</span>
-                    <span class="home-price-item__value">от 3 500 ₽</span>
-                </a>
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Платье</span>
-                    <span class="home-price-item__value">от 2 500 ₽</span>
-                </a>
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Пуховик</span>
-                    <span class="home-price-item__value">от 4 000 ₽</span>
-                </a>
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Шуба</span>
-                    <span class="home-price-item__value">от 3 500 ₽</span>
-                </a>
-                <a href="/pricing" class="home-price-item">
-                    <span class="home-price-item__name">Брюки</span>
-                    <span class="home-price-item__value">от 1 800 ₽</span>
-                </a>
-            </div>
-            <div class="home-price-cta-wrap">
-                <a href="/pricing" class="home-price-cta">
-                    Полный прайс-лист
-                    <span class="home-price-cta__arrow">→</span>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <div class="home-banner">
         <div class="home-banner__inner">
             <p class="home-banner__title">Не нашли нужную услугу?</p>
@@ -370,6 +331,62 @@
                     return res;
                 });
             };
+        })();
+    </script>
+    <script>
+        (function() {
+            function injectHomePrices() {
+                if (document.getElementById('home-prices-injected')) return;
+                var demo = document.getElementById('demo-try');
+                if (!demo) return false;
+                var div = document.createElement('div');
+                div.id = 'home-prices-injected';
+                div.className = 'home-services';
+                div.innerHTML =
+                    '<div class="home-services__inner">' +
+                        '<p class="home-services__label">Прайс-лист</p>' +
+                        '<h2 class="home-services__title">Цены на популярные услуги</h2>' +
+                        '<div class="home-price-grid">' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Пальто</span>' +
+                                '<span class="home-price-item__value">от 4\u202F500 \u20BD</span>' +
+                            '</a>' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Костюм</span>' +
+                                '<span class="home-price-item__value">от 3\u202F500 \u20BD</span>' +
+                            '</a>' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Платье</span>' +
+                                '<span class="home-price-item__value">от 2\u202F500 \u20BD</span>' +
+                            '</a>' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Пуховик</span>' +
+                                '<span class="home-price-item__value">от 4\u202F000 \u20BD</span>' +
+                            '</a>' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Шуба</span>' +
+                                '<span class="home-price-item__value">от 3\u202F500 \u20BD</span>' +
+                            '</a>' +
+                            '<a href="/pricing" class="home-price-item">' +
+                                '<span class="home-price-item__name">Брюки</span>' +
+                                '<span class="home-price-item__value">от 1\u202F800 \u20BD</span>' +
+                            '</a>' +
+                        '</div>' +
+                        '<div class="home-price-cta-wrap">' +
+                            '<a href="/pricing" class="home-price-cta">' +
+                                'Полный прайс-лист' +
+                                '<span class="home-price-cta__arrow">\u2192</span>' +
+                            '</a>' +
+                        '</div>' +
+                    '</div>';
+                demo.parentNode.insertBefore(div, demo.nextSibling);
+                return true;
+            }
+            if (injectHomePrices()) return;
+            var obs = new MutationObserver(function () {
+                if (injectHomePrices()) obs.disconnect();
+            });
+            obs.observe(document.body, { childList: true, subtree: true });
         })();
     </script>
 </body>

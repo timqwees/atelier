@@ -174,7 +174,15 @@ function getClientFacingBaseName(baseName, userText = '') {
     return 'вечернее платье';
   }
 
-  return String(baseName || '').toLowerCase();
+  // Убираем внутренние квалификаторы SKU, которых клиент не называл — иначе бот «приписывает»
+  // пол/комплектацию (голое «брюки» → «брюки женские два кармана»; «мужские брюки» → «женские»).
+  const label = normalizedBaseName
+    .replace(/\s*\(рубашка\)/g, '')
+    .replace(/\s+(?:женск|мужск|детск)[а-яё]*/g, '')          // пол — артефакт базы, не показываем
+    .replace(/\s+(?:один|два|три|четыре)\s+карман[а-яё]*/g, '') // число карманов из имени базы
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+  return label || normalizedBaseName;
 }
 
 function getKnownDressDetailsSummary(userText = '') {
@@ -242,7 +250,72 @@ function hasMeaningfulDressDescription(userText = '') {
 
 function hasAnyGarmentDetail(userText = '') {
   const text = String(userText || '').toLowerCase();
-  return /ш[её]лк|атлас|сатин|шифон|кружев|бархат|велюр|органза|кашемир|шерст|драп|твид|хлопок|хлопк|плащевк|плащёвк|нейлон|полиэстер|кож[аеуой]|замш|деним|джинс|трикотаж|(?:^|\s)(?:лён|лен)(?:\s|$)|клетк|полоск|принт|рисунок|длинн|макси|в пол|до пола|до колена|миди|мини|коротк|удлин|открыт[а-яёa-z]*\s+спин|открыт[а-яёa-z]*\s+плеч|драпиров|корсет|асимметр|необычн[а-яёa-z]*\s+форм|нестандартн[а-яёa-z]*\s+форм|карман|капюшон|пояс|подкладк|пуговиц|молни|разрез|волан|рюши|пайет|бисер|вышив|декор/.test(text);
+  return /ш[её]лк|атлас|сатин|шифон|кружев|бархат|велюр|органза|кашемир|шерст|драп|твид|хлопок|хлопк|плащевк|плащёвк|нейлон|полиэстер|кож[аеуой]|замш|деним|джинс|трикотаж|(?:^|\s)(?:лён|лен)(?:\s|$)|клетк|полоск|принт|рисунок|длинн|макси|в пол|до пола|до колена|миди|мини|коротк|удлин|открыт[а-яёa-z]*\s+спин|открыт[а-яёa-z]*\s+плеч|драпиров|корсет|асимметр|необычн[а-яёa-z]*\s+форм|нестандартн[а-яёa-z]*\s+форм|карман|капюшон|пояс|подкладк|пуговиц|молни|разрез|волан|рюши|пайет|бисер|вышив|декор|защип|стрелк|манжет|шлиц|высок[а-яё]*\s+посадк/.test(text);
+}
+
+// === Единый лексикон конструктивных деталей ===
+// Источник И для ОТРАЖЕНИЯ (label — как назвать клиенту), И для ЦЕНЫ (driverCode — какой драйвер).
+// Гарантирует: что бот понял и озвучил — то и учтено в цене (и наоборот). driverCode:null = базовая (без доплаты).
+const GARMENT_DETAIL_LEXICON = [
+  { slot: 'construction', match: /защип/i,                                   label: 'с защипом',            driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /стрелк/i,                                  label: 'со стрелками',         driverCode: null },
+  { slot: 'construction', match: /высок[а-яё]*\s+посадк|завышенн[а-яё]*\s+тали/i, label: 'с высокой посадкой', driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /манжет/i,                                  label: 'с манжетами',          driverCode: 'MANZHETY_SHLITSY' },
+  { slot: 'construction', match: /шлиц|разрез/i,                             label: 'со шлицей',            driverCode: 'SHLITSA' },
+  { slot: 'construction', match: /капюшон/i,                                 label: 'с капюшоном',          driverCode: 'KAPYUSHON' },
+  { slot: 'construction', match: /корсет|корсаж/i,                           label: 'с корсетом',           driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /открыт[а-яё]*\s+спин/i,                    label: 'с открытой спиной',    driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /драпировк/i,                              label: 'с драпировкой',        driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /асимметри/i,                              label: 'асимметричного кроя',  driverCode: 'USLOZHNENNY_KROY' },
+  { slot: 'construction', match: /реглан/i,                                 label: 'с рукавом реглан',     driverCode: 'REGLAN' },
+  { slot: 'construction', match: /погон|паты/i,                             label: 'с погонами',           driverCode: 'POGONY_PATY' },
+  { slot: 'material',     match: /(?:^|[^а-яё])дабл(?:[^а-яё]|$)/i,          label: 'из ткани дабл',        driverCode: 'DABL' },
+];
+
+// Человекочитаемый список уже названных клиентом деталей — для ВСЕХ изделий (не только платьев).
+function summarizeKnownDetails(userText = '', category = '', baseName = '') {
+  const text = String(userText || '').toLowerCase();
+  const out = [];
+  const push = (s) => { if (s && !out.includes(s)) out.push(s); };
+
+  if (category === 'ПЛАТЬЯ') {
+    for (const d of getKnownDressDetailsSummary(userText)) push(d);
+  } else {
+    const mat = [
+      [/шерст/, 'из шерсти'], [/кашемир/, 'из кашемира'], [/ш[её]лк/, 'из шелка'], [/хлопк|хлопок/, 'из хлопка'],
+      [/л[её]н\b|льнян/, 'изо льна'], [/твид/, 'из твида'], [/бархат/, 'из бархата'], [/велюр/, 'из велюра'],
+      [/кож[аеуой]|кожан/, 'из кожи'], [/замш/, 'из замши'], [/деним|джинс/, 'из денима'], [/трикотаж/, 'из трикотажа'],
+    ].find(([p]) => p.test(text));
+    if (mat) push(mat[1]);
+    if (/в пол|до пола|макси|длинн/.test(text)) push('длиной в пол');
+    else if (/миди|до колена/.test(text)) push('длины миди');
+    else if (/мини|коротк|выше колена/.test(text)) push('короткой длины');
+  }
+
+  for (const item of GARMENT_DETAIL_LEXICON) {
+    if (item.slot === 'construction' && item.match.test(text)) push(item.label);
+  }
+  if (/без\s+карман/.test(text)) push('без карманов');
+  else if (/(три|3)\s+карман/.test(text)) push('с тремя карманами');
+  else if (/(четыре|4)\s+карман/.test(text)) push('с четырьмя карманами');
+  const noLin = /без\s+подкладк/.test(text);
+  const posLin = /(с|на)\s+подкладк|подкладк(ой|а|у|е)\b/.test(text);
+  if (posLin && !noLin) push('на подкладке');
+  else if (noLin) push('без подкладки');
+
+  return out;
+}
+
+// Префикс «Понял: <изделие>, <детали>.» для вопросов — показывается ОДИН раз за диалог
+// (не повторяем, если «Понял:» уже звучал), чтобы бот подтвердил контекст, но не занудствовал.
+function buildKnownPrefix(userText, category, baseName, allAssistantTexts = '') {
+  if (String(allAssistantTexts || '').includes('понял:')) return '';
+  const details = summarizeKnownDetails(userText, category, baseName).filter((detail) => {
+    if (/выпускн/.test(baseName) && detail === 'для выпускного') return false;
+    if (/свадебн/.test(baseName) && detail === 'для свадьбы') return false;
+    return true;
+  });
+  return details.length ? `Понял: ${baseName}, ${details.join(', ')}.\n\n` : '';
 }
 
 function hasEveningDressIntent(userText = '') {
@@ -327,34 +400,6 @@ function loadFinalServicePages() {
 
 function readHtmlPage(page) {
   return readFileSync(page.index, 'utf8');
-}
-
-function injectRelatedIntoFinalPage(html, req) {
-  const page = findServicePageByPath(req.path);
-  if (!page) return html;
-  const related = getRelatedServicePage(page);
-  if (!related) return html;
-
-  const isTailoring = related.path.startsWith('/services/custom-tailoring');
-  const label = isTailoring ? 'Индивидуальный пошив' : 'Корректировка изделий';
-
-  const relatedHtml = `
-<section class="py-24 sm:py-32 bg-background">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="max-w-3xl mb-14">
-      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"><strong>Также в ателье</strong></p>
-      <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">Связанная услуга</h2>
-      <p class="text-muted-foreground leading-relaxed">Посмотрите смежное направление — оно может быть полезно для вашей задачи.</p>
-    </div>
-    <div class="rounded-md border border-border bg-card p-6">
-      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2"><strong>Связанная услуга</strong></p>
-      <a href="${escapeHtml(related.path)}" class="font-serif text-xl hover:underline">${escapeHtml(related.title)} — ${escapeHtml(label)}</a>
-      <p class="text-sm text-muted-foreground mt-2 leading-relaxed">${escapeHtml(related.seoDescription)}</p>
-    </div>
-  </div>
-</section>`;
-
-  return html.replace('</main>', relatedHtml + '\n</main>');
 }
 
 function serializeServiceMenuNode(node) {
@@ -549,45 +594,10 @@ function getServicePageContext(page) {
   };
 }
 
-function getRelatedServicePage(page) {
-  let relatedPath = null;
-
-  if (page.path === '/services/custom-tailoring') {
-    relatedPath = '/services/alterations';
-  } else if (page.path === '/services/alterations') {
-    relatedPath = '/services/custom-tailoring';
-  } else if (page.path.startsWith('/services/custom-tailoring/')) {
-    relatedPath = page.path.replace('/services/custom-tailoring/', '/services/alterations/');
-  } else if (page.path.startsWith('/services/alterations/')) {
-    relatedPath = page.path.replace('/services/alterations/', '/services/custom-tailoring/');
-  }
-
-  if (!relatedPath || relatedPath === page.path) return null;
-  const related = findServicePageByPath(relatedPath);
-  return related && related.indexable !== false ? related : null;
-}
-
-function renderRelatedPageLink(relatedPage) {
-  if (!relatedPage) return '';
-
-  const isTailoring = relatedPage.path.startsWith('/services/custom-tailoring');
-  const label = isTailoring ? 'Индивидуальный пошив' : 'Корректировка изделий';
-
-  return `
-    <div class="rounded-md border border-border bg-card p-6">
-      <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-2"><strong>Связанная услуга</strong></p>
-      <a href="${escapeHtml(relatedPage.path)}" class="font-serif text-xl hover:underline">${escapeHtml(relatedPage.title)} — ${label}</a>
-      <p class="text-sm text-muted-foreground mt-2 leading-relaxed">${escapeHtml(relatedPage.seoDescription)}</p>
-    </div>
-  `;
-}
-
 function renderServiceContent(page, req) {
   const breadcrumbs = getServiceBreadcrumbs(page.path);
   const priceLabel = page.priceFrom ? `от ${formatPrice(page.priceFrom)} ₽` : 'индивидуально';
   const context = getServicePageContext(page);
-  const relatedPage = getRelatedServicePage(page);
-  const relatedHtml = renderRelatedPageLink(relatedPage);
 
   return `
     <main class="min-h-screen pt-16 bg-background">
@@ -668,18 +678,6 @@ function renderServiceContent(page, req) {
         </div>
       </section>
 
-      ${relatedHtml ? `
-      <section class="py-24 sm:py-32 bg-background">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class="max-w-3xl mb-14">
-            <p class="text-xs tracking-[0.3em] uppercase text-muted-foreground mb-4"><strong>Также в ателье</strong></p>
-            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-5">Связанная услуга</h2>
-            <p class="text-muted-foreground leading-relaxed">Посмотрите смежное направление — оно может быть полезно для вашей задачи.</p>
-          </div>
-          ${relatedHtml}
-        </div>
-      </section>
-      ` : ''}
       <section class="py-24 sm:py-32 bg-card">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           ${renderSectionIntro('FAQ', 'Частые вопросы')}
@@ -1206,9 +1204,7 @@ app.get(FINAL_SERVICE_PAGE_ROUTES, (req, res, next) => {
   }
 
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-  let html = renderStaticHtmlPage(page);
-  html = injectRelatedIntoFinalPage(html, req);
-  res.send(html);
+  res.send(renderStaticHtmlPage(page));
 });
 
 app.get('/services/*', (req, res) => {
@@ -2863,10 +2859,18 @@ function hasAlterationIntent(userText = '', assistantText = '', assistantContext
   const route = normalizeAssistantRoute(assistantContext?.route || '');
 
   if (route.includes('/services/alterations')) return true;
+  // Залоченная страница индивидуального пошива — интент всегда «пошив», не корректировка.
+  // Иначе описание вроде «без подкладки» ошибочно уводит в корректировку (слово «подкладк»
+  // ловит финальный alteration-регэксп, т.к. hasTailoringIntent требует явного «пошить/сшить»).
+  if (assistantContext?.lockBase && !route.includes('/services/alterations')) return false;
   if (/стоимость корректировки|корректировк[аи]\s+по прайсу|прайс[а-я\s]+корректиров/.test(assistant)) return true;
   if (hasTailoringIntent(text) && !/коррект|укорот|подшить|ушить|расшить|замен|ремонт|подгон|перешить/.test(text)) return false;
 
-  return /корректиров|скоррект|подгон|подогнать|укорот|подшить|ушить|расшить|сузить|расширить|уменьшить|увеличить|перешить|заменить|поменять|ремонт|штопк|молни|пуговиц|кнопк|петл|подкладк|шлиц|манжет|сохранени[ея]\s+(?:шва|вара)|фабричн[а-я\s]+шв|готов[а-я\s]+издел/.test(text);
+  // ТОЛЬКО явные признаки корректировки. Неоднозначные детали-существительные
+  // (молния/пуговицы/подкладка/шлица/манжеты/карман) сюда НЕ входят: это и детали пошива —
+  // они уводили в корректировку («с подкладкой» на пальто → тупик). Замена/ремонт молнии и т.п.
+  // ловятся глаголами (замен/поменя/почин/ремонт), а «готовое изделие» — отдельным признаком.
+  return /корректиров|скоррект|подгон|подогн|подгони|укорот|удлин|подшить|подшив|подше[йёи]|ушить|ушив|уше[йё]|расшить|расшив|расше[йё]|сузить|заузи|заузь|расширить|уменьшить|увеличить|перешить|перешив|передела|замен[аеиоуыять]|поменя|ремонт|починить|почин[иякть]|штопк|заштоп|реставрац|перекро|сохранени[ея]\s+(?:шва|вара)|фабричн[а-я\s]+шв|готов[а-я\s]+издел/.test(text);
 }
 
 const ALTERATION_GARMENT_CATEGORY_RULES = [
@@ -3313,9 +3317,34 @@ function renderAlterationWorkQuestion(category) {
   return `Скажите, какую корректировку нужно выполнить для ${garment}?`;
 }
 
+// Был ли последний вопрос ассистента — выбором «сшить новое изделие или скорректировать готовое»?
+function isIntentQuestion(assistantText = '') {
+  return /сшить\s+новое\s+изделие\s+или\s+скорректировать\s+готовое/i.test(normalizeRuText(assistantText));
+}
+
+// СТРОГО КОНТЕКСТНАЯ интерпретация ответа на интент-вопрос.
+// Вызывать ТОЛЬКО когда isIntentQuestion(последнее сообщение ассистента) === true.
+// Голое «новое»/«готовое» осмысленно лишь как ответ на этот бинарный вопрос — вне контекста НЕ использовать.
+function interpretIntentAnswer(userText = '') {
+  const t = normalizeRuText(userText);
+  const alteration = /(^|[^а-яё])(готов(ое|ый|ую|ые|ого)?|скорректир[а-яё]*|корректир[а-яё]*|передел[а-яё]*|подшить|подшив[а-яё]*|укорот[а-яё]*|ушить|расшить|подогн[а-яё]*|подгон[а-яё]*|имеющ[а-яё]*|второй|второе|вторая)([^а-яё]|$)/.test(t)
+    || /есть\s+готов/.test(t);
+  const tailoring = /(^|[^а-яё])(нов(ое|ый|ую|ые|енькое|еньким|инку)?|пошив[а-яё]*|пошить|пошей[а-яё]*|сшить|сшив[а-яё]*|шить|создать|создани[а-яё]*|первый|первое|первая)([^а-яё]|$)/.test(t)
+    || /с\s+нул[а-яё]*|на\s+заказ|индивидуальн[а-яё]*/.test(t);
+  if (alteration && !tailoring) return 'alteration';
+  if (tailoring && !alteration) return 'tailoring';
+  return null; // неоднозначно → пусть переспросит
+}
+
+// Явные ГЛАГОЛЫ корректировки (не атрибуты вроде «длина/карман», которые бывают и у пошива).
+const STRICT_ALTERATION_VERBS = /укорот|удлин|подшить|подшив|ушить|расшить|сузить|расширить|уменьшить|увеличить|перешить|передела|переделк|подгон|подогн|заменить|замен[аеуы]|поменять|штопк|заштоп|починить|ремонт|реставрац|перекро/i;
+
 function shouldAskIntentBeforeTailoring(userText, assistantText, hasAnyImage, lockedAssistantContext) {
   if (lockedAssistantContext || hasAnyImage) return false;
   if (hasTailoringIntent(userText) || hasAlterationIntent(userText, assistantText)) return false;
+  // Описательный запрос пошива: изделие + конкретные детали (материал/крой/длина) и НЕТ
+  // глаголов корректировки → это описание нового изделия, интент переспрашивать не нужно.
+  if (hasAnyGarmentDetail(userText) && !STRICT_ALTERATION_VERBS.test(normalizeRuText(userText))) return false;
   const category = detectAlterationCategory(userText, '');
   return typeof category === 'string' && category !== 'Дополнительно';
 }
@@ -3373,8 +3402,11 @@ async function handleAlterationFlow({
   currentSessionMessages,
   provider,
   model,
+  forceAlteration = false,
 }) {
-  if (!hasAlterationIntent(allUserTexts, allAssistantTexts, assistantContext)) return null;
+  // forceAlteration — контекстный ответ «готовое» на интент-вопрос: заходим в корректировку
+  // явно, НЕ полагаясь на глобальный hasAlterationIntent (чтобы не засорять его голым словом).
+  if (!forceAlteration && !hasAlterationIntent(allUserTexts, allAssistantTexts, assistantContext)) return null;
 
   let photoAnalysis = null;
   if (hasAnyImage) {
@@ -3794,7 +3826,7 @@ const DRIVERS_TABLE = {
   MEH_VOROT_OTL:       { type: 'fixed', value: 8000, label: 'меховой воротник отложной' },
   MEH_VOROT_ANGL:      { type: 'fixed', value: 15000, label: 'меховой воротник английский' },
   MEH_MANZHETY:        { type: 'fixed', value: 10000, label: 'манжеты меховые' },
-  USLOZHNENNY_KROY:    { type: 'percent', value: 50, label: 'усложненный крой' },
+  USLOZHNENNY_KROY:    { type: 'percent', value: 50, label: 'усложненный крой' }, // в т.ч. защипы (подтверждено ателье)
   SHLITSA:             { type: 'fixed', value: 3000, label: 'шлица/разрез' },
 };
 
@@ -3816,8 +3848,10 @@ function getBaseExcludedDrivers(baseName) {
     excluded.add('PODKLADKA');
   }
 
-  // Классические изделия — подкладка уже в базе
-  if (lower.includes('классическ')) {
+  // Классические ПИДЖАКИ/ПАЛЬТО/ЖАКЕТЫ — подкладка в базе. НЕ распространять на брюки/юбки:
+  // «классические брюки» подкладку в базе НЕ содержат (иначе платный вопрос о подкладке
+  // задаётся, но ответ молча игнорируется, и +50% теряется).
+  if (lower.includes('классическ') && /пиджак|пальто|жакет/.test(lower)) {
     excluded.add('PODKLADKA');
   }
 
@@ -4300,7 +4334,9 @@ const TEXT_MODE_ESSENTIALS = {
 
 // === Обязательные вопросы по листам применимости (Источник = "вопрос") ===
 const SIZE_QUESTION = 'Подскажите ваш размер одежды';
-const SIZE_ANSWER_PATTERN = /размер|size|\b(3[6-9]|[4-6]\d|70)\b|\b(xxxl|xxl|xxs|3xl|2xl|4xl|5xl|6xl|xl|xs)\b|\b[sml]\b/i;
+// Число считается размером ТОЛЬКО с контекстом «размер/рост/обхват» или как одиночный ответ —
+// иначе «на 58 лет», «3 метра» ложно закрывают вопрос о размере.
+const SIZE_ANSWER_PATTERN = /размер|size|\b(?:xxxl|xxl|xxs|3xl|2xl|4xl|5xl|6xl|xl|xs)\b|(?:размер|р-р|рост|обхват)[а-яё]*\D{0,4}(?:3[6-9]|[4-6]\d|70)|\b(?:3[6-9]|[4-6]\d|70)\s*(?:-?[а-яё]{1,3}\s+)?(?:размер|рост)|^\s*(?:3[6-9]|[4-6]\d|70)\s*$|^\s*[sml]\s*$/i;
 
 const MANDATORY_QUESTIONS = {
   'ПРИМЕНИМОСТЬ_ПЛАТЬЯ': [
@@ -4393,13 +4429,90 @@ function detectForcedDrivers(text) {
       found.add(kw.code);
     }
   }
+  // Единый лексикон конструктива: те же match, что и для отражения деталей → цена и текст синхронны.
+  // driverCode:null (напр. стрелки) — базовая деталь, в цену не идёт.
+  for (const item of GARMENT_DETAIL_LEXICON) {
+    if (item.driverCode && item.match.test(text)) {
+      found.add(item.driverCode);
+    }
+  }
   const lower = String(text || '').toLowerCase();
   const mentionsNoLining = /без\s+подкладк|подкладк[а-яё\s]*(?:не\s+нужн|не\s+надо)|не\s+нужн[а-яё\s]*подкладк/i.test(lower);
   const mentionsPositiveLining = /с\s+подкладк|на\s+подкладк|подкладк(?:ой|а|у|и|е)\b|ш[её]лков[а-яё\s]+подкладк/i.test(lower);
   if (mentionsPositiveLining && !mentionsNoLining) {
     found.add('PODKLADKA');
+  } else if (mentionsNoLining) {
+    // Recency-приоритет для addon-режима: если клиент сначала сказал «без подкладки»,
+    // а ПОЗЖЕ явно попросил её добавить — учитываем подкладку (более позднее решение важнее).
+    const explicitAddLining = /(?:с|на)\s+подкладк|добав[а-яё]*\s+подкладк|нужн[а-яё]*\s+подкладк|хочу\s+подкладк/gi;
+    const noLining = /без\s+подкладк|подкладк[а-яё\s]*(?:не\s+нужн|не\s+надо)|не\s+нужн[а-яё\s]*подкладк/gi;
+    const lastMatchIndex = (re) => { let m, last = -1; while ((m = re.exec(lower)) !== null) last = m.index; return last; };
+    if (lastMatchIndex(explicitAddLining) > lastMatchIndex(noLining)) {
+      found.add('PODKLADKA');
+    }
   }
   return found;
+}
+
+// === Детерминированная логика карманов (текстовый режим) ===
+// В листах применимости карманы помечены как фото-драйвер ("доп карманы | DOP_KARMAN | фото | нет"):
+// из текста доп. карман начисляется ТОЛЬКО когда клиент явно просит карманы СВЕРХ стандартной
+// комплектации. Простое «два кармана» = базовая комплектация → доплаты нет.
+function pocketWordToNum(w) {
+  const map = {
+    'один': 1, 'одного': 1, 'одним': 1,
+    'два': 2, 'две': 2, 'двух': 2, 'двумя': 2,
+    'три': 3, 'трех': 3, 'трёх': 3, 'тремя': 3,
+    'четыре': 4, 'четырех': 4, 'четырёх': 4,
+    'пять': 5, 'шесть': 6,
+  };
+  return map[w] ?? null;
+}
+
+// Сколько карманов уже входит в базовую комплектацию основы.
+function getBaseIncludedPockets(baseName, category) {
+  const n = String(baseName || '').toLowerCase();
+  const explicit = n.match(/(один|два|две|три|четыре|пять|[1-6])\s+карман/);
+  if (explicit) {
+    const num = /^[1-6]$/.test(explicit[1]) ? Number(explicit[1]) : pocketWordToNum(explicit[1]);
+    if (num != null) return num;
+  }
+  if (category === 'БРЮКИ') return 2; // брюки/джинсы стандартно идут с 2 карманами
+  return 0;
+}
+
+// Число доп. карманов СВЕРХ базовой комплектации по тексту клиента.
+// Возвращает целое >= 0, либо null — если про карманы ничего не сказано (драйвер не трогаем).
+function resolveExtraPockets(baseName, category, clientText) {
+  const t = String(clientText || '').toLowerCase();
+  if (!/карман/.test(t)) return null;
+  const baseIncluded = getBaseIncludedPockets(baseName, category);
+  // Аддитивная формулировка имеет приоритет ("ещё/дополнительный/добавь ... карман").
+  const additive = t.match(/(?:ещ[её]|дополнительн[а-яё]*|лишн[а-яё]*|добав[а-яё]*|прибав[а-яё]*|плюс)\s+([^.!?;]{0,25}?)карман/);
+  if (additive) {
+    const numMatch = additive[1].match(/(один|одного|одним|два|две|двух|двумя|три|тр[её]х|тремя|четыре|четыр[её]х|пять|шесть|[1-6])/);
+    const num = numMatch ? (/^[1-6]$/.test(numMatch[1]) ? Number(numMatch[1]) : pocketWordToNum(numMatch[1])) : 1;
+    return Math.max(0, num || 1);
+  }
+  if (/без\s+карман/.test(t)) return 0;
+  // Явно указанное общее число карманов — берём максимальное встреченное.
+  let requested = null;
+  const re = /(один|одного|одним|два|две|двух|двумя|три|тр[её]х|тремя|четыре|четыр[её]х|пять|шесть|[1-6])\s+(?:[а-яё]+\s+){0,2}карман/g;
+  let m;
+  while ((m = re.exec(t)) !== null) {
+    const num = /^[1-6]$/.test(m[1]) ? Number(m[1]) : pocketWordToNum(m[1]);
+    if (num != null && (requested == null || num > requested)) requested = num;
+  }
+  if (requested != null) return Math.max(0, requested - baseIncluded);
+  return 0; // общее упоминание карманов без числа — считаем базовую комплектацию (0 доп.)
+}
+
+// Извлекает рублёвую сумму из текста ответа ("...от 28 600 руб." → 28600).
+function parseRublePrice(text) {
+  const m = String(text || '').match(/(\d[\d\s  ]{2,})\s*(?:руб|₽)/i);
+  if (!m) return null;
+  const num = parseInt(m[1].replace(/[\s  ]/g, ''), 10);
+  return Number.isFinite(num) ? num : null;
 }
 
 // === Серверная детекция уже указанной клиентом фактуры ===
@@ -4461,12 +4574,14 @@ function parseSizeFromText(text) {
   // Отдельный короткий ответ: только буква (возможно с пробелами)
   if (/^\s*[sml]\s*$/i.test(lower)) return singleMap[lower.trim().toLowerCase()];
 
-  // Числовой размер (российские: 36-70, только чётные)
-  const numMatch = lower.match(/\b(3[6-9]|[4-6]\d|70)\b/);
-  if (numMatch) {
-    const num = parseInt(numMatch[1], 10);
-    if (num >= 36 && num <= 70) return num;
-  }
+  // Числовой размер (36-70) ТОЛЬКО с контекстом размера или как одиночный короткий ответ.
+  // Иначе «на 58 лет», «к 50-летию», «3 метра», «2 кармана» ошибочно берутся за размер (+20%).
+  const ctxNum = lower.match(/(?:размер|р-р|size|рост|обхват)[а-яё]*\D{0,4}(3[6-9]|[4-6]\d|70)\b/i)
+    || lower.match(/\b(3[6-9]|[4-6]\d|70)\s*(?:-?[а-яё]{1,3}\s+)?(?:размер|рост)/i);
+  if (ctxNum) { const num = parseInt(ctxNum[1], 10); if (num >= 36 && num <= 70) return num; }
+  // Одиночный короткий числовой ответ (клиент отвечает на вопрос о размере)
+  const soloNum = lower.match(/^\s*(3[6-9]|[4-6]\d|70)\s*$/);
+  if (soloNum) return parseInt(soloNum[1], 10);
 
   return null;
 }
@@ -4534,28 +4649,15 @@ function cleanupChatSessions() {
 }
 
 function mergeChatSessionMessages(sessionId, incomingMessages) {
-  if (!isSafeSessionId(sessionId)) return incomingMessages;
-
-  cleanupChatSessions();
-  const entry = chatSessionCache.get(sessionId);
-  const existing = entry?.messages || [];
-  let merged = incomingMessages;
-
-  if (existing.length > 0) {
-    const incomingLast = incomingMessages[incomingMessages.length - 1];
-    const existingLast = existing[existing.length - 1];
-
-    if (incomingMessages.length < existing.length) {
-      merged = sameChatMessage(incomingLast, existingLast)
-        ? existing
-        : existing.concat(incomingLast);
-    } else if (incomingMessages.length === existing.length && sameChatMessage(incomingLast, existingLast)) {
-      merged = existing;
-    }
+  // БЕЗОПАСНОСТЬ: источник истины — присланная клиентом ПОЛНАЯ история (виджет шлёт её
+  // каждый запрос). Серверный кэш НЕ подмешиваем в ответ: раньше при совпадении sessionId
+  // (напр. «testtest») клиент B получал историю клиента A (межсессионная утечка/инъекция).
+  // Кэш только обновляем — в ответ он не попадает.
+  if (isSafeSessionId(sessionId)) {
+    cleanupChatSessions();
+    chatSessionCache.set(sessionId, { messages: incomingMessages, timestamp: Date.now() });
   }
-
-  chatSessionCache.set(sessionId, { messages: merged, timestamp: Date.now() });
-  return merged;
+  return incomingMessages;
 }
 
 function saveChatSessionMessages(sessionId, messages) {
@@ -4642,6 +4744,9 @@ async function runPhase2(provider, model, baseName, basePrice, category, convers
     .filter(m => m.role === 'user')
     .map(m => typeof m.content === 'string' ? m.content :
       Array.isArray(m.content) ? m.content.filter(p => p.type === 'text').map(p => p.text).join(' ') : '')
+    // Вопросы-определения («что такое дабл?») НЕ считаем упоминанием детали — иначе цена
+    // ошибочно возьмёт драйвер из вопроса, а не из реального пожелания клиента.
+    .filter((text) => !/что\s+так(ое|ая|ой|ие)|что\s+знач|что\s+это|это\s+что|как\s+выглядит/i.test(String(text || '')))
     .join(' ');
   // forcedDrivers работают ТОЛЬКО по тексту клиента (не по AI-описанию)
   const forcedCodes = detectForcedDrivers(sessionUserText);
@@ -4667,6 +4772,11 @@ async function runPhase2(provider, model, baseName, basePrice, category, convers
   // Шаг 1: обрабатываем чеклист AI (он анализировал конкретное фото/описание)
   for (const item of checklist) {
     if (item.applies === true) {
+      // ДЕТЕРМИНИЗМ (текстовый режим): драйверы берём ТОЛЬКО из детерминированной детекции
+      // (detectForcedDrivers + overrides карманов/размера/подкладки), а НЕ из нестабильного
+      // LLM-чеклиста — иначе один и тот же заказ давал разные цены (разброс до 18%).
+      // Чеклист как источник драйверов используем только в фото-режиме.
+      if (hasPhoto === false) continue;
       // Серверная защита: если AI ошибочно поставил true для кода, включённого в базу — игнорируем
       if (baseExcludedCodes.has(item.code)) {
         console.log(`[Phase2A] Blocked double-count: AI set ${item.code}=true, but it's included in base price for "${baseName}"`);
@@ -4725,6 +4835,20 @@ async function runPhase2(provider, model, baseName, basePrice, category, convers
     }
   }
 
+  // === Детерминированная сверка карманов (только текстовый режим) ===
+  // Устраняет недетерминизм: в тексте DOP_KARMAN считаем сами по описанию клиента,
+  // не полагаясь на нестабильный AI-чеклист. Для фото-режима логика не меняется.
+  if (hasPhoto === false) {
+    const extraPockets = resolveExtraPockets(baseName, category, sessionUserText);
+    if (extraPockets != null) {
+      if (extraPockets > 0) {
+        driverMap.set('DOP_KARMAN', { code: 'DOP_KARMAN', quantity: extraPockets, reason: `доп. карманы сверх базовых: ${extraPockets}` });
+      } else if (driverMap.delete('DOP_KARMAN')) {
+        console.log('[Phase2A] DOP_KARMAN снят: карманы в пределах базовой комплектации');
+      }
+    }
+  }
+
   const drivers = Array.from(driverMap.values());
   console.log('[Phase2A] Drivers:', drivers.map(d => d.code).join(', '), '| Questions:', questions.map(q => q.code).join(', '));
 
@@ -4755,22 +4879,23 @@ async function runPhase2(provider, model, baseName, basePrice, category, convers
     }
   }
 
-  // === Серверное определение RAZMER56 по ответу клиента ===
+  // === Серверное определение RAZMER56 по ответу клиента (АВТОРИТЕТНО и детерминированно) ===
+  // Размер решает только сервер: сбрасываем возможное значение из LLM-чеклиста, затем
+  // ставим надбавку ТОЛЬКО если распознан реальный размер > 56. Нет размера → нет надбавки
+  // (обязательный вопрос о размере будет задан).
   const parsedSize = parseSizeFromText(sessionUserText);
+  driverMap.delete('RAZMER56');
   if (parsedSize !== null) {
-    // Размер найден — убираем RAZMER56 из вопросов и решаем программно
     const qIdx = questions.findIndex(q => q.code === 'RAZMER56');
     if (qIdx !== -1) questions.splice(qIdx, 1);
-
     if (parsedSize > 56) {
-      if (!driverMap.has('RAZMER56')) {
-        driverMap.set('RAZMER56', { code: 'RAZMER56', reason: `размер ${parsedSize} > 56` });
-        console.log(`[Phase2A] RAZMER56 = true (parsed size: ${parsedSize})`);
-      }
+      driverMap.set('RAZMER56', { code: 'RAZMER56', reason: `размер ${parsedSize} > 56` });
+      console.log(`[Phase2A] RAZMER56 = true (parsed size: ${parsedSize})`);
     } else {
-      driverMap.delete('RAZMER56');
       console.log(`[Phase2A] RAZMER56 = false (parsed size: ${parsedSize})`);
     }
+  } else {
+    console.log('[Phase2A] RAZMER56 сброшен: размер не распознан детерминированно');
   }
 
   // Если есть вопросы (AI или обязательные) — вернуть их клиенту, расчёт НЕ делать
@@ -4798,8 +4923,10 @@ async function runPhase2(provider, model, baseName, basePrice, category, convers
     }
   }
 
-  // Все драйверы определены — серверный расчёт
-  const appliedDrivers = drivers.map(d => ({
+  // Все драйверы определены — серверный расчёт.
+  // Читаем driverMap заново (а не массив `drivers` выше): между ними RAZMER56 определяется
+  // сервером по размеру, и раньше он попадал в цену только если его добавлял LLM-чеклист.
+  const appliedDrivers = Array.from(driverMap.values()).map(d => ({
     code: d.code,
     quantity: d.quantity,
     value: d.value,
@@ -5070,7 +5197,7 @@ app.post('/api/contact', async (req, res) => {
   }
 
   try {
-    await sendNotificationEmail(
+    sendNotificationEmail(
       `Заявка с сайта: ${name}`,
       `Имя: ${name}\nТелефон: ${phone}\nEmail: ${email || '—'}\nСообщение: ${message || '—'}\nУслуга: ${service || '—'}`,
       `<h2>Заявка с сайта</h2><table style="border-collapse:collapse;width:100%;max-width:500px"><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Имя</td><td style="padding:8px;border:1px solid #ddd">${name}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Телефон</td><td style="padding:8px;border:1px solid #ddd">${phone}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Email</td><td style="padding:8px;border:1px solid #ddd">${email || '—'}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Сообщение</td><td style="padding:8px;border:1px solid #ddd">${(message || '—').replace(/\n/g, '<br>')}</td></tr><tr><td style="padding:8px;border:1px solid #ddd;font-weight:600">Услуга</td><td style="padding:8px;border:1px solid #ddd">${service || '—'}</td></tr></table>`
@@ -5172,11 +5299,14 @@ app.post('/api/chat', async (req, res) => {
     return originalJson(payload);
   };
 
-  // Найти границу последнего завершённого расчёта (ответ с ценой)
+  // Найти границу последнего завершённого расчёта (ответ с ЦЕНОЙ).
+  // Маркер = реальная сумма «от N руб/₽». Раньше здесь были голые «стоимость пошива/
+  // корректировки», которые есть и в приветствии, и в welcome → ложная граница обрезала
+  // контекст (изделие терялось, диалог скатывался в welcome/ремонт). Требуем число рядом.
   let lastCalcIndex = -1;
   for (let idx = messages.length - 1; idx >= 0; idx--) {
     if (messages[idx].role === 'assistant' && typeof messages[idx].content === 'string' &&
-        /ориентировочная стоимость|стоимость пошива|стоимость корректировки|стоит от/i.test(messages[idx].content)) {
+        /от\s*\d[\d\s  ]{2,}\s*(?:руб|₽)/i.test(messages[idx].content)) {
       lastCalcIndex = idx;
       break;
     }
@@ -5281,6 +5411,10 @@ app.post('/api/chat', async (req, res) => {
     const latestAssistantMessage = [...currentSessionMessages].reverse().find(m => m.role === 'assistant');
     const latestAssistantText = extractMessageText(latestAssistantMessage || {}).toLowerCase();
 
+    // === Контекстный ответ на интент-вопрос (строго в рамках заданного вопроса) ===
+    const intentAnswer = isIntentQuestion(latestAssistantText) ? interpretIntentAnswer(latestUserText) : null;
+    if (intentAnswer) console.log(`[Intent] Контекстный ответ на интент-вопрос: ${intentAnswer}`);
+
     const alterationResult = await handleAlterationFlow({
       allUserTexts,
       userTextParts,
@@ -5292,13 +5426,16 @@ app.post('/api/chat', async (req, res) => {
       currentSessionMessages,
       provider,
       model,
+      forceAlteration: intentAnswer === 'alteration',
     });
     if (alterationResult?.reply) {
       console.log('[Alteration] Deterministic branch');
       return res.json({ reply: alterationResult.reply });
     }
 
-    if (shouldAskIntentBeforeTailoring(allUserTexts, allAssistantTexts, hasAnyImage, lockedAssistantContext)) {
+    // Контекстный ответ «пошив» → не переспрашивать интент. Иначе — обычная эвристика.
+    if (intentAnswer !== 'tailoring'
+      && shouldAskIntentBeforeTailoring(allUserTexts, allAssistantTexts, hasAnyImage, lockedAssistantContext)) {
       return res.json({ reply: 'Скажите, вы хотите сшить новое изделие или скорректировать готовое?' });
     }
 
@@ -5358,7 +5495,16 @@ app.post('/api/chat', async (req, res) => {
           saveClassificationToCache(currentSessionMessages, cachedClassification);
 
           const phase2Result = await runPhase2(provider, model, base_name, base_price, category, fullContextMessages, false);
-          return res.json({ reply: phase2Result.content || phase2Result });
+          const addonReply = phase2Result.content || phase2Result;
+          // Если добавленный элемент не изменил ориентировочную стоимость (его нет в прайс-модели
+          // этого изделия) — не повторяем прайс дословно, а честно сообщаем и направляем в ателье.
+          const prevTotal = parseRublePrice(messages[lastCalcIndex]?.content);
+          const newTotal = parseRublePrice(typeof addonReply === 'string' ? addonReply : '');
+          if (prevTotal != null && newTotal != null && prevTotal === newTotal) {
+            console.log('[Addon-Mode] Элемент не меняет стоимость — отвечаем без повтора прайса');
+            return res.json({ reply: `Пока не могу учесть этот элемент в ориентировочном расчёте для данного изделия — итог прежний: от ${newTotal.toLocaleString('ru-RU')} руб.\n\nТочную стоимость с учётом всех пожеланий подскажут в ателье: +7 (915) 371-50-41.` });
+          }
+          return res.json({ reply: addonReply });
         } else {
           console.log('[Addon-Mode] Кэш классификации не найден — пропускаем в обычный поток');
         }
@@ -5594,8 +5740,10 @@ app.post('/api/chat', async (req, res) => {
     console.log(`[Phase2] Confirmed base: ${base_name} (${base_price}), sheet: ${category}`);
     const clientFacingBaseName = getClientFacingBaseName(base_name, allUserTexts);
 
-    // === TEXT MODE ONLY: «Свободное описание» — один раз после определения базы ===
-    const FREE_DESC_MARKER = 'расскажите, что для вас важно';
+    // === TEXT MODE ONLY: приветствие «расскажите» — ТОЛЬКО для голого запроса без деталей ===
+    // Если клиент уже дал детали — не задерживаем приветствием (лишний ход + в связке с обрезкой
+    // контекста ломал диалог): сразу идём к уточняющим вопросам, где отражаем «Понял: …».
+    const FREE_DESC_MARKER = 'расскажите, что';
     const shouldAskForFreeDescription = !hasAnyImage
       && !allAssistantTexts.includes(FREE_DESC_MARKER)
       && !hasAnyGarmentDetail(allUserTexts)
@@ -5625,17 +5773,7 @@ app.post('/api/chat', async (req, res) => {
           const alreadyAsked = allAssistantTexts.toLowerCase().includes(e.question.toLowerCase().slice(0, 30));
           return alreadyAsked ? e.retryQuestion : e.question;
         }).join('\n\n');
-        const knownDressDetails = category === 'ПЛАТЬЯ'
-          ? getKnownDressDetailsSummary(allUserTexts).filter((detail) => {
-            if (/выпускн/.test(clientFacingBaseName) && detail === 'для выпускного') return false;
-            if (/свадебн/.test(clientFacingBaseName) && detail === 'для свадьбы') return false;
-            return true;
-          })
-          : [];
-        const knownPrefix = knownDressDetails.length
-          ? `Понял: ${clientFacingBaseName}, ${knownDressDetails.join(', ')}.\n\n`
-          : '';
-        const reply = `${knownPrefix}${questions}`;
+        const reply = `${buildKnownPrefix(allUserTexts, category, clientFacingBaseName, allAssistantTexts)}${questions}`;
         console.log(`[TextLoop] Unanswered essentials: ${unansweredEssentials.map(e => e.key).join(', ')}`);
         return res.json({ reply });
       }
@@ -5647,9 +5785,10 @@ app.post('/api/chat', async (req, res) => {
 
       if (unansweredMandatory.length > 0) {
         const qs = unansweredMandatory.map((q, i) => `${i + 1}. ${q.question}`).join('\n');
-        const reply = unansweredMandatory.length === 1
+        const body = unansweredMandatory.length === 1
           ? unansweredMandatory[0].question
           : `Подскажите, пожалуйста:\n${qs}`;
+        const reply = `${buildKnownPrefix(allUserTexts, category, clientFacingBaseName, allAssistantTexts)}${body}`;
         console.log(`[TextLoop] Unanswered mandatory: ${unansweredMandatory.map(q => q.code).join(', ')}`);
         return res.json({ reply });
       }
